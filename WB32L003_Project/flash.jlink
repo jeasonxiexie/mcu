@@ -1,0 +1,18 @@
+// J-Link script for flashing WB32L003K8U6
+
+// Reset and halt
+r
+h
+
+// Load binary
+loadbin build/firmware.bin, 0x08000000
+
+// Verify
+verifybin build/firmware.bin, 0x08000000
+
+// Reset and run
+r
+g
+
+// Exit
+exit

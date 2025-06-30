@@ -1,0 +1,67 @@
+# Build outputs
+build/
+*.o
+*.d
+*.elf
+*.map
+*.lst
+*.hex
+*.bin
+*.srec
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.DS_Store
+
+# IDE specific files
+.vscode/
+.idea/
+*.ioc
+*.eww
+*.ewp
+*.ewd
+*.uvguix.*
+*.uvoptx
+*.uvprojx
+
+# Debug files
+*.log
+*.tlog
+*.idb
+*.pdb
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Tool downloads
+tools/*.tar.gz
+tools/*.tar.bz2
+tools/*.zip
+
+# Delivery archives (keep only the latest)
+delivery_package*.zip
+!delivery_package_v2.0.zip
+
+# Large binary files that can be regenerated
+WB32L003_Project/build/
+
+# OS generated files
+Thumbs.db
+.Spotlight-V100
+.Trashes
+
+# Project specific ignores
+# Keep firmware in delivery folder but ignore build artifacts
+!delivery/v2.0/firmware.bin
+!delivery/v2.0/firmware.hex
