@@ -65,3 +65,9 @@ Thumbs.db
 # Keep firmware in delivery folder but ignore build artifacts
 !delivery/v2.0/firmware.bin
 !delivery/v2.0/firmware.hex
+
+# Claude AI assistant files
+.claude/
+
+# Empty tools directory
+tools/
