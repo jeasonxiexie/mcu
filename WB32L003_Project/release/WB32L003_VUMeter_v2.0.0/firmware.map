@@ -1,0 +1,1619 @@
+Archive member included to satisfy reference by file (symbol)
+
+/opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_udivsi3.o)
+                              build/ui.o (__aeabi_uidiv)
+/opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_divsi3.o)
+                              build/ui.o (__aeabi_idiv)
+/opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
+                              /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_udivsi3.o) (__aeabi_idiv0)
+/opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
+                              build/power.o (__aeabi_fcmplt)
+/opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(addsf3.o)
+                              build/power.o (__aeabi_fadd)
+/opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(eqsf2.o)
+                              /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o) (__eqsf2)
+/opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(gesf2.o)
+                              /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o) (__gesf2)
+/opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(lesf2.o)
+                              /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o) (__lesf2)
+/opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(mulsf3.o)
+                              build/power.o (__aeabi_fmul)
+/opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(floatunsisf.o)
+                              build/power.o (__aeabi_ui2f)
+/opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_clzsi2.o)
+                              /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(addsf3.o) (__clzsi2)
+
+Discarded input sections
+
+ .text          0x00000000        0x0 build/main.o
+ .data          0x00000000        0x0 build/main.o
+ .bss           0x00000000        0x0 build/main.o
+ .text.HAL_SYSTICK_Callback
+                0x00000000       0x30 build/main.o
+ .bss.tick_ms   0x00000000        0x4 build/main.o
+ .text          0x00000000        0x0 build/st7735.o
+ .data          0x00000000        0x0 build/st7735.o
+ .bss           0x00000000        0x0 build/st7735.o
+ .text          0x00000000        0x0 build/power.o
+ .data          0x00000000        0x0 build/power.o
+ .bss           0x00000000        0x0 build/power.o
+ .text.Power_SetMode
+                0x00000000        0xc build/power.o
+ .text          0x00000000        0x0 build/ui.o
+ .data          0x00000000        0x0 build/ui.o
+ .bss           0x00000000        0x0 build/ui.o
+ .text.UI_Clear
+                0x00000000        0xa build/ui.o
+ .text          0x00000000        0x0 build/ui_assets.o
+ .data          0x00000000        0x0 build/ui_assets.o
+ .bss           0x00000000        0x0 build/ui_assets.o
+ .data.ui_volume_blocks
+                0x00000000       0x80 build/ui_assets.o
+ .rodata.ui_volume_block_32
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_31
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_30
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_29
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_28
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_27
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_26
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_25
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_24
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_23
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_22
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_21
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_20
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_19
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_18
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_17
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_16
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_15
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_14
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_13
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_12
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_11
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_10
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_09
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_08
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_07
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_06
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_05
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_04
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_03
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_02
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_volume_block_01
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_stereo_text
+                0x00000000      0x3e8 build/ui_assets.o
+ .rodata.ui_mono_text
+                0x00000000      0x320 build/ui_assets.o
+ .rodata.ui_battery_bar
+                0x00000000       0xc0 build/ui_assets.o
+ .rodata.ui_battery_empty
+                0x00000000      0x190 build/ui_assets.o
+ .rodata.ui_background_base
+                0x00000000     0x6400 build/ui_assets.o
+ .debug_info    0x00000000      0x536 build/ui_assets.o
+ .debug_abbrev  0x00000000       0x91 build/ui_assets.o
+ .debug_aranges
+                0x00000000       0x18 build/ui_assets.o
+ .debug_line    0x00000000       0x6f build/ui_assets.o
+ .debug_str     0x00000000      0x41b build/ui_assets.o
+ .comment       0x00000000       0x13 build/ui_assets.o
+ .ARM.attributes
+                0x00000000       0x2c build/ui_assets.o
+ .text          0x00000000        0x0 build/hardware_control.o
+ .data          0x00000000        0x0 build/hardware_control.o
+ .bss           0x00000000        0x0 build/hardware_control.o
+ .text.HW_IsCharging
+                0x00000000       0x18 build/hardware_control.o
+ .text.HW_GetLeftAudioLevel
+                0x00000000       0x14 build/hardware_control.o
+ .text.HW_GetRightAudioLevel
+                0x00000000       0x14 build/hardware_control.o
+ .text          0x00000000        0x0 build/audio_adc.o
+ .data          0x00000000        0x0 build/audio_adc.o
+ .bss           0x00000000        0x0 build/audio_adc.o
+ .text.Audio_ADC_Stop
+                0x00000000        0xc build/audio_adc.o
+ .text.Audio_ADC_ConversionComplete
+                0x00000000       0x44 build/audio_adc.o
+ .text.Audio_ADC_TimerCallback
+                0x00000000       0x7c build/audio_adc.o
+ .text.Audio_ADC_IsDataReady
+                0x00000000        0xc build/audio_adc.o
+ .bss.sample_count.0
+                0x00000000        0x1 build/audio_adc.o
+ .bss.adc_busy  0x00000000        0x1 build/audio_adc.o
+ .text          0x00000000        0x0 build/syscalls.o
+ .data          0x00000000        0x0 build/syscalls.o
+ .bss           0x00000000        0x0 build/syscalls.o
+ .text._sbrk    0x00000000       0x1c build/syscalls.o
+ .text._close   0x00000000        0x6 build/syscalls.o
+ .text._fstat   0x00000000        0x6 build/syscalls.o
+ .text._isatty  0x00000000        0x4 build/syscalls.o
+ .text._lseek   0x00000000        0x4 build/syscalls.o
+ .text._open    0x00000000        0x6 build/syscalls.o
+ .text._read    0x00000000        0x4 build/syscalls.o
+ .text._write   0x00000000        0x4 build/syscalls.o
+ .text.memcpy   0x00000000       0x12 build/syscalls.o
+ .text._exit    0x00000000        0x2 build/syscalls.o
+ .text.abort    0x00000000        0x2 build/syscalls.o
+ .bss.heap_end.0
+                0x00000000        0x4 build/syscalls.o
+ .text          0x00000000        0x0 build/wb32l003_hal.o
+ .data          0x00000000        0x0 build/wb32l003_hal.o
+ .bss           0x00000000        0x0 build/wb32l003_hal.o
+ .text.HAL_MspDeInit
+                0x00000000        0x2 build/wb32l003_hal.o
+ .text.HAL_DeInit
+                0x00000000       0x24 build/wb32l003_hal.o
+ .text.HAL_IncTick
+                0x00000000       0x18 build/wb32l003_hal.o
+ .text.HAL_GetTickPrio
+                0x00000000        0xc build/wb32l003_hal.o
+ .rodata.HAL_SetTickFreq.str1.1
+                0x00000000       0x2f build/wb32l003_hal.o
+ .text.HAL_SetTickFreq
+                0x00000000       0x3c build/wb32l003_hal.o
+ .text.HAL_GetTickFreq
+                0x00000000        0xc build/wb32l003_hal.o
+ .text.HAL_GetHalVersion
+                0x00000000        0x6 build/wb32l003_hal.o
+ .text.HAL_GetREVID
+                0x00000000        0xc build/wb32l003_hal.o
+ .text.HAL_GetDEVID
+                0x00000000       0x10 build/wb32l003_hal.o
+ .text          0x00000000        0x0 build/wb32l003_hal_cortex.o
+ .data          0x00000000        0x0 build/wb32l003_hal_cortex.o
+ .bss           0x00000000        0x0 build/wb32l003_hal_cortex.o
+ .text.HAL_NVIC_EnableIRQ
+                0x00000000       0x28 build/wb32l003_hal_cortex.o
+ .text.HAL_NVIC_DisableIRQ
+                0x00000000       0x28 build/wb32l003_hal_cortex.o
+ .text.HAL_NVIC_SystemReset
+                0x00000000       0x28 build/wb32l003_hal_cortex.o
+ .text.HAL_NVIC_GetPriorityGrouping
+                0x00000000       0x10 build/wb32l003_hal_cortex.o
+ .text.HAL_NVIC_GetPriority
+                0x00000000       0x6c build/wb32l003_hal_cortex.o
+ .text.HAL_NVIC_SetPendingIRQ
+                0x00000000       0x28 build/wb32l003_hal_cortex.o
+ .text.HAL_NVIC_GetPendingIRQ
+                0x00000000       0x2c build/wb32l003_hal_cortex.o
+ .text.HAL_NVIC_ClearPendingIRQ
+                0x00000000       0x2c build/wb32l003_hal_cortex.o
+ .text.HAL_NVIC_GetActive
+                0x00000000       0x1c build/wb32l003_hal_cortex.o
+ .text.HAL_SYSTICK_CLKSourceConfig
+                0x00000000       0x30 build/wb32l003_hal_cortex.o
+ .text.HAL_SYSTICK_Callback
+                0x00000000        0x2 build/wb32l003_hal_cortex.o
+ .text.HAL_SYSTICK_IRQHandler
+                0x00000000        0x8 build/wb32l003_hal_cortex.o
+ .text          0x00000000        0x0 build/wb32l003_hal_rcc.o
+ .data          0x00000000        0x0 build/wb32l003_hal_rcc.o
+ .bss           0x00000000        0x0 build/wb32l003_hal_rcc.o
+ .text          0x00000000        0x0 build/wb32l003_hal_gpio.o
+ .data          0x00000000        0x0 build/wb32l003_hal_gpio.o
+ .bss           0x00000000        0x0 build/wb32l003_hal_gpio.o
+ .text.HAL_GPIO_DeInit
+                0x00000000       0x94 build/wb32l003_hal_gpio.o
+ .text.HAL_GPIO_TogglePin
+                0x00000000       0x1c build/wb32l003_hal_gpio.o
+ .text          0x00000000        0x0 build/wb32l003_hal_spi.o
+ .data          0x00000000        0x0 build/wb32l003_hal_spi.o
+ .bss           0x00000000        0x0 build/wb32l003_hal_spi.o
+ .text          0x00000000        0x0 build/wb32l003_hal_adc.o
+ .data          0x00000000        0x0 build/wb32l003_hal_adc.o
+ .bss           0x00000000        0x0 build/wb32l003_hal_adc.o
+ .text          0x00000000        0x0 build/wb32l003_hal_tim.o
+ .data          0x00000000        0x0 build/wb32l003_hal_tim.o
+ .bss           0x00000000        0x0 build/wb32l003_hal_tim.o
+ .text.HAL_TIM_Base_MspInit
+                0x00000000        0x2 build/wb32l003_hal_tim.o
+ .text.HAL_TIM_Base_Init
+                0x00000000       0xc8 build/wb32l003_hal_tim.o
+ .text          0x00000000        0x0 build/wb32l003_hal_pwr.o
+ .data          0x00000000        0x0 build/wb32l003_hal_pwr.o
+ .bss           0x00000000        0x0 build/wb32l003_hal_pwr.o
+ .text.HAL_PWR_DeInit
+                0x00000000       0x20 build/wb32l003_hal_pwr.o
+ .text.HAL_PWR_EnableBkUpAccess
+                0x00000000       0x14 build/wb32l003_hal_pwr.o
+ .text.HAL_PWR_DisableBkUpAccess
+                0x00000000       0x14 build/wb32l003_hal_pwr.o
+ .text.HAL_PWR_EnterSLEEPMode
+                0x00000000       0x40 build/wb32l003_hal_pwr.o
+ .text.HAL_PWR_EnterSTANDBYMode
+                0x00000000       0x20 build/wb32l003_hal_pwr.o
+ .text.HAL_PWR_EnableSleepOnExit
+                0x00000000       0x10 build/wb32l003_hal_pwr.o
+ .text.HAL_PWR_DisableSleepOnExit
+                0x00000000       0x10 build/wb32l003_hal_pwr.o
+ .text.HAL_PWR_EnableSEVOnPend
+                0x00000000       0x10 build/wb32l003_hal_pwr.o
+ .text.HAL_PWR_DisableSEVOnPend
+                0x00000000       0x10 build/wb32l003_hal_pwr.o
+ .text          0x00000000        0x0 build/system_wb32l003.o
+ .data          0x00000000        0x0 build/system_wb32l003.o
+ .bss           0x00000000        0x0 build/system_wb32l003.o
+ .text.SystemCoreClockUpdate
+                0x00000000       0x5c build/system_wb32l003.o
+ .rodata.APBPrescTable
+                0x00000000        0x8 build/system_wb32l003.o
+ .text          0x00000000       0x14 build/startup_wb32l003.o
+ .data          0x00000000        0x0 build/startup_wb32l003.o
+ .bss           0x00000000        0x0 build/startup_wb32l003.o
+ .data          0x00000000        0x0 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_udivsi3.o)
+ .bss           0x00000000        0x0 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_udivsi3.o)
+ .data          0x00000000        0x0 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_divsi3.o)
+ .bss           0x00000000        0x0 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_divsi3.o)
+ .data          0x00000000        0x0 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
+ .bss           0x00000000        0x0 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
+ .data          0x00000000        0x0 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
+ .bss           0x00000000        0x0 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
+ .data          0x00000000        0x0 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(addsf3.o)
+ .bss           0x00000000        0x0 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(addsf3.o)
+ .data          0x00000000        0x0 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(eqsf2.o)
+ .bss           0x00000000        0x0 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(eqsf2.o)
+ .data          0x00000000        0x0 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(gesf2.o)
+ .bss           0x00000000        0x0 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(gesf2.o)
+ .data          0x00000000        0x0 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(lesf2.o)
+ .bss           0x00000000        0x0 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(lesf2.o)
+ .data          0x00000000        0x0 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(mulsf3.o)
+ .bss           0x00000000        0x0 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(mulsf3.o)
+ .data          0x00000000        0x0 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(floatunsisf.o)
+ .bss           0x00000000        0x0 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(floatunsisf.o)
+ .data          0x00000000        0x0 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_clzsi2.o)
+ .bss           0x00000000        0x0 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_clzsi2.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x08000000         0x00010000         xr
+RAM              0x20000000         0x00002000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD build/main.o
+LOAD build/st7735.o
+LOAD build/power.o
+LOAD build/ui.o
+LOAD build/ui_assets.o
+LOAD build/hardware_control.o
+LOAD build/audio_adc.o
+LOAD build/syscalls.o
+LOAD build/wb32l003_hal.o
+LOAD build/wb32l003_hal_cortex.o
+LOAD build/wb32l003_hal_rcc.o
+LOAD build/wb32l003_hal_gpio.o
+LOAD build/wb32l003_hal_spi.o
+LOAD build/wb32l003_hal_adc.o
+LOAD build/wb32l003_hal_tim.o
+LOAD build/wb32l003_hal_pwr.o
+LOAD build/system_wb32l003.o
+LOAD build/startup_wb32l003.o
+LOAD /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a
+LOAD build/stubs/libc.a
+LOAD build/stubs/libm.a
+LOAD build/stubs/libnosys.a
+                0x20002000                        _estack = (ORIGIN (RAM) + LENGTH (RAM))
+                0x00000200                        _Min_Heap_Size = 0x200
+                0x00000400                        _Min_Stack_Size = 0x400
+
+.isr_vector     0x08000000       0xbc
+                0x08000000                        . = ALIGN (0x4)
+ *(.isr_vector)
+ .isr_vector    0x08000000       0xbc build/startup_wb32l003.o
+                0x08000000                g_pfnVectors
+                0x080000bc                        . = ALIGN (0x4)
+
+.text           0x080000bc     0x31ec
+                0x080000bc                        . = ALIGN (0x4)
+ *(.text)
+ .text          0x080000bc      0x114 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_udivsi3.o)
+                0x080000bc                __udivsi3
+                0x080000bc                __aeabi_uidiv
+                0x080001c8                __aeabi_uidivmod
+ .text          0x080001d0      0x1d4 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_divsi3.o)
+                0x080001d0                __aeabi_idiv
+                0x080001d0                __divsi3
+                0x0800039c                __aeabi_idivmod
+ .text          0x080003a4        0x4 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
+                0x080003a4                __aeabi_ldiv0
+                0x080003a4                __aeabi_idiv0
+ .text          0x080003a8       0x74 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
+                0x080003a8                __aeabi_cfrcmple
+                0x080003b0                __aeabi_cfcmple
+                0x080003b0                __aeabi_cfcmpeq
+                0x080003c0                __aeabi_fcmpeq
+                0x080003cc                __aeabi_fcmplt
+                0x080003e0                __aeabi_fcmple
+                0x080003f4                __aeabi_fcmpgt
+                0x08000408                __aeabi_fcmpge
+ .text          0x0800041c      0x458 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(addsf3.o)
+                0x0800041c                __aeabi_fadd
+ .text          0x08000874       0x58 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(eqsf2.o)
+                0x08000874                __nesf2
+                0x08000874                __eqsf2
+ .text          0x080008cc       0xa0 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(gesf2.o)
+                0x080008cc                __gtsf2
+                0x080008cc                __gesf2
+ .text          0x0800096c       0xa0 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(lesf2.o)
+                0x0800096c                __lesf2
+                0x0800096c                __ltsf2
+ .text          0x08000a0c      0x294 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(mulsf3.o)
+                0x08000a0c                __aeabi_fmul
+ .text          0x08000ca0       0x84 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(floatunsisf.o)
+                0x08000ca0                __aeabi_ui2f
+ .text          0x08000d24       0x3c /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_clzsi2.o)
+                0x08000d24                __clzsi2
+ *(.text*)
+ .text.startup.main
+                0x08000d60      0x3c8 build/main.o
+                0x08000d60                main
+ .text.Error_Handler
+                0x08001128        0x4 build/main.o
+                0x08001128                Error_Handler
+ .text.ST7735_SpiWrite
+                0x0800112c       0x1c build/st7735.o
+ .text.ST7735_WriteCommand
+                0x08001148       0x30 build/st7735.o
+                0x08001148                ST7735_WriteCommand
+ .text.ST7735_WriteData
+                0x08001178       0x30 build/st7735.o
+                0x08001178                ST7735_WriteData
+ .text.ST7735_WriteData16
+                0x080011a8       0x34 build/st7735.o
+                0x080011a8                ST7735_WriteData16
+ .text.ST7735_Reset
+                0x080011dc       0x38 build/st7735.o
+                0x080011dc                ST7735_Reset
+ .text.ST7735_SetAddressWindow
+                0x08001214       0x4e build/st7735.o
+                0x08001214                ST7735_SetAddressWindow
+ *fill*         0x08001262        0x2 
+ .text.ST7735_FillRect.part.0
+                0x08001264       0x70 build/st7735.o
+ .text.ST7735_FillRect
+                0x080012d4       0x16 build/st7735.o
+                0x080012d4                ST7735_FillRect
+ .text.ST7735_FillScreen
+                0x080012ea       0x12 build/st7735.o
+                0x080012ea                ST7735_FillScreen
+ .text.ST7735_DrawPixel
+                0x080012fc       0x1c build/st7735.o
+                0x080012fc                ST7735_DrawPixel
+ .text.ST7735_DrawImage
+                0x08001318       0x7c build/st7735.o
+                0x08001318                ST7735_DrawImage
+ .text.ST7735_SetBacklight
+                0x08001394       0x20 build/st7735.o
+                0x08001394                ST7735_SetBacklight
+ .text.ST7735_Init
+                0x080013b4      0x238 build/st7735.o
+                0x080013b4                ST7735_Init
+ .text.Power_Init
+                0x080015ec       0x54 build/power.o
+                0x080015ec                Power_Init
+ .text.Power_GetBatteryVoltage
+                0x08001640       0x50 build/power.o
+                0x08001640                Power_GetBatteryVoltage
+ .text.Power_GetBatteryLevel
+                0x08001690       0x60 build/power.o
+                0x08001690                Power_GetBatteryLevel
+ .text.Power_Process
+                0x080016f0       0x90 build/power.o
+                0x080016f0                Power_Process
+ .text.Power_GetMode
+                0x08001780        0xc build/power.o
+                0x08001780                Power_GetMode
+ .text.Power_Off
+                0x0800178c        0x8 build/power.o
+                0x0800178c                Power_Off
+ .text.Power_ExitStandby
+                0x08001794       0x28 build/power.o
+                0x08001794                Power_ExitStandby
+ .text.SystemClock_Config
+                0x080017bc       0x46 build/power.o
+                0x080017bc                SystemClock_Config
+ *fill*         0x08001802        0x2 
+ .text.Power_EnterStandby
+                0x08001804       0x54 build/power.o
+                0x08001804                Power_EnterStandby
+ .text.UI_Init  0x08001858       0x1c build/ui.o
+                0x08001858                UI_Init
+ .text.UI_ShowBootLogo
+                0x08001874       0x20 build/ui.o
+                0x08001874                UI_ShowBootLogo
+ .text.UI_ShowOffLogo
+                0x08001894       0x24 build/ui.o
+                0x08001894                UI_ShowOffLogo
+ .text.UI_DrawBackground
+                0x080018b8       0x50 build/ui.o
+                0x080018b8                UI_DrawBackground
+ .text.UI_SetAudioMode
+                0x08001908       0xf0 build/ui.o
+                0x08001908                UI_SetAudioMode
+ .text.UI_UpdateVUMeter
+                0x080019f8      0x1d8 build/ui.o
+                0x080019f8                UI_UpdateVUMeter
+ .text.UI_UpdateAnimation
+                0x08001bd0       0x38 build/ui.o
+                0x08001bd0                UI_UpdateAnimation
+ .text.UI_UpdateBatteryIcon
+                0x08001c08       0xbc build/ui.o
+                0x08001c08                UI_UpdateBatteryIcon
+ .text.HW_SetMainPower
+                0x08001cc4       0x14 build/hardware_control.o
+                0x08001cc4                HW_SetMainPower
+ .text.HW_SetLCDPower
+                0x08001cd8       0x14 build/hardware_control.o
+                0x08001cd8                HW_SetLCDPower
+ .text.HW_SetMute
+                0x08001cec       0x12 build/hardware_control.o
+                0x08001cec                HW_SetMute
+ *fill*         0x08001cfe        0x2 
+ .text.HW_SetAudioMode
+                0x08001d00       0x28 build/hardware_control.o
+                0x08001d00                HW_SetAudioMode
+ .text.HW_GetAudioMode
+                0x08001d28        0xc build/hardware_control.o
+                0x08001d28                HW_GetAudioMode
+ .text.HW_SetGreenLED
+                0x08001d34       0x14 build/hardware_control.o
+                0x08001d34                HW_SetGreenLED
+ .text.HW_SetRedLED
+                0x08001d48       0x14 build/hardware_control.o
+                0x08001d48                HW_SetRedLED
+ .text.HW_Init  0x08001d5c       0xf8 build/hardware_control.o
+                0x08001d5c                HW_Init
+ .text.HW_PowerOnSequence
+                0x08001e54       0x4c build/hardware_control.o
+                0x08001e54                HW_PowerOnSequence
+ .text.HW_PowerOffSequence
+                0x08001ea0       0x32 build/hardware_control.o
+                0x08001ea0                HW_PowerOffSequence
+ *fill*         0x08001ed2        0x2 
+ .text.Audio_ADC_Init
+                0x08001ed4       0xd8 build/audio_adc.o
+                0x08001ed4                Audio_ADC_Init
+ .text.Audio_ADC_Start
+                0x08001fac       0x14 build/audio_adc.o
+                0x08001fac                Audio_ADC_Start
+ .text.Audio_ADC_Process
+                0x08001fc0       0xc0 build/audio_adc.o
+                0x08001fc0                Audio_ADC_Process
+ .text.Audio_ADC_GetLeftLevel
+                0x08002080        0xc build/audio_adc.o
+                0x08002080                Audio_ADC_GetLeftLevel
+ .text.Audio_ADC_GetRightLevel
+                0x0800208c        0xc build/audio_adc.o
+                0x0800208c                Audio_ADC_GetRightLevel
+ .text.Audio_ADC_GetMonoLevel
+                0x08002098        0xc build/audio_adc.o
+                0x08002098                Audio_ADC_GetMonoLevel
+ .text.memset   0x080020a4       0x10 build/syscalls.o
+                0x080020a4                memset
+ .text.assert_failed
+                0x080020b4        0x2 build/syscalls.o
+                0x080020b4                assert_failed
+ .text.__libc_init_array
+                0x080020b6        0x2 build/syscalls.o
+                0x080020b6                __libc_init_array
+ .text.HAL_MspInit
+                0x080020b8        0x2 build/wb32l003_hal.o
+                0x080020b8                HAL_MspInit
+ *fill*         0x080020ba        0x2 
+ .text.HAL_InitTick
+                0x080020bc       0x48 build/wb32l003_hal.o
+                0x080020bc                HAL_InitTick
+ .text.HAL_Init
+                0x08002104       0x16 build/wb32l003_hal.o
+                0x08002104                HAL_Init
+ *fill*         0x0800211a        0x2 
+ .text.HAL_Delay
+                0x0800211c       0x20 build/wb32l003_hal.o
+                0x0800211c                HAL_Delay
+ .text.HAL_GetTick
+                0x0800213c        0xc build/wb32l003_hal.o
+                0x0800213c                HAL_GetTick
+ .text.HAL_SuspendTick
+                0x08002148       0x10 build/wb32l003_hal.o
+                0x08002148                HAL_SuspendTick
+ .text.HAL_ResumeTick
+                0x08002158       0x10 build/wb32l003_hal.o
+                0x08002158                HAL_ResumeTick
+ .text.HAL_NVIC_SetPriorityGrouping
+                0x08002168       0x3c build/wb32l003_hal_cortex.o
+                0x08002168                HAL_NVIC_SetPriorityGrouping
+ .text.HAL_NVIC_SetPriority
+                0x080021a4       0x7c build/wb32l003_hal_cortex.o
+                0x080021a4                HAL_NVIC_SetPriority
+ .text.HAL_SYSTICK_Config
+                0x08002220       0x28 build/wb32l003_hal_cortex.o
+                0x08002220                HAL_SYSTICK_Config
+ .text.HAL_RCC_OscConfig
+                0x08002248      0x3e0 build/wb32l003_hal_rcc.o
+                0x08002248                HAL_RCC_OscConfig
+ .text.HAL_RCC_ClockConfig
+                0x08002628      0x1ac build/wb32l003_hal_rcc.o
+                0x08002628                HAL_RCC_ClockConfig
+ .text.HAL_GPIO_Init
+                0x080027d4       0xfc build/wb32l003_hal_gpio.o
+                0x080027d4                HAL_GPIO_Init
+ .text.HAL_GPIO_ReadPin
+                0x080028d0       0x20 build/wb32l003_hal_gpio.o
+                0x080028d0                HAL_GPIO_ReadPin
+ .text.HAL_GPIO_WritePin
+                0x080028f0       0x30 build/wb32l003_hal_gpio.o
+                0x080028f0                HAL_GPIO_WritePin
+ .text.HAL_SPI_Transmit
+                0x08002920       0xb2 build/wb32l003_hal_spi.o
+                0x08002920                HAL_SPI_Transmit
+ .text.HAL_SPI_MspInit
+                0x080029d2        0x2 build/wb32l003_hal_spi.o
+                0x080029d2                HAL_SPI_MspInit
+ .text.HAL_SPI_Init
+                0x080029d4      0x130 build/wb32l003_hal_spi.o
+                0x080029d4                HAL_SPI_Init
+ .text.HAL_ADC_Start
+                0x08002b04       0x44 build/wb32l003_hal_adc.o
+                0x08002b04                HAL_ADC_Start
+ .text.HAL_ADC_Stop
+                0x08002b48       0x3c build/wb32l003_hal_adc.o
+                0x08002b48                HAL_ADC_Stop
+ .text.HAL_ADC_PollForConversion
+                0x08002b84       0x54 build/wb32l003_hal_adc.o
+                0x08002b84                HAL_ADC_PollForConversion
+ .text.HAL_ADC_GetValue
+                0x08002bd8       0x20 build/wb32l003_hal_adc.o
+                0x08002bd8                HAL_ADC_GetValue
+ .text.HAL_ADC_ConfigChannel
+                0x08002bf8       0x60 build/wb32l003_hal_adc.o
+                0x08002bf8                HAL_ADC_ConfigChannel
+ .text.HAL_ADCEx_Calibration_Start
+                0x08002c58       0x60 build/wb32l003_hal_adc.o
+                0x08002c58                HAL_ADCEx_Calibration_Start
+ .text.HAL_ADC_MspInit
+                0x08002cb8        0x2 build/wb32l003_hal_adc.o
+                0x08002cb8                HAL_ADC_MspInit
+ *fill*         0x08002cba        0x2 
+ .text.HAL_ADC_Init
+                0x08002cbc       0x74 build/wb32l003_hal_adc.o
+                0x08002cbc                HAL_ADC_Init
+ .text.TIM_Base_SetConfig
+                0x08002d30       0x88 build/wb32l003_hal_tim.o
+ .text.HAL_TIM_PWM_ConfigChannel
+                0x08002db8      0x1fc build/wb32l003_hal_tim.o
+                0x08002db8                HAL_TIM_PWM_ConfigChannel
+ .text.HAL_TIM_PWM_Start
+                0x08002fb4       0xb8 build/wb32l003_hal_tim.o
+                0x08002fb4                HAL_TIM_PWM_Start
+ .text.HAL_TIM_PWM_MspInit
+                0x0800306c        0x2 build/wb32l003_hal_tim.o
+                0x0800306c                HAL_TIM_PWM_MspInit
+ *fill*         0x0800306e        0x2 
+ .text.HAL_TIM_PWM_Init
+                0x08003070       0xc8 build/wb32l003_hal_tim.o
+                0x08003070                HAL_TIM_PWM_Init
+ .text.HAL_PWR_EnableWakeUpPin
+                0x08003138       0x2c build/wb32l003_hal_pwr.o
+                0x08003138                HAL_PWR_EnableWakeUpPin
+ .text.HAL_PWR_DisableWakeUpPin
+                0x08003164       0x2c build/wb32l003_hal_pwr.o
+                0x08003164                HAL_PWR_DisableWakeUpPin
+ .text.HAL_PWR_EnterSTOPMode
+                0x08003190       0x64 build/wb32l003_hal_pwr.o
+                0x08003190                HAL_PWR_EnterSTOPMode
+ .text.SystemInit
+                0x080031f4       0x60 build/system_wb32l003.o
+                0x080031f4                SystemInit
+ .text.Reset_Handler
+                0x08003254       0x50 build/startup_wb32l003.o
+                0x08003254                Reset_Handler
+ .text.Default_Handler
+                0x080032a4        0x2 build/startup_wb32l003.o
+                0x080032a4                TIM1_BRK_UP_TRG_COM_IRQHandler
+                0x080032a4                HardFault_Handler
+                0x080032a4                SysTick_Handler
+                0x080032a4                PVD_IRQHandler
+                0x080032a4                PendSV_Handler
+                0x080032a4                NMI_Handler
+                0x080032a4                I2C1_IRQHandler
+                0x080032a4                SPI1_IRQHandler
+                0x080032a4                EXTI2_3_IRQHandler
+                0x080032a4                ADC1_IRQHandler
+                0x080032a4                TIM17_IRQHandler
+                0x080032a4                RTC_IRQHandler
+                0x080032a4                TIM16_IRQHandler
+                0x080032a4                TIM3_IRQHandler
+                0x080032a4                EXTI4_15_IRQHandler
+                0x080032a4                RCC_IRQHandler
+                0x080032a4                DMA1_Channel1_IRQHandler
+                0x080032a4                Default_Handler
+                0x080032a4                TIM14_IRQHandler
+                0x080032a4                DMA1_Channel4_5_IRQHandler
+                0x080032a4                EXTI0_1_IRQHandler
+                0x080032a4                SVC_Handler
+                0x080032a4                WWDG_IRQHandler
+                0x080032a4                TIM2_IRQHandler
+                0x080032a4                DMA1_Channel2_3_IRQHandler
+                0x080032a4                USART2_IRQHandler
+                0x080032a4                FLASH_IRQHandler
+                0x080032a4                USART1_IRQHandler
+                0x080032a4                TIM1_CC_IRQHandler
+ *(.glue_7)
+ .glue_7        0x080032a6        0x0 linker stubs
+ *(.glue_7t)
+ .glue_7t       0x080032a6        0x0 linker stubs
+ *(.eh_frame)
+ *(.init)
+ *(.fini)
+                0x080032a8                        . = ALIGN (0x4)
+ *fill*         0x080032a6        0x2 
+                0x080032a8                        _etext = .
+
+.vfp11_veneer   0x080032a8        0x0
+ .vfp11_veneer  0x080032a8        0x0 linker stubs
+
+.v4_bx          0x080032a8        0x0
+ .v4_bx         0x080032a8        0x0 linker stubs
+
+.iplt           0x080032a8        0x0
+ .iplt          0x080032a8        0x0 build/main.o
+
+.rodata         0x080032a8     0xc98c
+                0x080032a8                        . = ALIGN (0x4)
+ *(.rodata)
+ *(.rodata*)
+ .rodata.CSWTCH.11
+                0x080032a8        0x8 build/st7735.o
+ .rodata.CSWTCH.21
+                0x080032b0        0x8 build/ui.o
+ .rodata.off_logo
+                0x080032b8     0x6400 build/ui.o
+                0x080032b8                off_logo
+ .rodata.boot_logo
+                0x080096b8     0x6400 build/ui.o
+                0x080096b8                boot_logo
+ .rodata.HAL_NVIC_SetPriorityGrouping.str1.1
+                0x0800fab8      0x169 build/wb32l003_hal_cortex.o
+                                 0x36 (size before relaxing)
+ .rodata.HAL_RCC_OscConfig.str1.1
+                0x0800fc21       0x33 build/wb32l003_hal_rcc.o
+ .rodata.HAL_GPIO_Init.str1.1
+                0x0800fc21       0x34 build/wb32l003_hal_gpio.o
+ .rodata.HAL_SPI_Init.str1.1
+                0x0800fc21       0x33 build/wb32l003_hal_spi.o
+ .rodata.HAL_ADC_Start.str1.1
+                0x0800fc21       0x33 build/wb32l003_hal_adc.o
+ .rodata.HAL_TIM_PWM_ConfigChannel.str1.1
+                0x0800fc21       0x33 build/wb32l003_hal_tim.o
+ .rodata.HAL_PWR_EnableWakeUpPin.str1.1
+                0x0800fc21       0x33 build/wb32l003_hal_pwr.o
+ .rodata.AHBPrescTable
+                0x0800fc21       0x10 build/system_wb32l003.o
+                0x0800fc21                AHBPrescTable
+                0x0800fc58                        . = ALIGN (0x4)
+ *fill*         0x0800fc31        0x3 
+
+.rel.dyn        0x0800fc34        0x0
+ .rel.iplt      0x0800fc34        0x0 build/main.o
+
+.ARM.extab
+ *(.ARM.extab* .gnu.linkonce.armextab.*)
+
+.ARM            0x0800fc34        0x0
+                0x0800fc34                        __exidx_start = .
+ *(.ARM.exidx*)
+                0x0800fc34                        __exidx_end = .
+
+.preinit_array  0x0800fc34        0x0
+                [!provide]                        PROVIDE (__preinit_array_start = .)
+ *(.preinit_array*)
+                [!provide]                        PROVIDE (__preinit_array_end = .)
+
+.init_array     0x0800fc34        0x0
+                [!provide]                        PROVIDE (__init_array_start = .)
+ *(SORT_BY_NAME(.init_array.*))
+ *(.init_array*)
+                [!provide]                        PROVIDE (__init_array_end = .)
+
+.fini_array     0x0800fc34        0x0
+                [!provide]                        PROVIDE (__fini_array_start = .)
+ *(SORT_BY_NAME(.fini_array.*))
+ *(.fini_array*)
+                [!provide]                        PROVIDE (__fini_array_end = .)
+                0x0800fc34                        _sidata = LOADADDR (.data)
+
+.data           0x20000000       0x14 load address 0x0800fc34
+                0x20000000                        . = ALIGN (0x4)
+                0x20000000                        _sdata = .
+ *(.data)
+ *(.data*)
+ .data.battery_level
+                0x20000000        0x1 build/power.o
+ *fill*         0x20000001        0x3 
+ .data.battery_voltage
+                0x20000004        0x4 build/power.o
+ .data.uwTickFreq
+                0x20000008        0x4 build/wb32l003_hal.o
+                0x20000008                uwTickFreq
+ .data.uwTickPrio
+                0x2000000c        0x4 build/wb32l003_hal.o
+                0x2000000c                uwTickPrio
+ .data.SystemCoreClock
+                0x20000010        0x4 build/system_wb32l003.o
+                0x20000010                SystemCoreClock
+                0x20000014                        . = ALIGN (0x4)
+                0x20000014                        _edata = .
+
+.igot.plt       0x20000014        0x0 load address 0x0800fc48
+ .igot.plt      0x20000014        0x0 build/main.o
+                0x20000014                        . = ALIGN (0x4)
+
+.bss            0x20000014      0x1c8 load address 0x0800fc48
+                0x20000014                        _sbss = .
+                0x20000014                        __bss_start__ = _sbss
+ *(.bss)
+ *(.bss*)
+ .bss.current_audio_mode.0
+                0x20000014        0x1 build/main.o
+ .bss.frame_update_flag
+                0x20000015        0x1 build/main.o
+                0x20000015                frame_update_flag
+ .bss.led_state
+                0x20000016        0x1 build/power.o
+ *fill*         0x20000017        0x1 
+ .bss.led_flash_time
+                0x20000018        0x4 build/power.o
+ .bss.last_adc_time
+                0x2000001c        0x4 build/power.o
+ .bss.power_mode
+                0x20000020        0x1 build/power.o
+ .bss.vu_right_level
+                0x20000021        0x1 build/ui.o
+ .bss.vu_left_level
+                0x20000022        0x1 build/ui.o
+ *fill*         0x20000023        0x1 
+ .bss.last_frame_time
+                0x20000024        0x4 build/ui.o
+ .bss.audio_mode
+                0x20000028        0x1 build/ui.o
+ .bss.current_mode
+                0x20000029        0x1 build/ui.o
+ .bss.current_audio_mode
+                0x2000002a        0x1 build/hardware_control.o
+ *fill*         0x2000002b        0x1 
+ .bss.adc_counter
+                0x2000002c        0x2 build/audio_adc.o
+ *fill*         0x2000002e        0x2 
+ .bss.hadc      0x20000030       0x44 build/audio_adc.o
+ .bss.audio_data
+                0x20000074       0x8a build/audio_adc.o
+ *fill*         0x200000fe        0x2 
+ .bss.uwTick    0x20000100        0x4 build/wb32l003_hal.o
+                0x20000100                uwTick
+ .bss.hspi1     0x20000104       0x54 build/wb32l003_hal_spi.o
+                0x20000104                hspi1
+ .bss.hadc      0x20000158       0x44 build/wb32l003_hal_adc.o
+                0x20000158                hadc
+ .bss.htim2     0x2000019c       0x40 build/wb32l003_hal_tim.o
+                0x2000019c                htim2
+ *(COMMON)
+                0x200001dc                        . = ALIGN (0x4)
+                0x200001dc                        _ebss = .
+                0x200001dc                        __bss_end__ = _ebss
+
+._user_heap_stack
+                0x200001dc      0x604 load address 0x0800fc48
+                0x200001e0                        . = ALIGN (0x8)
+ *fill*         0x200001dc        0x4 
+                [!provide]                        PROVIDE (end = .)
+                0x200001e0                        PROVIDE (_end = .)
+                0x200003e0                        . = (. + _Min_Heap_Size)
+ *fill*         0x200001e0      0x200 
+                0x200007e0                        . = (. + _Min_Stack_Size)
+ *fill*         0x200003e0      0x400 
+                0x200007e0                        . = ALIGN (0x8)
+
+/DISCARD/
+ libc.a(*)
+ libm.a(*)
+ libgcc.a(*)
+
+.ARM.attributes
+                0x00000000       0x2a
+ *(.ARM.attributes)
+ .ARM.attributes
+                0x00000000       0x2c build/main.o
+ .ARM.attributes
+                0x0000002c       0x2c build/st7735.o
+ .ARM.attributes
+                0x00000058       0x2c build/power.o
+ .ARM.attributes
+                0x00000084       0x2c build/ui.o
+ .ARM.attributes
+                0x000000b0       0x2c build/hardware_control.o
+ .ARM.attributes
+                0x000000dc       0x2c build/audio_adc.o
+ .ARM.attributes
+                0x00000108       0x2c build/syscalls.o
+ .ARM.attributes
+                0x00000134       0x2c build/wb32l003_hal.o
+ .ARM.attributes
+                0x00000160       0x2c build/wb32l003_hal_cortex.o
+ .ARM.attributes
+                0x0000018c       0x2c build/wb32l003_hal_rcc.o
+ .ARM.attributes
+                0x000001b8       0x2c build/wb32l003_hal_gpio.o
+ .ARM.attributes
+                0x000001e4       0x2c build/wb32l003_hal_spi.o
+ .ARM.attributes
+                0x00000210       0x2c build/wb32l003_hal_adc.o
+ .ARM.attributes
+                0x0000023c       0x2c build/wb32l003_hal_tim.o
+ .ARM.attributes
+                0x00000268       0x2c build/wb32l003_hal_pwr.o
+ .ARM.attributes
+                0x00000294       0x2c build/system_wb32l003.o
+ .ARM.attributes
+                0x000002c0       0x22 build/startup_wb32l003.o
+ .ARM.attributes
+                0x000002e2       0x1e /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_udivsi3.o)
+ .ARM.attributes
+                0x00000300       0x1e /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_divsi3.o)
+ .ARM.attributes
+                0x0000031e       0x1e /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
+ .ARM.attributes
+                0x0000033c       0x1e /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
+ .ARM.attributes
+                0x0000035a       0x2c /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(addsf3.o)
+ .ARM.attributes
+                0x00000386       0x2c /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(eqsf2.o)
+ .ARM.attributes
+                0x000003b2       0x2c /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(gesf2.o)
+ .ARM.attributes
+                0x000003de       0x2c /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(lesf2.o)
+ .ARM.attributes
+                0x0000040a       0x2c /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(mulsf3.o)
+ .ARM.attributes
+                0x00000436       0x2c /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(floatunsisf.o)
+ .ARM.attributes
+                0x00000462       0x1e /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_clzsi2.o)
+OUTPUT(build/firmware.elf elf32-littlearm)
+LOAD linker stubs
+LOAD build/stubs/libc.a
+LOAD build/stubs/libm.a
+LOAD /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a
+
+.debug_info     0x00000000     0xb5af
+ .debug_info    0x00000000     0x1611 build/main.o
+ .debug_info    0x00001611     0x1716 build/st7735.o
+ .debug_info    0x00002d27      0xd74 build/power.o
+ .debug_info    0x00003a9b      0xd5a build/ui.o
+ .debug_info    0x000047f5      0xabd build/hardware_control.o
+ .debug_info    0x000052b2      0xdd4 build/audio_adc.o
+ .debug_info    0x00006086      0x46e build/syscalls.o
+ .debug_info    0x000064f4      0x6ee build/wb32l003_hal.o
+ .debug_info    0x00006be2      0xcbd build/wb32l003_hal_cortex.o
+ .debug_info    0x0000789f      0x7fc build/wb32l003_hal_rcc.o
+ .debug_info    0x0000809b      0x509 build/wb32l003_hal_gpio.o
+ .debug_info    0x000085a4      0x5f2 build/wb32l003_hal_spi.o
+ .debug_info    0x00008b96      0x723 build/wb32l003_hal_adc.o
+ .debug_info    0x000092b9      0xac1 build/wb32l003_hal_tim.o
+ .debug_info    0x00009d7a      0x4c0 build/wb32l003_hal_pwr.o
+ .debug_info    0x0000a23a      0x298 build/system_wb32l003.o
+ .debug_info    0x0000a4d2       0x30 build/startup_wb32l003.o
+ .debug_info    0x0000a502       0x3e /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_udivsi3.o)
+ .debug_info    0x0000a540       0x3e /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_divsi3.o)
+ .debug_info    0x0000a57e       0x3c /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
+ .debug_info    0x0000a5ba       0x7e /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
+ .debug_info    0x0000a638      0x326 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(addsf3.o)
+ .debug_info    0x0000a95e      0x208 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(eqsf2.o)
+ .debug_info    0x0000ab66      0x224 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(gesf2.o)
+ .debug_info    0x0000ad8a      0x224 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(lesf2.o)
+ .debug_info    0x0000afae      0x3ae /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(mulsf3.o)
+ .debug_info    0x0000b35c      0x222 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(floatunsisf.o)
+ .debug_info    0x0000b57e       0x31 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_clzsi2.o)
+
+.debug_abbrev   0x00000000     0x2ce2
+ .debug_abbrev  0x00000000      0x2ea build/main.o
+ .debug_abbrev  0x000002ea      0x2ea build/st7735.o
+ .debug_abbrev  0x000005d4      0x29c build/power.o
+ .debug_abbrev  0x00000870      0x24f build/ui.o
+ .debug_abbrev  0x00000abf      0x240 build/hardware_control.o
+ .debug_abbrev  0x00000cff      0x330 build/audio_adc.o
+ .debug_abbrev  0x0000102f      0x17b build/syscalls.o
+ .debug_abbrev  0x000011aa      0x2cd build/wb32l003_hal.o
+ .debug_abbrev  0x00001477      0x2aa build/wb32l003_hal_cortex.o
+ .debug_abbrev  0x00001721      0x252 build/wb32l003_hal_rcc.o
+ .debug_abbrev  0x00001973      0x160 build/wb32l003_hal_gpio.o
+ .debug_abbrev  0x00001ad3      0x1e6 build/wb32l003_hal_spi.o
+ .debug_abbrev  0x00001cb9      0x1b3 build/wb32l003_hal_adc.o
+ .debug_abbrev  0x00001e6c      0x284 build/wb32l003_hal_tim.o
+ .debug_abbrev  0x000020f0      0x15f build/wb32l003_hal_pwr.o
+ .debug_abbrev  0x0000224f      0x147 build/system_wb32l003.o
+ .debug_abbrev  0x00002396       0x1d build/startup_wb32l003.o
+ .debug_abbrev  0x000023b3       0x28 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_udivsi3.o)
+ .debug_abbrev  0x000023db       0x28 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_divsi3.o)
+ .debug_abbrev  0x00002403       0x26 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
+ .debug_abbrev  0x00002429       0x28 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
+ .debug_abbrev  0x00002451      0x172 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(addsf3.o)
+ .debug_abbrev  0x000025c3      0x147 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(eqsf2.o)
+ .debug_abbrev  0x0000270a      0x160 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(gesf2.o)
+ .debug_abbrev  0x0000286a      0x160 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(lesf2.o)
+ .debug_abbrev  0x000029ca      0x16a /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(mulsf3.o)
+ .debug_abbrev  0x00002b34      0x186 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(floatunsisf.o)
+ .debug_abbrev  0x00002cba       0x28 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_clzsi2.o)
+
+.debug_loc      0x00000000     0x404c
+ .debug_loc     0x00000000       0xec build/main.o
+ .debug_loc     0x000000ec      0x7f5 build/st7735.o
+ .debug_loc     0x000008e1      0x1c4 build/power.o
+ .debug_loc     0x00000aa5      0x5ef build/ui.o
+ .debug_loc     0x00001094      0x301 build/hardware_control.o
+ .debug_loc     0x00001395      0x430 build/audio_adc.o
+ .debug_loc     0x000017c5      0x330 build/syscalls.o
+ .debug_loc     0x00001af5      0x17d build/wb32l003_hal.o
+ .debug_loc     0x00001c72      0xb15 build/wb32l003_hal_cortex.o
+ .debug_loc     0x00002787      0x363 build/wb32l003_hal_rcc.o
+ .debug_loc     0x00002aea      0x586 build/wb32l003_hal_gpio.o
+ .debug_loc     0x00003070      0x1f4 build/wb32l003_hal_spi.o
+ .debug_loc     0x00003264      0x406 build/wb32l003_hal_adc.o
+ .debug_loc     0x0000366a      0x6a3 build/wb32l003_hal_tim.o
+ .debug_loc     0x00003d0d      0x1d0 build/wb32l003_hal_pwr.o
+ .debug_loc     0x00003edd      0x16f build/system_wb32l003.o
+
+.debug_aranges  0x00000000      0x778
+ .debug_aranges
+                0x00000000       0x30 build/main.o
+ .debug_aranges
+                0x00000030       0x80 build/st7735.o
+ .debug_aranges
+                0x000000b0       0x68 build/power.o
+ .debug_aranges
+                0x00000118       0x60 build/ui.o
+ .debug_aranges
+                0x00000178       0x80 build/hardware_control.o
+ .debug_aranges
+                0x000001f8       0x68 build/audio_adc.o
+ .debug_aranges
+                0x00000260       0x88 build/syscalls.o
+ .debug_aranges
+                0x000002e8       0x98 build/wb32l003_hal.o
+ .debug_aranges
+                0x00000380       0x90 build/wb32l003_hal_cortex.o
+ .debug_aranges
+                0x00000410       0x28 build/wb32l003_hal_rcc.o
+ .debug_aranges
+                0x00000438       0x40 build/wb32l003_hal_gpio.o
+ .debug_aranges
+                0x00000478       0x30 build/wb32l003_hal_spi.o
+ .debug_aranges
+                0x000004a8       0x58 build/wb32l003_hal_adc.o
+ .debug_aranges
+                0x00000500       0x50 build/wb32l003_hal_tim.o
+ .debug_aranges
+                0x00000550       0x78 build/wb32l003_hal_pwr.o
+ .debug_aranges
+                0x000005c8       0x28 build/system_wb32l003.o
+ .debug_aranges
+                0x000005f0       0x28 build/startup_wb32l003.o
+ .debug_aranges
+                0x00000618       0x20 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_udivsi3.o)
+ .debug_aranges
+                0x00000638       0x20 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_divsi3.o)
+ .debug_aranges
+                0x00000658       0x20 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
+ .debug_aranges
+                0x00000678       0x20 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
+ .debug_aranges
+                0x00000698       0x20 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(addsf3.o)
+ .debug_aranges
+                0x000006b8       0x20 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(eqsf2.o)
+ .debug_aranges
+                0x000006d8       0x20 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(gesf2.o)
+ .debug_aranges
+                0x000006f8       0x20 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(lesf2.o)
+ .debug_aranges
+                0x00000718       0x20 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(mulsf3.o)
+ .debug_aranges
+                0x00000738       0x20 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(floatunsisf.o)
+ .debug_aranges
+                0x00000758       0x20 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_clzsi2.o)
+
+.debug_ranges   0x00000000      0xa40
+ .debug_ranges  0x00000000       0xf0 build/main.o
+ .debug_ranges  0x000000f0       0xe8 build/st7735.o
+ .debug_ranges  0x000001d8       0xb8 build/power.o
+ .debug_ranges  0x00000290      0x120 build/ui.o
+ .debug_ranges  0x000003b0       0xe8 build/hardware_control.o
+ .debug_ranges  0x00000498       0xe0 build/audio_adc.o
+ .debug_ranges  0x00000578       0x78 build/syscalls.o
+ .debug_ranges  0x000005f0       0x88 build/wb32l003_hal.o
+ .debug_ranges  0x00000678      0x1e0 build/wb32l003_hal_cortex.o
+ .debug_ranges  0x00000858       0x18 build/wb32l003_hal_rcc.o
+ .debug_ranges  0x00000870       0x30 build/wb32l003_hal_gpio.o
+ .debug_ranges  0x000008a0       0x20 build/wb32l003_hal_spi.o
+ .debug_ranges  0x000008c0       0x48 build/wb32l003_hal_adc.o
+ .debug_ranges  0x00000908       0x98 build/wb32l003_hal_tim.o
+ .debug_ranges  0x000009a0       0x68 build/wb32l003_hal_pwr.o
+ .debug_ranges  0x00000a08       0x18 build/system_wb32l003.o
+ .debug_ranges  0x00000a20       0x20 build/startup_wb32l003.o
+
+.debug_line     0x00000000     0x67ee
+ .debug_line    0x00000000      0x6ea build/main.o
+ .debug_line    0x000006ea      0x46f build/st7735.o
+ .debug_line    0x00000b59      0x470 build/power.o
+ .debug_line    0x00000fc9      0x551 build/ui.o
+ .debug_line    0x0000151a      0x436 build/hardware_control.o
+ .debug_line    0x00001950      0x5c4 build/audio_adc.o
+ .debug_line    0x00001f14      0x1f1 build/syscalls.o
+ .debug_line    0x00002105      0x3f1 build/wb32l003_hal.o
+ .debug_line    0x000024f6      0x6ac build/wb32l003_hal_cortex.o
+ .debug_line    0x00002ba2      0x79d build/wb32l003_hal_rcc.o
+ .debug_line    0x0000333f      0x46b build/wb32l003_hal_gpio.o
+ .debug_line    0x000037aa      0x331 build/wb32l003_hal_spi.o
+ .debug_line    0x00003adb      0x4cd build/wb32l003_hal_adc.o
+ .debug_line    0x00003fa8      0x6b9 build/wb32l003_hal_tim.o
+ .debug_line    0x00004661      0x2d9 build/wb32l003_hal_pwr.o
+ .debug_line    0x0000493a      0x1ea build/system_wb32l003.o
+ .debug_line    0x00004b24       0x71 build/startup_wb32l003.o
+ .debug_line    0x00004b95       0x56 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_udivsi3.o)
+ .debug_line    0x00004beb       0x5d /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_divsi3.o)
+ .debug_line    0x00004c48       0x4a /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
+ .debug_line    0x00004c92       0x5f /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
+ .debug_line    0x00004cf1      0xdc5 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(addsf3.o)
+ .debug_line    0x00005ab6      0x17f /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(eqsf2.o)
+ .debug_line    0x00005c35      0x247 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(gesf2.o)
+ .debug_line    0x00005e7c      0x242 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(lesf2.o)
+ .debug_line    0x000060be      0x501 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(mulsf3.o)
+ .debug_line    0x000065bf      0x1d1 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(floatunsisf.o)
+ .debug_line    0x00006790       0x5e /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_clzsi2.o)
+
+.debug_str      0x00000000     0x2290
+ .debug_str     0x00000000     0x2290 build/main.o
+                                0xb54 (size before relaxing)
+ .debug_str     0x00002290      0x638 build/st7735.o
+ .debug_str     0x00002290      0x888 build/power.o
+ .debug_str     0x00002290      0x490 build/ui.o
+ .debug_str     0x00002290      0x4ae build/hardware_control.o
+ .debug_str     0x00002290      0x841 build/audio_adc.o
+ .debug_str     0x00002290      0x225 build/syscalls.o
+ .debug_str     0x00002290      0x550 build/wb32l003_hal.o
+ .debug_str     0x00002290      0x6dc build/wb32l003_hal_cortex.o
+ .debug_str     0x00002290      0x408 build/wb32l003_hal_rcc.o
+ .debug_str     0x00002290      0x2c4 build/wb32l003_hal_gpio.o
+ .debug_str     0x00002290      0x3b9 build/wb32l003_hal_spi.o
+ .debug_str     0x00002290      0x443 build/wb32l003_hal_adc.o
+ .debug_str     0x00002290      0x563 build/wb32l003_hal_tim.o
+ .debug_str     0x00002290      0x372 build/wb32l003_hal_pwr.o
+ .debug_str     0x00002290      0x259 build/system_wb32l003.o
+ .debug_str     0x00002290       0x71 build/startup_wb32l003.o
+ .debug_str     0x00002290       0xd4 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_udivsi3.o)
+ .debug_str     0x00002290       0xd2 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_divsi3.o)
+ .debug_str     0x00002290       0xd5 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
+ .debug_str     0x00002290      0x135 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
+ .debug_str     0x00002290      0x2ce /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(addsf3.o)
+ .debug_str     0x00002290      0x1fc /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(eqsf2.o)
+ .debug_str     0x00002290      0x220 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(gesf2.o)
+ .debug_str     0x00002290      0x220 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(lesf2.o)
+ .debug_str     0x00002290      0x2f3 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(mulsf3.o)
+ .debug_str     0x00002290      0x291 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(floatunsisf.o)
+ .debug_str     0x00002290       0xc2 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_clzsi2.o)
+
+.comment        0x00000000       0x12
+ .comment       0x00000000       0x12 build/main.o
+                                 0x13 (size before relaxing)
+ .comment       0x00000012       0x13 build/st7735.o
+ .comment       0x00000012       0x13 build/power.o
+ .comment       0x00000012       0x13 build/ui.o
+ .comment       0x00000012       0x13 build/hardware_control.o
+ .comment       0x00000012       0x13 build/audio_adc.o
+ .comment       0x00000012       0x13 build/syscalls.o
+ .comment       0x00000012       0x13 build/wb32l003_hal.o
+ .comment       0x00000012       0x13 build/wb32l003_hal_cortex.o
+ .comment       0x00000012       0x13 build/wb32l003_hal_rcc.o
+ .comment       0x00000012       0x13 build/wb32l003_hal_gpio.o
+ .comment       0x00000012       0x13 build/wb32l003_hal_spi.o
+ .comment       0x00000012       0x13 build/wb32l003_hal_adc.o
+ .comment       0x00000012       0x13 build/wb32l003_hal_tim.o
+ .comment       0x00000012       0x13 build/wb32l003_hal_pwr.o
+ .comment       0x00000012       0x13 build/system_wb32l003.o
+ .comment       0x00000012       0x13 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(addsf3.o)
+ .comment       0x00000012       0x13 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(eqsf2.o)
+ .comment       0x00000012       0x13 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(gesf2.o)
+ .comment       0x00000012       0x13 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(lesf2.o)
+ .comment       0x00000012       0x13 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(mulsf3.o)
+ .comment       0x00000012       0x13 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(floatunsisf.o)
+
+.debug_frame    0x00000000      0xeec
+ .debug_frame   0x00000000       0x54 build/main.o
+ .debug_frame   0x00000054      0x15c build/st7735.o
+ .debug_frame   0x000001b0      0x104 build/power.o
+ .debug_frame   0x000002b4      0x108 build/ui.o
+ .debug_frame   0x000003bc      0x144 build/hardware_control.o
+ .debug_frame   0x00000500       0xe4 build/audio_adc.o
+ .debug_frame   0x000005e4       0xf8 build/syscalls.o
+ .debug_frame   0x000006dc      0x134 build/wb32l003_hal.o
+ .debug_frame   0x00000810      0x160 build/wb32l003_hal_cortex.o
+ .debug_frame   0x00000970       0x54 build/wb32l003_hal_rcc.o
+ .debug_frame   0x000009c4       0xa8 build/wb32l003_hal_gpio.o
+ .debug_frame   0x00000a6c       0x5c build/wb32l003_hal_spi.o
+ .debug_frame   0x00000ac8       0xe8 build/wb32l003_hal_adc.o
+ .debug_frame   0x00000bb0       0xbc build/wb32l003_hal_tim.o
+ .debug_frame   0x00000c6c       0xf4 build/wb32l003_hal_pwr.o
+ .debug_frame   0x00000d60       0x3c build/system_wb32l003.o
+ .debug_frame   0x00000d9c       0x20 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_udivsi3.o)
+ .debug_frame   0x00000dbc       0x20 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_divsi3.o)
+ .debug_frame   0x00000ddc       0x34 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(addsf3.o)
+ .debug_frame   0x00000e10       0x2c /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(eqsf2.o)
+ .debug_frame   0x00000e3c       0x28 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(gesf2.o)
+ .debug_frame   0x00000e64       0x28 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(lesf2.o)
+ .debug_frame   0x00000e8c       0x38 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(mulsf3.o)
+ .debug_frame   0x00000ec4       0x28 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(floatunsisf.o)
+
+.debug_line_str
+                0x00000000       0xb9
+ .debug_line_str
+                0x00000000       0xb9 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_udivsi3.o)
+                                 0xad (size before relaxing)
+ .debug_line_str
+                0x000000b9       0xad /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_divsi3.o)
+ .debug_line_str
+                0x000000b9       0xad /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
+ .debug_line_str
+                0x000000b9       0xad /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
+ .debug_line_str
+                0x000000b9       0xad /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_clzsi2.o)
+
+.debug_loclists
+                0x00000000     0x1b7a
+ .debug_loclists
+                0x00000000     0x1007 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(addsf3.o)
+ .debug_loclists
+                0x00001007       0x9a /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(eqsf2.o)
+ .debug_loclists
+                0x000010a1      0x147 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(gesf2.o)
+ .debug_loclists
+                0x000011e8      0x175 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(lesf2.o)
+ .debug_loclists
+                0x0000135d      0x672 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(mulsf3.o)
+ .debug_loclists
+                0x000019cf      0x1ab /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(floatunsisf.o)
+
+.debug_rnglists
+                0x00000000      0x2ea
+ .debug_rnglists
+                0x00000000      0x1b7 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(addsf3.o)
+ .debug_rnglists
+                0x000001b7       0x23 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(eqsf2.o)
+ .debug_rnglists
+                0x000001da       0x2d /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(gesf2.o)
+ .debug_rnglists
+                0x00000207       0x28 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(lesf2.o)
+ .debug_rnglists
+                0x0000022f       0x83 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(mulsf3.o)
+ .debug_rnglists
+                0x000002b2       0x38 /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(floatunsisf.o)
+
+Cross Reference Table
+
+Symbol                                            File
+ADC1_IRQHandler                                   build/startup_wb32l003.o
+AHBPrescTable                                     build/system_wb32l003.o
+                                                  build/wb32l003_hal_rcc.o
+APBPrescTable                                     build/system_wb32l003.o
+Audio_ADC_ConversionComplete                      build/audio_adc.o
+Audio_ADC_GetLeftLevel                            build/audio_adc.o
+                                                  build/hardware_control.o
+                                                  build/main.o
+Audio_ADC_GetMonoLevel                            build/audio_adc.o
+                                                  build/main.o
+Audio_ADC_GetRightLevel                           build/audio_adc.o
+                                                  build/hardware_control.o
+                                                  build/main.o
+Audio_ADC_Init                                    build/audio_adc.o
+                                                  build/hardware_control.o
+Audio_ADC_IsDataReady                             build/audio_adc.o
+Audio_ADC_Process                                 build/audio_adc.o
+                                                  build/main.o
+Audio_ADC_Start                                   build/audio_adc.o
+                                                  build/main.o
+Audio_ADC_Stop                                    build/audio_adc.o
+Audio_ADC_TimerCallback                           build/audio_adc.o
+DMA1_Channel1_IRQHandler                          build/startup_wb32l003.o
+DMA1_Channel2_3_IRQHandler                        build/startup_wb32l003.o
+DMA1_Channel4_5_IRQHandler                        build/startup_wb32l003.o
+Default_Handler                                   build/startup_wb32l003.o
+EXTI0_1_IRQHandler                                build/startup_wb32l003.o
+EXTI2_3_IRQHandler                                build/startup_wb32l003.o
+EXTI4_15_IRQHandler                               build/startup_wb32l003.o
+Error_Handler                                     build/main.o
+                                                  build/audio_adc.o
+FLASH_IRQHandler                                  build/startup_wb32l003.o
+HAL_ADCEx_Calibration_Start                       build/wb32l003_hal_adc.o
+                                                  build/power.o
+                                                  build/main.o
+HAL_ADC_ConfigChannel                             build/wb32l003_hal_adc.o
+                                                  build/audio_adc.o
+                                                  build/main.o
+HAL_ADC_GetValue                                  build/wb32l003_hal_adc.o
+                                                  build/audio_adc.o
+                                                  build/power.o
+HAL_ADC_Init                                      build/wb32l003_hal_adc.o
+                                                  build/audio_adc.o
+                                                  build/main.o
+HAL_ADC_MspInit                                   build/wb32l003_hal_adc.o
+HAL_ADC_PollForConversion                         build/wb32l003_hal_adc.o
+                                                  build/audio_adc.o
+                                                  build/power.o
+HAL_ADC_Start                                     build/wb32l003_hal_adc.o
+                                                  build/audio_adc.o
+                                                  build/power.o
+HAL_ADC_Stop                                      build/wb32l003_hal_adc.o
+                                                  build/power.o
+HAL_DeInit                                        build/wb32l003_hal.o
+HAL_Delay                                         build/wb32l003_hal.o
+                                                  build/hardware_control.o
+                                                  build/power.o
+                                                  build/st7735.o
+                                                  build/main.o
+HAL_GPIO_DeInit                                   build/wb32l003_hal_gpio.o
+HAL_GPIO_Init                                     build/wb32l003_hal_gpio.o
+                                                  build/audio_adc.o
+                                                  build/hardware_control.o
+                                                  build/power.o
+                                                  build/main.o
+HAL_GPIO_ReadPin                                  build/wb32l003_hal_gpio.o
+                                                  build/hardware_control.o
+                                                  build/main.o
+HAL_GPIO_TogglePin                                build/wb32l003_hal_gpio.o
+HAL_GPIO_WritePin                                 build/wb32l003_hal_gpio.o
+                                                  build/hardware_control.o
+                                                  build/power.o
+                                                  build/st7735.o
+                                                  build/main.o
+HAL_GetDEVID                                      build/wb32l003_hal.o
+HAL_GetHalVersion                                 build/wb32l003_hal.o
+HAL_GetREVID                                      build/wb32l003_hal.o
+HAL_GetTick                                       build/wb32l003_hal.o
+                                                  build/wb32l003_hal_adc.o
+                                                  build/wb32l003_hal_spi.o
+                                                  build/wb32l003_hal_rcc.o
+                                                  build/ui.o
+                                                  build/power.o
+HAL_GetTickFreq                                   build/wb32l003_hal.o
+HAL_GetTickPrio                                   build/wb32l003_hal.o
+HAL_IncTick                                       build/wb32l003_hal.o
+HAL_Init                                          build/wb32l003_hal.o
+                                                  build/main.o
+HAL_InitTick                                      build/wb32l003_hal.o
+                                                  build/wb32l003_hal_rcc.o
+HAL_MspDeInit                                     build/wb32l003_hal.o
+HAL_MspInit                                       build/wb32l003_hal.o
+HAL_NVIC_ClearPendingIRQ                          build/wb32l003_hal_cortex.o
+HAL_NVIC_DisableIRQ                               build/wb32l003_hal_cortex.o
+HAL_NVIC_EnableIRQ                                build/wb32l003_hal_cortex.o
+HAL_NVIC_GetActive                                build/wb32l003_hal_cortex.o
+HAL_NVIC_GetPendingIRQ                            build/wb32l003_hal_cortex.o
+HAL_NVIC_GetPriority                              build/wb32l003_hal_cortex.o
+HAL_NVIC_GetPriorityGrouping                      build/wb32l003_hal_cortex.o
+HAL_NVIC_SetPendingIRQ                            build/wb32l003_hal_cortex.o
+HAL_NVIC_SetPriority                              build/wb32l003_hal_cortex.o
+                                                  build/wb32l003_hal.o
+HAL_NVIC_SetPriorityGrouping                      build/wb32l003_hal_cortex.o
+                                                  build/wb32l003_hal.o
+HAL_NVIC_SystemReset                              build/wb32l003_hal_cortex.o
+HAL_PWR_DeInit                                    build/wb32l003_hal_pwr.o
+HAL_PWR_DisableBkUpAccess                         build/wb32l003_hal_pwr.o
+HAL_PWR_DisableSEVOnPend                          build/wb32l003_hal_pwr.o
+HAL_PWR_DisableSleepOnExit                        build/wb32l003_hal_pwr.o
+HAL_PWR_DisableWakeUpPin                          build/wb32l003_hal_pwr.o
+                                                  build/power.o
+HAL_PWR_EnableBkUpAccess                          build/wb32l003_hal_pwr.o
+HAL_PWR_EnableSEVOnPend                           build/wb32l003_hal_pwr.o
+HAL_PWR_EnableSleepOnExit                         build/wb32l003_hal_pwr.o
+HAL_PWR_EnableWakeUpPin                           build/wb32l003_hal_pwr.o
+                                                  build/power.o
+HAL_PWR_EnterSLEEPMode                            build/wb32l003_hal_pwr.o
+HAL_PWR_EnterSTANDBYMode                          build/wb32l003_hal_pwr.o
+HAL_PWR_EnterSTOPMode                             build/wb32l003_hal_pwr.o
+                                                  build/power.o
+HAL_RCC_ClockConfig                               build/wb32l003_hal_rcc.o
+                                                  build/power.o
+                                                  build/main.o
+HAL_RCC_OscConfig                                 build/wb32l003_hal_rcc.o
+                                                  build/power.o
+                                                  build/main.o
+HAL_ResumeTick                                    build/wb32l003_hal.o
+                                                  build/power.o
+HAL_SPI_Init                                      build/wb32l003_hal_spi.o
+                                                  build/main.o
+HAL_SPI_MspInit                                   build/wb32l003_hal_spi.o
+HAL_SPI_Transmit                                  build/wb32l003_hal_spi.o
+                                                  build/st7735.o
+HAL_SYSTICK_CLKSourceConfig                       build/wb32l003_hal_cortex.o
+HAL_SYSTICK_Callback                              build/main.o
+HAL_SYSTICK_Config                                build/wb32l003_hal_cortex.o
+                                                  build/wb32l003_hal.o
+HAL_SYSTICK_IRQHandler                            build/wb32l003_hal_cortex.o
+HAL_SetTickFreq                                   build/wb32l003_hal.o
+HAL_SuspendTick                                   build/wb32l003_hal.o
+                                                  build/power.o
+HAL_TIM_Base_Init                                 build/wb32l003_hal_tim.o
+HAL_TIM_Base_MspInit                              build/wb32l003_hal_tim.o
+HAL_TIM_PWM_ConfigChannel                         build/wb32l003_hal_tim.o
+                                                  build/main.o
+HAL_TIM_PWM_Init                                  build/wb32l003_hal_tim.o
+                                                  build/main.o
+HAL_TIM_PWM_MspInit                               build/wb32l003_hal_tim.o
+HAL_TIM_PWM_Start                                 build/wb32l003_hal_tim.o
+                                                  build/main.o
+HW_GetAudioMode                                   build/hardware_control.o
+                                                  build/main.o
+HW_GetLeftAudioLevel                              build/hardware_control.o
+HW_GetRightAudioLevel                             build/hardware_control.o
+HW_Init                                           build/hardware_control.o
+                                                  build/main.o
+HW_IsCharging                                     build/hardware_control.o
+HW_PowerOffSequence                               build/hardware_control.o
+                                                  build/power.o
+HW_PowerOnSequence                                build/hardware_control.o
+                                                  build/main.o
+HW_SetAudioMode                                   build/hardware_control.o
+                                                  build/main.o
+HW_SetGreenLED                                    build/hardware_control.o
+                                                  build/power.o
+HW_SetLCDPower                                    build/hardware_control.o
+HW_SetMainPower                                   build/hardware_control.o
+HW_SetMute                                        build/hardware_control.o
+HW_SetRedLED                                      build/hardware_control.o
+                                                  build/power.o
+HardFault_Handler                                 build/startup_wb32l003.o
+I2C1_IRQHandler                                   build/startup_wb32l003.o
+NMI_Handler                                       build/startup_wb32l003.o
+PVD_IRQHandler                                    build/startup_wb32l003.o
+PendSV_Handler                                    build/startup_wb32l003.o
+Power_EnterStandby                                build/power.o
+                                                  build/hardware_control.o
+                                                  build/main.o
+Power_ExitStandby                                 build/power.o
+Power_GetBatteryLevel                             build/power.o
+Power_GetBatteryVoltage                           build/power.o
+                                                  build/hardware_control.o
+Power_GetMode                                     build/power.o
+                                                  build/main.o
+Power_Init                                        build/power.o
+                                                  build/main.o
+Power_Off                                         build/power.o
+                                                  build/main.o
+Power_Process                                     build/power.o
+                                                  build/main.o
+Power_SetMode                                     build/power.o
+RCC_IRQHandler                                    build/startup_wb32l003.o
+RTC_IRQHandler                                    build/startup_wb32l003.o
+Reset_Handler                                     build/startup_wb32l003.o
+SPI1_IRQHandler                                   build/startup_wb32l003.o
+ST7735_DrawImage                                  build/st7735.o
+                                                  build/ui.o
+ST7735_DrawPixel                                  build/st7735.o
+                                                  build/ui.o
+ST7735_FillRect                                   build/st7735.o
+                                                  build/ui.o
+ST7735_FillScreen                                 build/st7735.o
+                                                  build/ui.o
+ST7735_Init                                       build/st7735.o
+                                                  build/hardware_control.o
+ST7735_Reset                                      build/st7735.o
+ST7735_SetAddressWindow                           build/st7735.o
+ST7735_SetBacklight                               build/st7735.o
+                                                  build/power.o
+ST7735_WriteCommand                               build/st7735.o
+                                                  build/power.o
+ST7735_WriteData                                  build/st7735.o
+ST7735_WriteData16                                build/st7735.o
+SVC_Handler                                       build/startup_wb32l003.o
+SysTick_Handler                                   build/startup_wb32l003.o
+SystemClock_Config                                build/power.o
+SystemCoreClock                                   build/system_wb32l003.o
+                                                  build/wb32l003_hal_rcc.o
+                                                  build/wb32l003_hal.o
+SystemCoreClockUpdate                             build/system_wb32l003.o
+SystemInit                                        build/system_wb32l003.o
+                                                  build/startup_wb32l003.o
+TIM14_IRQHandler                                  build/startup_wb32l003.o
+TIM16_IRQHandler                                  build/startup_wb32l003.o
+TIM17_IRQHandler                                  build/startup_wb32l003.o
+TIM1_BRK_UP_TRG_COM_IRQHandler                    build/startup_wb32l003.o
+TIM1_CC_IRQHandler                                build/startup_wb32l003.o
+TIM2_IRQHandler                                   build/startup_wb32l003.o
+TIM3_IRQHandler                                   build/startup_wb32l003.o
+UI_Clear                                          build/ui.o
+UI_DrawBackground                                 build/ui.o
+                                                  build/main.o
+UI_Init                                           build/ui.o
+                                                  build/main.o
+UI_SetAudioMode                                   build/ui.o
+                                                  build/main.o
+UI_ShowBootLogo                                   build/ui.o
+                                                  build/hardware_control.o
+UI_ShowOffLogo                                    build/ui.o
+                                                  build/hardware_control.o
+UI_UpdateAnimation                                build/ui.o
+                                                  build/main.o
+UI_UpdateBatteryIcon                              build/ui.o
+                                                  build/power.o
+UI_UpdateVUMeter                                  build/ui.o
+                                                  build/main.o
+USART1_IRQHandler                                 build/startup_wb32l003.o
+USART2_IRQHandler                                 build/startup_wb32l003.o
+WWDG_IRQHandler                                   build/startup_wb32l003.o
+__aeabi_cfcmpeq                                   /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
+__aeabi_cfcmple                                   /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
+__aeabi_cfrcmple                                  /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
+__aeabi_fadd                                      /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(addsf3.o)
+                                                  build/power.o
+__aeabi_fcmpeq                                    /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
+__aeabi_fcmpge                                    /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
+                                                  build/hardware_control.o
+                                                  build/power.o
+__aeabi_fcmpgt                                    /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
+__aeabi_fcmple                                    /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
+__aeabi_fcmplt                                    /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
+                                                  build/power.o
+__aeabi_fmul                                      /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(mulsf3.o)
+                                                  build/power.o
+__aeabi_idiv                                      /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_divsi3.o)
+                                                  build/hardware_control.o
+                                                  build/ui.o
+__aeabi_idiv0                                     /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
+                                                  /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_divsi3.o)
+                                                  /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_udivsi3.o)
+__aeabi_idivmod                                   /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_divsi3.o)
+__aeabi_ldiv0                                     /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
+__aeabi_ui2f                                      /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(floatunsisf.o)
+                                                  build/power.o
+__aeabi_uidiv                                     /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_udivsi3.o)
+                                                  build/system_wb32l003.o
+                                                  build/wb32l003_hal.o
+                                                  build/ui.o
+__aeabi_uidivmod                                  /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_udivsi3.o)
+__clzsi2                                          /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_clzsi2.o)
+                                                  /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(floatunsisf.o)
+                                                  /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(mulsf3.o)
+                                                  /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(addsf3.o)
+__divsi3                                          /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_divsi3.o)
+__eqsf2                                           /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(eqsf2.o)
+                                                  /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
+__gesf2                                           /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(gesf2.o)
+                                                  /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
+__gtsf2                                           /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(gesf2.o)
+__lesf2                                           /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(lesf2.o)
+                                                  /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
+__libc_init_array                                 build/syscalls.o
+                                                  build/startup_wb32l003.o
+__ltsf2                                           /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(lesf2.o)
+__nesf2                                           /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(eqsf2.o)
+__udivsi3                                         /opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp/libgcc.a(_udivsi3.o)
+_close                                            build/syscalls.o
+_ebss                                             build/startup_wb32l003.o
+_edata                                            build/startup_wb32l003.o
+_end                                              build/syscalls.o
+_estack                                           build/startup_wb32l003.o
+_exit                                             build/syscalls.o
+_fstat                                            build/syscalls.o
+_isatty                                           build/syscalls.o
+_lseek                                            build/syscalls.o
+_open                                             build/syscalls.o
+_read                                             build/syscalls.o
+_sbrk                                             build/syscalls.o
+_sbss                                             build/startup_wb32l003.o
+_sdata                                            build/startup_wb32l003.o
+_sidata                                           build/startup_wb32l003.o
+_write                                            build/syscalls.o
+abort                                             build/syscalls.o
+assert_failed                                     build/syscalls.o
+                                                  build/wb32l003_hal_pwr.o
+                                                  build/wb32l003_hal_tim.o
+                                                  build/wb32l003_hal_adc.o
+                                                  build/wb32l003_hal_spi.o
+                                                  build/wb32l003_hal_gpio.o
+                                                  build/wb32l003_hal_rcc.o
+                                                  build/wb32l003_hal_cortex.o
+                                                  build/wb32l003_hal.o
+boot_logo                                         build/ui.o
+frame_update_flag                                 build/main.o
+g_pfnVectors                                      build/startup_wb32l003.o
+hadc                                              build/wb32l003_hal_adc.o
+                                                  build/power.o
+hspi1                                             build/wb32l003_hal_spi.o
+                                                  build/st7735.o
+htim2                                             build/wb32l003_hal_tim.o
+                                                  build/st7735.o
+main                                              build/main.o
+                                                  build/startup_wb32l003.o
+memcpy                                            build/syscalls.o
+memset                                            build/syscalls.o
+                                                  build/audio_adc.o
+                                                  build/hardware_control.o
+                                                  build/power.o
+                                                  build/main.o
+off_logo                                          build/ui.o
+tick_ms                                           build/main.o
+ui_background_base                                build/ui_assets.o
+ui_battery_bar                                    build/ui_assets.o
+ui_battery_empty                                  build/ui_assets.o
+ui_mono_text                                      build/ui_assets.o
+ui_stereo_text                                    build/ui_assets.o
+ui_volume_block_01                                build/ui_assets.o
+ui_volume_block_02                                build/ui_assets.o
+ui_volume_block_03                                build/ui_assets.o
+ui_volume_block_04                                build/ui_assets.o
+ui_volume_block_05                                build/ui_assets.o
+ui_volume_block_06                                build/ui_assets.o
+ui_volume_block_07                                build/ui_assets.o
+ui_volume_block_08                                build/ui_assets.o
+ui_volume_block_09                                build/ui_assets.o
+ui_volume_block_10                                build/ui_assets.o
+ui_volume_block_11                                build/ui_assets.o
+ui_volume_block_12                                build/ui_assets.o
+ui_volume_block_13                                build/ui_assets.o
+ui_volume_block_14                                build/ui_assets.o
+ui_volume_block_15                                build/ui_assets.o
+ui_volume_block_16                                build/ui_assets.o
+ui_volume_block_17                                build/ui_assets.o
+ui_volume_block_18                                build/ui_assets.o
+ui_volume_block_19                                build/ui_assets.o
+ui_volume_block_20                                build/ui_assets.o
+ui_volume_block_21                                build/ui_assets.o
+ui_volume_block_22                                build/ui_assets.o
+ui_volume_block_23                                build/ui_assets.o
+ui_volume_block_24                                build/ui_assets.o
+ui_volume_block_25                                build/ui_assets.o
+ui_volume_block_26                                build/ui_assets.o
+ui_volume_block_27                                build/ui_assets.o
+ui_volume_block_28                                build/ui_assets.o
+ui_volume_block_29                                build/ui_assets.o
+ui_volume_block_30                                build/ui_assets.o
+ui_volume_block_31                                build/ui_assets.o
+ui_volume_block_32                                build/ui_assets.o
+ui_volume_blocks                                  build/ui_assets.o
+uwTick                                            build/wb32l003_hal.o
+uwTickFreq                                        build/wb32l003_hal.o
+uwTickPrio                                        build/wb32l003_hal.o
+                                                  build/wb32l003_hal_rcc.o

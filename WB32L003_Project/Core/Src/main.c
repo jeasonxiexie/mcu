@@ -4,6 +4,7 @@
 #include "power.h"
 #include "ui.h"
 #include "hardware_control.h"
+#include "audio_adc.h"
 
 static void SystemClock_Config(void);
 static void GPIO_Init(void);
@@ -30,43 +31,49 @@ int main(void)
     // Use proper power-on sequence
     HW_PowerOnSequence();
     
+    // Start audio ADC sampling
+    Audio_ADC_Start();
+    
     // Switch to VU meter mode after boot
     UI_DrawBackground();
     UI_SetAudioMode(AUDIO_MODE_STEREO);
-    
-    // Demo variables for VU meter
-    uint8_t demo_left = 0;
-    uint8_t demo_right = 0;
-    uint8_t demo_direction = 1;
     
     while (1)
     {
         Power_Process();
         
+        // Process audio ADC data  
+        Audio_ADC_Process();
+        
         if (frame_update_flag)
         {
             frame_update_flag = 0;
             
-            // Get audio levels from hardware (or demo if not connected)
-            uint16_t left_adc = HW_GetLeftAudioLevel();
-            uint16_t right_adc = HW_GetRightAudioLevel();
+            // Get real audio levels from ADC
+            uint8_t left_level = Audio_ADC_GetLeftLevel();
+            uint8_t right_level = Audio_ADC_GetRightLevel();
             
-            // Convert ADC values (0-4095) to VU meter scale (0-32)
-            uint8_t left_level = (left_adc * 32) / 4096;
-            uint8_t right_level = (right_adc * 32) / 4096;
+            // In MONO mode, use the combined level
+            if (HW_GetAudioMode() == AUDIO_MODE_MONO)
+            {
+                uint8_t mono_level = Audio_ADC_GetMonoLevel();
+                left_level = mono_level;
+                right_level = mono_level;
+            }
             
             UI_UpdateVUMeter(left_level, right_level);
             UI_UpdateAnimation();
         }
         
-        if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_RESET)
+        /* Check power button */
+        if (HAL_GPIO_ReadPin(KEY_PWR_PORT, KEY_PWR_PIN) == GPIO_PIN_RESET)
         {
             HAL_Delay(50);  // Debounce
-            if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_RESET)
+            if (HAL_GPIO_ReadPin(KEY_PWR_PORT, KEY_PWR_PIN) == GPIO_PIN_RESET)
             {
                 uint32_t press_time = 0;
                 // Wait for button release or timeout
-                while (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_RESET)
+                while (HAL_GPIO_ReadPin(KEY_PWR_PORT, KEY_PWR_PIN) == GPIO_PIN_RESET)
                 {
                     HAL_Delay(10);
                     press_time += 10;
@@ -76,22 +83,37 @@ int main(void)
                         break;
                     }
                 }
-                
-                // If short press (< 3s), toggle audio mode
-                if (press_time < 3000 && press_time > 0)
+                // Power button short press could cycle backlight levels
+            }
+        }
+        
+        /* Check mode button */
+        if (HAL_GPIO_ReadPin(KEY_MODE_PORT, KEY_MODE_PIN) == GPIO_PIN_RESET)
+        {
+            HAL_Delay(50);  // Debounce
+            if (HAL_GPIO_ReadPin(KEY_MODE_PORT, KEY_MODE_PIN) == GPIO_PIN_RESET)
+            {
+                // Wait for button release
+                while (HAL_GPIO_ReadPin(KEY_MODE_PORT, KEY_MODE_PIN) == GPIO_PIN_RESET)
                 {
-                    // Toggle between STEREO and MONO
-                    static audio_mode_t current_audio_mode = AUDIO_MODE_STEREO;
-                    current_audio_mode = (current_audio_mode == AUDIO_MODE_STEREO) ? 
-                                       AUDIO_MODE_MONO : AUDIO_MODE_STEREO;
-                    UI_SetAudioMode(current_audio_mode);
-                    
-                    // Update hardware audio mode
-                    HW_SetAudioMode(current_audio_mode == AUDIO_MODE_MONO);
-                    
-                    // TODO: Save audio mode to flash/EEPROM for power-off memory
-                    // SaveAudioModeToFlash(current_audio_mode);
+                    HAL_Delay(10);
                 }
+                
+                // Toggle between STEREO and MONO
+                static audio_mode_t current_audio_mode = AUDIO_MODE_STEREO;
+                current_audio_mode = (current_audio_mode == AUDIO_MODE_STEREO) ? 
+                                   AUDIO_MODE_MONO : AUDIO_MODE_STEREO;
+                UI_SetAudioMode(current_audio_mode);
+                
+                // Update hardware audio mode
+                HW_SetAudioMode(current_audio_mode == AUDIO_MODE_MONO);
+                
+                // Update MODE_OUT pin
+                HAL_GPIO_WritePin(MODE_OUT_PORT, MODE_OUT_PIN, 
+                                  current_audio_mode == AUDIO_MODE_MONO ? GPIO_PIN_SET : GPIO_PIN_RESET);
+                
+                // TODO: Save audio mode to flash for power-off memory
+                // SaveAudioModeToFlash(current_audio_mode);
             }
         }
         
@@ -126,35 +148,61 @@ static void GPIO_Init(void)
 {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
     
+    /* Enable all GPIO clocks */
     __HAL_RCC_GPIOA_CLK_ENABLE();
     __HAL_RCC_GPIOB_CLK_ENABLE();
     __HAL_RCC_GPIOC_CLK_ENABLE();
     
-    GPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_1;
-    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-    
-    GPIO_InitStruct.Pin = GPIO_PIN_2;
+    /* TFT control pins */
+    GPIO_InitStruct.Pin = TFT_CS_PIN;  // PB4
     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+    HAL_GPIO_Init(TFT_CS_PORT, &GPIO_InitStruct);
     
-    GPIO_InitStruct.Pin = GPIO_PIN_1;
+    GPIO_InitStruct.Pin = TFT_DC_PIN;  // PA3
+    HAL_GPIO_Init(TFT_DC_PORT, &GPIO_InitStruct);
+    
+    GPIO_InitStruct.Pin = TFT_RST_PIN;  // PD3
+    HAL_GPIO_Init(TFT_RST_PORT, &GPIO_InitStruct);
+    
+    /* Set initial states */
+    HAL_GPIO_WritePin(TFT_CS_PORT, TFT_CS_PIN, GPIO_PIN_SET);    // CS high (inactive)
+    HAL_GPIO_WritePin(TFT_DC_PORT, TFT_DC_PIN, GPIO_PIN_SET);    // DC high
+    HAL_GPIO_WritePin(TFT_RST_PORT, TFT_RST_PIN, GPIO_PIN_SET);  // RST high
+    
+    /* PWM backlight pin - will be configured as AF in TIM_Init */
+    GPIO_InitStruct.Pin = TFT_BL_PIN;  // PA1
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.Alternate = GPIO_AF2_TIM2;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+    GPIO_InitStruct.Alternate = GPIO_AF2_TIM2;  // TIM2_CH2
+    HAL_GPIO_Init(TFT_BL_PORT, &GPIO_InitStruct);
     
-    GPIO_InitStruct.Pin = GPIO_PIN_13;
+    /* Button inputs with pull-up */
+    GPIO_InitStruct.Pin = KEY_PWR_PIN;  // PD6
     GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
     GPIO_InitStruct.Pull = GPIO_PULLUP;
-    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+    HAL_GPIO_Init(KEY_PWR_PORT, &GPIO_InitStruct);
     
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2, GPIO_PIN_SET);
+    GPIO_InitStruct.Pin = KEY_MODE_PIN;  // PD4
+    HAL_GPIO_Init(KEY_MODE_PORT, &GPIO_InitStruct);
+    
+    /* LED output */
+    GPIO_InitStruct.Pin = LED_RED_PIN;  // PD5
+    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    HAL_GPIO_Init(LED_RED_PORT, &GPIO_InitStruct);
+    HAL_GPIO_WritePin(LED_RED_PORT, LED_RED_PIN, GPIO_PIN_SET);  // LED off (active low)
+    
+    /* Mode output pin */
+    GPIO_InitStruct.Pin = MODE_OUT_PIN;  // PB2
+    HAL_GPIO_Init(MODE_OUT_PORT, &GPIO_InitStruct);
+    HAL_GPIO_WritePin(MODE_OUT_PORT, MODE_OUT_PIN, GPIO_PIN_RESET);  // Default STEREO
+    
+    /* ADC pins will be configured as analog in ADC_Init */
+    /* SPI pins will be configured as AF in SPI_Init */
 }
 
 static void SPI_Init(void)
@@ -164,21 +212,23 @@ static void SPI_Init(void)
     
     __HAL_RCC_SPI1_CLK_ENABLE();
     
-    GPIO_InitStruct.Pin = GPIO_PIN_5 | GPIO_PIN_7;
+    /* Configure SPI pins: PC5 (SCK) and PC6 (MOSI) */
+    GPIO_InitStruct.Pin = TFT_SPI_SCLK_PIN | TFT_SPI_MOSI_PIN;  // PC5 | PC6
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-    GPIO_InitStruct.Alternate = GPIO_AF0_SPI1;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+    GPIO_InitStruct.Alternate = GPIO_AF0_SPI1;  // SPI1 alternate function
+    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
     
+    /* Configure SPI peripheral */
     hspi1.Instance = SPI1;
     hspi1.Init.Mode = SPI_MODE_MASTER;
     hspi1.Init.Direction = SPI_DIRECTION_2LINES;
     hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
-    hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
-    hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
+    hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;   // CPOL = 0
+    hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;       // CPHA = 0 (Mode 0)
     hspi1.Init.NSS = SPI_NSS_SOFT;
-    hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_4;
+    hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;  // 24MHz/2 = 12MHz
     hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
     hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
     hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -193,42 +243,70 @@ static void ADC_Init(void)
     
     __HAL_RCC_ADC_CLK_ENABLE();
     
-    GPIO_InitStruct.Pin = GPIO_PIN_0;
+    /* Configure ADC GPIO pins as analog */
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
     
+    /* Battery ADC pin - PC0 */
+    GPIO_InitStruct.Pin = BAT_ADC_PIN;
+    HAL_GPIO_Init(BAT_ADC_PORT, &GPIO_InitStruct);
+    
+    /* Audio ADC pins - PC1, PC2 */
+    GPIO_InitStruct.Pin = L_AD_PIN;
+    HAL_GPIO_Init(L_AD_PORT, &GPIO_InitStruct);
+    
+    GPIO_InitStruct.Pin = R_AD_PIN;
+    HAL_GPIO_Init(R_AD_PORT, &GPIO_InitStruct);
+    
+    /* Configure ADC for multi-channel scan mode */
     hadc.Instance = ADC1;
     hadc.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;
     hadc.Init.Resolution = ADC_RESOLUTION_12B;
     hadc.Init.DataAlign = ADC_DATAALIGN_RIGHT;
-    hadc.Init.ScanConvMode = ADC_SCAN_DISABLE;
-    hadc.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
+    hadc.Init.ScanConvMode = ADC_SCAN_ENABLE;  // Enable scan mode for multiple channels
+    hadc.Init.EOCSelection = ADC_EOC_SEQ_CONV;  // End of sequence conversion
     hadc.Init.LowPowerAutoWait = DISABLE;
     hadc.Init.LowPowerAutoPowerOff = DISABLE;
     hadc.Init.ContinuousConvMode = DISABLE;
     hadc.Init.DiscontinuousConvMode = DISABLE;
-    hadc.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+    hadc.Init.ExternalTrigConv = ADC_SOFTWARE_START;  // Software trigger for now
     hadc.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
-    hadc.Init.DMAContinuousRequests = DISABLE;
-    hadc.Init.Overrun = ADC_OVR_DATA_PRESERVED;
+    hadc.Init.DMAContinuousRequests = ENABLE;  // Enable DMA continuous requests
+    hadc.Init.Overrun = ADC_OVR_DATA_OVERWRITTEN;
     HAL_ADC_Init(&hadc);
     
-    sConfig.Channel = ADC_CHANNEL_0;
-    sConfig.Rank = ADC_RANK_CHANNEL_NUMBER;
-    sConfig.SamplingTime = ADC_SAMPLETIME_239CYCLES_5;
+    /* Configure Battery voltage channel - PC0 (ADC_IN15) */
+    sConfig.Channel = BAT_ADC_CHANNEL;
+    sConfig.Rank = 1;
+    sConfig.SamplingTime = ADC_SAMPLETIME_239CYCLES_5;  // Long sampling for accuracy
     HAL_ADC_ConfigChannel(&hadc, &sConfig);
+    
+    /* Configure Left audio channel - PC1 (ADC_IN14) */
+    sConfig.Channel = L_AD_ADC_CHANNEL;
+    sConfig.Rank = 2;
+    sConfig.SamplingTime = ADC_SAMPLETIME_71CYCLES_5;  // Faster for audio
+    HAL_ADC_ConfigChannel(&hadc, &sConfig);
+    
+    /* Configure Right audio channel - PC2 (ADC_IN13) */
+    sConfig.Channel = R_AD_ADC_CHANNEL;
+    sConfig.Rank = 3;
+    sConfig.SamplingTime = ADC_SAMPLETIME_71CYCLES_5;  // Faster for audio
+    HAL_ADC_ConfigChannel(&hadc, &sConfig);
+    
+    /* Calibrate ADC */
+    HAL_ADCEx_Calibration_Start(&hadc);
 }
 
 static void TIM_Init(void)
 {
-    TIM_HandleTypeDef htim2;
+    TIM_HandleTypeDef htim2;  // Use TIM2 for PWM as in original code
     TIM_OC_InitTypeDef sConfigOC = {0};
     
+    /* TIM2 for PWM backlight control */
     __HAL_RCC_TIM2_CLK_ENABLE();
     
     htim2.Instance = TIM2;
-    htim2.Init.Prescaler = 31;
+    htim2.Init.Prescaler = 31;  // Similar to original
     htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
     htim2.Init.Period = 999;
     htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -236,12 +314,15 @@ static void TIM_Init(void)
     HAL_TIM_PWM_Init(&htim2);
     
     sConfigOC.OCMode = TIM_OCMODE_PWM1;
-    sConfigOC.Pulse = 500;
+    sConfigOC.Pulse = 500;  // 50% duty cycle default
     sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
     sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
     HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_2);
     
     HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
+    
+    /* Note: ADC will use software trigger for now
+       TIM3 could be added later for hardware trigger if needed */
 }
 
 void HAL_SYSTICK_Callback(void)

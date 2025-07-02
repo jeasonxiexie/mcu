@@ -132,51 +132,76 @@ void UI_UpdateVUMeter(uint8_t left_level, uint8_t right_level)
         UI_SetAudioMode(audio_mode);
     }
     
-    // Display volume level blocks for left channel
-    // Position adjusted for 80x160 portrait display
-    if (audio_mode == AUDIO_MODE_STEREO || audio_mode == AUDIO_MODE_MONO)
-    {
-        // Draw left channel volume block at appropriate position
-        uint8_t block_x = 10;
-        uint8_t block_y = 60;
-        
-        // Draw volume indicator as colored bar instead of image
-        uint16_t color = UI_COLOR_VU_GREEN;
-        if (left_level > 24) color = UI_COLOR_VU_RED;
-        else if (left_level > 16) color = UI_COLOR_VU_ORANGE;
-        else if (left_level > 8) color = UI_COLOR_VU_YELLOW;
-        
-        // Clear previous bar
-        ST7735_FillRect(block_x, block_y - 40, 8, 40, ST7735_BLACK);
-        // Draw new bar
-        uint8_t bar_height = (left_level * 40) / 32;
-        ST7735_FillRect(block_x, block_y - bar_height, 8, bar_height, color);
-        
-        // Draw left channel indicator "L"
-        ST7735_FillRect(5, 130, 10, 8, left_level > 15 ? UI_COLOR_VU_GREEN : ST7735_BLACK);
-    }
-    
-    // Display volume level blocks for right channel (stereo mode only)
+    // Display based on audio mode
     if (audio_mode == AUDIO_MODE_STEREO)
     {
-        // Draw right channel volume block
-        uint8_t block_x = 65;
-        uint8_t block_y = 60;
+        // STEREO mode - display separate left and right channels
         
-        // Draw volume indicator as colored bar instead of image
+        // Left channel
+        uint8_t left_x = 10;
+        uint8_t bar_y = 60;
+        
+        uint16_t left_color = UI_COLOR_VU_GREEN;
+        if (left_level > 24) left_color = UI_COLOR_VU_RED;
+        else if (left_level > 16) left_color = UI_COLOR_VU_ORANGE;
+        else if (left_level > 8) left_color = UI_COLOR_VU_YELLOW;
+        
+        ST7735_FillRect(left_x, bar_y - 40, 8, 40, ST7735_BLACK);
+        uint8_t left_height = (left_level * 40) / 32;
+        ST7735_FillRect(left_x, bar_y - left_height, 8, left_height, left_color);
+        
+        // Right channel
+        uint8_t right_x = 65;
+        
+        uint16_t right_color = UI_COLOR_VU_GREEN;
+        if (right_level > 24) right_color = UI_COLOR_VU_RED;
+        else if (right_level > 16) right_color = UI_COLOR_VU_ORANGE;
+        else if (right_level > 8) right_color = UI_COLOR_VU_YELLOW;
+        
+        ST7735_FillRect(right_x, bar_y - 40, 8, 40, ST7735_BLACK);
+        uint8_t right_height = (right_level * 40) / 32;
+        ST7735_FillRect(right_x, bar_y - right_height, 8, right_height, right_color);
+        
+        // Channel indicators
+        ST7735_FillRect(5, 130, 10, 8, left_level > 5 ? UI_COLOR_VU_GREEN : ST7735_BLACK);
+        ST7735_FillRect(65, 130, 10, 8, right_level > 5 ? UI_COLOR_VU_GREEN : ST7735_BLACK);
+        
+        // Draw "L" and "R" labels
+        ST7735_FillRect(7, 120, 6, 7, UI_COLOR_WHITE);  // L
+        ST7735_FillRect(67, 120, 6, 7, UI_COLOR_WHITE); // R
+    }
+    else  // MONO mode
+    {
+        // MONO mode - display single centered bar
+        
+        // Use the average of left and right (already done in main.c)
+        uint8_t mono_level = (left_level + right_level) / 2;
+        
+        // Center bar position
+        uint8_t center_x = 36;  // Center of 80px display
+        uint8_t bar_y = 60;
+        uint8_t bar_width = 16; // Wider bar for mono
+        
         uint16_t color = UI_COLOR_VU_GREEN;
-        if (right_level > 24) color = UI_COLOR_VU_RED;
-        else if (right_level > 16) color = UI_COLOR_VU_ORANGE;
-        else if (right_level > 8) color = UI_COLOR_VU_YELLOW;
+        if (mono_level > 24) color = UI_COLOR_VU_RED;
+        else if (mono_level > 16) color = UI_COLOR_VU_ORANGE;
+        else if (mono_level > 8) color = UI_COLOR_VU_YELLOW;
         
-        // Clear previous bar
-        ST7735_FillRect(block_x, block_y - 40, 8, 40, ST7735_BLACK);
-        // Draw new bar
-        uint8_t bar_height = (right_level * 40) / 32;
-        ST7735_FillRect(block_x, block_y - bar_height, 8, bar_height, color);
+        // Clear both sides (in case switching from stereo)
+        ST7735_FillRect(10, bar_y - 40, 8, 40, ST7735_BLACK);
+        ST7735_FillRect(65, bar_y - 40, 8, 40, ST7735_BLACK);
         
-        // Draw right channel indicator "R"
-        ST7735_FillRect(65, 130, 10, 8, right_level > 15 ? UI_COLOR_VU_GREEN : ST7735_BLACK);
+        // Draw center mono bar
+        ST7735_FillRect(center_x, bar_y - 40, bar_width, 40, ST7735_BLACK);
+        uint8_t bar_height = (mono_level * 40) / 32;
+        ST7735_FillRect(center_x, bar_y - bar_height, bar_width, bar_height, color);
+        
+        // Clear L/R indicators
+        ST7735_FillRect(5, 120, 10, 18, ST7735_BLACK);
+        ST7735_FillRect(65, 120, 10, 18, ST7735_BLACK);
+        
+        // Draw "MONO" indicator in center
+        ST7735_FillRect(30, 130, 20, 8, mono_level > 5 ? UI_COLOR_ORANGE : ST7735_BLACK);
     }
     
     // Draw pointer indicators for visual reference

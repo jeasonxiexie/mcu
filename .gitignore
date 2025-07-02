@@ -71,3 +71,11 @@ Thumbs.db
 
 # Empty tools directory
 tools/
+
+# Template projects (manage separately)
+stm32-clean-template/
+
+# Release management - only keep the latest version
+WB32L003_Project/release/*
+!WB32L003_Project/release/WB32L003_VUMeter_v2.0.0/
+!WB32L003_Project/release/WB32L003_VUMeter_v2.0.0/**

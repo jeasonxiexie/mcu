@@ -1,6 +1,7 @@
 /**
  * @file pin_config.h
- * @brief Pin configuration according to project_spec.md and TFT096B039 datasheet
+ * @brief Pin configuration for WB32L003 MCU according to new PinMap
+ * @version 2.0 - Updated for WB32L003 with PC5/PC6 SPI
  */
 
 #ifndef __PIN_CONFIG_H
@@ -12,62 +13,90 @@ extern "C" {
 
 #include "wb32l003.h"
 
-/* SPI1 pins for TFT display */
-#define TFT_SPI_SCLK_PIN        GPIO_PIN_5      // PA5 - SPI1_SCK
-#define TFT_SPI_SCLK_PORT       GPIOA
-#define TFT_SPI_MOSI_PIN        GPIO_PIN_7      // PA7 - SPI1_MOSI
-#define TFT_SPI_MOSI_PORT       GPIOA
+/* ========== SPI INTERFACE FOR TFT DISPLAY ========== */
+/* Using PC5/PC6 for SPI as per WB32L003 datasheet */
+#define TFT_SPI_SCLK_PIN        GPIO_PIN_5      // PC5 - SPI_SCK (High Speed)
+#define TFT_SPI_SCLK_PORT       GPIOC
+#define TFT_SPI_MOSI_PIN        GPIO_PIN_6      // PC6 - SPI_MOSI (High Speed)
+#define TFT_SPI_MOSI_PORT       GPIOC
 
 /* TFT control pins */
-#define TFT_CS_PIN              GPIO_PIN_0      // PB0 - Chip Select
+#define TFT_CS_PIN              GPIO_PIN_4      // PB4 - Chip Select (Low active)
 #define TFT_CS_PORT             GPIOB
-#define TFT_DC_PIN              GPIO_PIN_1      // PB1 - Data/Command
-#define TFT_DC_PORT             GPIOB
-#define TFT_RST_PIN             GPIO_PIN_2      // PB2 - Hardware Reset
-#define TFT_RST_PORT            GPIOB
+#define TFT_DC_PIN              GPIO_PIN_3      // PA3 - Data/Command
+#define TFT_DC_PORT             GPIOA
+#define TFT_RST_PIN             GPIO_PIN_3      // PC3 - Hardware Reset (changed from PD3)
+#define TFT_RST_PORT            GPIOC
 
-/* TFT backlight control */
-#define TFT_BL_PIN              GPIO_PIN_1      // PA1 - PWM backlight control
+/* TFT backlight control - Using TIM2 */
+#define TFT_BL_PIN              GPIO_PIN_1      // PA1 - TIM2_CH2 PWM backlight (restored)
 #define TFT_BL_PORT             GPIOA
 #define TFT_BL_TIM              TIM2
 #define TFT_BL_CHANNEL          TIM_CHANNEL_2
 
-/* Power management */
-#define BAT_ADC_PIN             GPIO_PIN_0      // PA0 - Battery voltage detect
-#define BAT_ADC_PORT            GPIOA
-#define BAT_ADC_CHANNEL         ADC_CHANNEL_0
-
-#define KEY_PWR_PIN             GPIO_PIN_13     // PC13 - Power button
-#define KEY_PWR_PORT            GPIOC
-
-/* Status LED (if exists, not in spec) */
-#define LED_STATUS_PIN          GPIO_PIN_2      // PA2 - Status LED
-#define LED_STATUS_PORT         GPIOA
-
-/* ========== NEW PINS FROM SPECS.MD ========== */
-/* Note: The following pins need to be assigned based on your hardware design */
-
-/* Power management pins - Required for proper power sequencing */
-// #define CON_POW_PIN             GPIO_PIN_X      // Power control
-// #define CON_POW_PORT            GPIOX
-// #define CON_LCD_PIN             GPIO_PIN_X      // LCD power control
-// #define CON_LCD_PORT            GPIOX
-
-/* Audio control - Required for audio mute during power on/off */
-// #define MUTE_PIN                GPIO_PIN_X      // Audio mute control (High = unmute)
-// #define MUTE_PORT               GPIOX
-
-/* Charging detection - For battery charging status */
-// #define CHRG_PIN                GPIO_PIN_X      // Charging status (Low = charging)
-// #define CHRG_PORT               GPIOX
+/* ========== ADC INPUTS ========== */
+/* Battery voltage detection */
+#define BAT_ADC_PIN             GPIO_PIN_0      // PC0 - ADC_IN15 (with 1/2 divider)
+#define BAT_ADC_PORT            GPIOC
+#define BAT_ADC_CHANNEL         ADC_CHANNEL_15
 
 /* Audio level detection ADC inputs - For VU meter display */
-// #define L_AD_PIN                GPIO_PIN_X      // Left channel audio detect
-// #define L_AD_PORT               GPIOX
-// #define L_AD_ADC_CHANNEL        ADC_CHANNEL_X
-// #define R_AD_PIN                GPIO_PIN_X      // Right channel audio detect
-// #define R_AD_PORT               GPIOX
-// #define R_AD_ADC_CHANNEL        ADC_CHANNEL_X
+#define L_AD_PIN                GPIO_PIN_1      // PC1 - ADC_IN14 (Left channel)
+#define L_AD_PORT               GPIOC
+#define L_AD_ADC_CHANNEL        ADC_CHANNEL_14
+
+#define R_AD_PIN                GPIO_PIN_2      // PC2 - ADC_IN13 (Right channel)
+#define R_AD_PORT               GPIOC
+#define R_AD_ADC_CHANNEL        ADC_CHANNEL_13
+
+/* ========== USER INTERFACE ========== */
+/* Buttons */
+#define KEY_PWR_PIN             GPIO_PIN_13     // PC13 - Power button (EXTI) - restored original
+#define KEY_PWR_PORT            GPIOC
+
+#define KEY_MODE_PIN            GPIO_PIN_4      // PC4 - Mode button (STEREO/MONO) - changed from PD4
+#define KEY_MODE_PORT           GPIOC
+
+/* LED indicator */
+#define LED_RED_PIN             GPIO_PIN_5      // PB5 - Red LED for low battery - changed from PD5
+#define LED_RED_PORT            GPIOB
+
+/* ========== AUDIO AND CONTROL PINS ========== */
+/* Mode output pin */
+#define MODE_OUT_PIN            GPIO_PIN_2      // PB2 - Output selected mode
+#define MODE_OUT_PORT           GPIOB
+
+/* Audio control - Pins to be assigned based on final PCB */
+#define MUTE_PIN                GPIO_PIN_4      // PA4 - Audio mute control (High = unmute)
+#define MUTE_PORT               GPIOA
+
+#define V2_PIN                  GPIO_PIN_6      // PB6 - STEREO/MONO select (High = MONO)
+#define V2_PORT                 GPIOB
+
+/* Power management pins - To be confirmed with PCB design */
+#define CON_POW_PIN             GPIO_PIN_7      // PB7 - Main power control
+#define CON_POW_PORT            GPIOB
+
+#define CON_LCD_PIN             GPIO_PIN_8      // PB8 - LCD power control
+#define CON_LCD_PORT            GPIOB
+
+/* LED indicators - To be confirmed */
+#define GREEN_PIN               GPIO_PIN_3      // PB3 - Green LED (Low = on)
+#define GREEN_PORT              GPIOB
+
+#define RED_PIN                 GPIO_PIN_4      // PB4 - Red LED (Low = on)
+#define RED_PORT                GPIOB
+
+/* Charging detection */
+#define CHRG_PIN                GPIO_PIN_5      // PB5 - Charging status (Low = charging)
+#define CHRG_PORT               GPIOB
+
+/* ========== DEBUG UART ========== */
+/* Using PB6/PB7 to avoid conflict with SPI on PC6/PC7 */
+#define DEBUG_UART_TX_PIN       GPIO_PIN_6      // PB6 - UART TX
+#define DEBUG_UART_TX_PORT      GPIOB
+#define DEBUG_UART_RX_PIN       GPIO_PIN_7      // PB7 - UART RX (changed from PD6)
+#define DEBUG_UART_RX_PORT      GPIOB
 
 /* Backlight levels (mA) */
 #define BACKLIGHT_LEVEL_OFF     0

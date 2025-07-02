@@ -1,0 +1,33 @@
+WB32L003 VU Meter Firmware v2.0.0
+=================================
+
+Build Date: 2025-07-01
+Compiler: ARM GCC
+Target MCU: WB32L003 (Cortex-M0+)
+
+Memory Usage:
+   text    data     bss     dec     hex filename
+  64564      20    1996   66580   10414 firmware.elf
+
+Key Features:
+- Real-time VU meter with 32 levels
+- STEREO/MONO mode switching
+- Battery monitoring with low voltage warning
+- Deep sleep mode support (~10μA)
+- 12MHz SPI display update
+- 1kHz audio sampling rate
+
+Pin Configuration (Updated):
+- SPI: PC5(SCK), PC6(MOSI), PB4(CS), PA3(DC), PC3(RST)
+- PWM: PA1(Backlight)
+- ADC: PC0(Battery), PC1(Left Audio), PC2(Right Audio)
+- Buttons: PC13(Power), PC4(Mode)
+- LED: PB5(Red)
+- Mode Output: PB2
+
+Flash Memory Map:
+- 0x08000000 - 0x0800FFFF: Main program (64KB)
+- 0x0800F800 - 0x0800FFFF: User settings (last page)
+
+Note: Some pins have been remapped due to MCU limitations.
+Please verify with actual hardware before deployment.

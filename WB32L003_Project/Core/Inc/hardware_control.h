@@ -3,6 +3,7 @@
 
 #include "wb32l003.h"
 #include <stdbool.h>
+#include "ui.h"  // For audio_mode_t
 
 // Hardware control functions - to be implemented when GPIO assignments are known
 
@@ -13,6 +14,7 @@ void HW_SetLCDPower(bool enable);       // CON_LCD
 // Audio control
 void HW_SetMute(bool mute);             // MUTE pin
 void HW_SetAudioMode(bool mono);        // V2 pin (false=STEREO, true=MONO)
+audio_mode_t HW_GetAudioMode(void);     // Get current audio mode
 
 // LED control
 void HW_SetGreenLED(bool on);           // Green LED

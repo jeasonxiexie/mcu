@@ -20,6 +20,7 @@ Core/Src/power.c \
 Core/Src/ui.c \
 Core/Src/ui_assets.c \
 Core/Src/hardware_control.c \
+Core/Src/audio_adc.c \
 Core/Src/syscalls.c \
 Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal.c \
 Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal_cortex.c \
