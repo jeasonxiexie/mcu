@@ -6,7 +6,11 @@
       "Bash(make:*)",
       "Bash(find:*)",
       "Bash(git add:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(chmod:*)",
+      "Bash(grep:*)",
+      "Bash(awk:*)",
+      "Bash(git reset:*)"
     ],
     "deny": []
   }
