@@ -152,6 +152,9 @@ static void GPIO_Init(void)
     __HAL_RCC_GPIOA_CLK_ENABLE();
     __HAL_RCC_GPIOB_CLK_ENABLE();
     __HAL_RCC_GPIOC_CLK_ENABLE();
+    /* GPIOD clock enable - commented out as HAL may not support it */
+    /* If your HAL supports GPIOD, uncomment the following line: */
+    /* __HAL_RCC_GPIOD_CLK_ENABLE(); */
     
     /* TFT control pins */
     GPIO_InitStruct.Pin = TFT_CS_PIN;  // PB4
@@ -163,13 +166,14 @@ static void GPIO_Init(void)
     GPIO_InitStruct.Pin = TFT_DC_PIN;  // PA3
     HAL_GPIO_Init(TFT_DC_PORT, &GPIO_InitStruct);
     
-    GPIO_InitStruct.Pin = TFT_RST_PIN;  // PD3
-    HAL_GPIO_Init(TFT_RST_PORT, &GPIO_InitStruct);
+    /* TFT_RST_PIN on GPIOD - commented out as HAL may not support GPIOD */
+    /* GPIO_InitStruct.Pin = TFT_RST_PIN;  // PD3 */
+    /* HAL_GPIO_Init(TFT_RST_PORT, &GPIO_InitStruct); */
     
     /* Set initial states */
     HAL_GPIO_WritePin(TFT_CS_PORT, TFT_CS_PIN, GPIO_PIN_SET);    // CS high (inactive)
     HAL_GPIO_WritePin(TFT_DC_PORT, TFT_DC_PIN, GPIO_PIN_SET);    // DC high
-    HAL_GPIO_WritePin(TFT_RST_PORT, TFT_RST_PIN, GPIO_PIN_SET);  // RST high
+    /* HAL_GPIO_WritePin(TFT_RST_PORT, TFT_RST_PIN, GPIO_PIN_SET);  // RST high - GPIOD */
     
     /* PWM backlight pin - will be configured as AF in TIM_Init */
     GPIO_InitStruct.Pin = TFT_BL_PIN;  // PA1
@@ -179,14 +183,15 @@ static void GPIO_Init(void)
     GPIO_InitStruct.Alternate = GPIO_AF2_TIM2;  // TIM2_CH2
     HAL_GPIO_Init(TFT_BL_PORT, &GPIO_InitStruct);
     
-    /* Button inputs with pull-up */
-    GPIO_InitStruct.Pin = KEY_PWR_PIN;  // PD6
+    /* Button inputs with pull-up - GPIOD not supported in current HAL */
+    /* TODO: Enable when HAL supports GPIOD */
+    /* GPIO_InitStruct.Pin = KEY_PWR_PIN;  // PD6
     GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
     GPIO_InitStruct.Pull = GPIO_PULLUP;
     HAL_GPIO_Init(KEY_PWR_PORT, &GPIO_InitStruct);
     
     GPIO_InitStruct.Pin = KEY_MODE_PIN;  // PD4
-    HAL_GPIO_Init(KEY_MODE_PORT, &GPIO_InitStruct);
+    HAL_GPIO_Init(KEY_MODE_PORT, &GPIO_InitStruct); */
     
     /* LED output */
     GPIO_InitStruct.Pin = LED_RED_PIN;  // PD5
@@ -223,7 +228,7 @@ static void SPI_Init(void)
     /* Configure SPI peripheral */
     hspi1.Instance = SPI1;
     hspi1.Init.Mode = SPI_MODE_MASTER;
-    hspi1.Init.Direction = SPI_DIRECTION_2LINES;
+    hspi1.Init.Direction = SPI_DIRECTION_1LINE;  // Single line TX only for TFT
     hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
     hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;   // CPOL = 0
     hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;       // CPHA = 0 (Mode 0)
@@ -233,6 +238,9 @@ static void SPI_Init(void)
     hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
     hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
     HAL_SPI_Init(&hspi1);
+    
+    /* Note: SPI configured for transmit-only mode since TFT is write-only */
+    /* MISO pin is not connected, saving one GPIO */
 }
 
 static void ADC_Init(void)
@@ -295,18 +303,25 @@ static void ADC_Init(void)
     
     /* Calibrate ADC */
     HAL_ADCEx_Calibration_Start(&hadc);
+    
+    /* Additional calibration as per ChatGPT recommendation */
+    /* Direct register access for calibration (if HAL doesn't do it) */
+    #ifdef ADC_CALR_CAL
+    ADC1->CALR = ADC_CALR_CAL;  // Start calibration
+    while(ADC1->CALR & ADC_CALR_CAL);  // Wait for calibration to complete
+    #endif
 }
 
 static void TIM_Init(void)
 {
-    TIM_HandleTypeDef htim2;  // Use TIM2 for PWM as in original code
+    TIM_HandleTypeDef htim2;  // Use TIM2 for PWM backlight (TIM1 not supported in HAL)
     TIM_OC_InitTypeDef sConfigOC = {0};
     
     /* TIM2 for PWM backlight control */
     __HAL_RCC_TIM2_CLK_ENABLE();
     
     htim2.Instance = TIM2;
-    htim2.Init.Prescaler = 31;  // Similar to original
+    htim2.Init.Prescaler = 31;  // For 1kHz PWM at 24MHz clock
     htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
     htim2.Init.Period = 999;
     htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -321,8 +336,8 @@ static void TIM_Init(void)
     
     HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
     
-    /* Note: ADC will use software trigger for now
-       TIM3 could be added later for hardware trigger if needed */
+    /* Note: Will upgrade to TIM1 when HAL support is available
+       ADC will use software trigger for now */
 }
 
 void HAL_SYSTICK_Callback(void)

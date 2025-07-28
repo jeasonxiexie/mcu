@@ -21,15 +21,15 @@ extern "C" {
 #define TFT_SPI_MOSI_PORT       GPIOC
 
 /* TFT control pins */
-#define TFT_CS_PIN              GPIO_PIN_4      // PB4 - Chip Select (Low active)
-#define TFT_CS_PORT             GPIOB
+#define TFT_CS_PIN              GPIO_PIN_0      // PC0 - Chip Select (Low active)
+#define TFT_CS_PORT             GPIOC
 #define TFT_DC_PIN              GPIO_PIN_3      // PA3 - Data/Command
 #define TFT_DC_PORT             GPIOA
-#define TFT_RST_PIN             GPIO_PIN_3      // PC3 - Hardware Reset (changed from PD3)
-#define TFT_RST_PORT            GPIOC
+#define TFT_RST_PIN             GPIO_PIN_3      // PD3 - Hardware Reset
+#define TFT_RST_PORT            GPIOD
 
-/* TFT backlight control - Using TIM2 */
-#define TFT_BL_PIN              GPIO_PIN_1      // PA1 - TIM2_CH2 PWM backlight (restored)
+/* TFT backlight control - Using TIM2 (TIM1 not supported in current HAL) */
+#define TFT_BL_PIN              GPIO_PIN_1      // PA1 - TIM2_CH2 PWM backlight
 #define TFT_BL_PORT             GPIOA
 #define TFT_BL_TIM              TIM2
 #define TFT_BL_CHANNEL          TIM_CHANNEL_2
@@ -51,15 +51,17 @@ extern "C" {
 
 /* ========== USER INTERFACE ========== */
 /* Buttons */
-#define KEY_PWR_PIN             GPIO_PIN_13     // PC13 - Power button (EXTI) - restored original
-#define KEY_PWR_PORT            GPIOC
+#define KEY_PWR_PIN             GPIO_PIN_6      // PD6 - Power button (EXTI)
+#define KEY_PWR_PORT            GPIOD
 
-#define KEY_MODE_PIN            GPIO_PIN_4      // PC4 - Mode button (STEREO/MONO) - changed from PD4
-#define KEY_MODE_PORT           GPIOC
+#define KEY_MODE_PIN            GPIO_PIN_4      // PD4 - Mode button (STEREO/MONO)
+#define KEY_MODE_PORT           GPIOD
 
-/* LED indicator */
-#define LED_RED_PIN             GPIO_PIN_5      // PB5 - Red LED for low battery - changed from PD5
+/* LED indicators */
+#define LED_RED_PIN             GPIO_PIN_0      // PB0 - Red LED for low battery
 #define LED_RED_PORT            GPIOB
+#define LED_GREEN_PIN           GPIO_PIN_2      // PB2 - Green LED (additional)
+#define LED_GREEN_PORT          GPIOB
 
 /* ========== AUDIO AND CONTROL PINS ========== */
 /* Mode output pin */
@@ -95,8 +97,8 @@ extern "C" {
 /* Using PB6/PB7 to avoid conflict with SPI on PC6/PC7 */
 #define DEBUG_UART_TX_PIN       GPIO_PIN_6      // PB6 - UART TX
 #define DEBUG_UART_TX_PORT      GPIOB
-#define DEBUG_UART_RX_PIN       GPIO_PIN_7      // PB7 - UART RX (changed from PD6)
-#define DEBUG_UART_RX_PORT      GPIOB
+#define DEBUG_UART_RX_PIN       GPIO_PIN_6      // PD6 - UART RX (shared with KEY_PWR)
+#define DEBUG_UART_RX_PORT      GPIOD
 
 /* Backlight levels (mA) */
 #define BACKLIGHT_LEVEL_OFF     0

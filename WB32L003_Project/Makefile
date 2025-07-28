@@ -66,6 +66,14 @@ C_DEFS =  \
 -DUSE_HAL_DRIVER \
 -DWB32L003K8U6
 
+# Clock source selection (default: use internal HSI)
+# To use external crystal, add USE_HSE=1 to make command
+ifeq ($(USE_HSE), 1)
+C_DEFS += -DUSE_HSE
+else
+C_DEFS += -DUSE_HSI_ONLY
+endif
+
 # AS includes
 AS_INCLUDES = 
 

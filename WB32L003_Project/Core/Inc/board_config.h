@@ -100,20 +100,22 @@ typedef struct {
 
 /* ========== PIN ASSIGNMENT STATUS ========== */
 /*
- * CONFIRMED PINS (from PinMap):
- * - SPI: PC5(SCK), PC6(MOSI), PB4(CS), PA3(DC), PD3(RST)
+ * CONFIRMED PINS (from latest schematic):
+ * - SPI: PC5(SCK), PC6(MOSI), PC0(CS), PA3(DC), PD3(RST)
  * - PWM: PB1(TIM1_CH1)
  * - ADC: PC0(BAT), PC1(L_AD), PC2(R_AD)
  * - BTN: PD6(PWR), PD4(MODE)
- * - LED: PD5(RED)
+ * - LED: PB0(RED), PB2(GREEN)
  * - OUT: PB2(MODE_OUT)
  * - DBG: PB6(TX), PD6(RX)
  * 
- * TO BE CONFIRMED (waiting for PCB design):
- * - CON_POW, CON_LCD (power control)
- * - MUTE, V2 (audio control)
- * - GREEN, RED (dual LED or separate)
- * - CHRG (charging detect)
+ * IMPORTANT NOTES:
+ * - PC0 is shared between TFT_CS and BAT_ADC
+ *   Hardware must ensure proper isolation (>100kΩ divider)
+ * - PD6 is shared between KEY_PWR and UART_RX
+ *   Software must handle mutual exclusion
+ * - PB2 is shared between LED_GREEN and MODE_OUT
+ *   Check schematic for actual usage
  */
 
 /* ========== FEATURE FLAGS ========== */

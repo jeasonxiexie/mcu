@@ -138,6 +138,14 @@ void HW_Init(void)
     GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
     GPIO_InitStruct.Pull = GPIO_PULLUP;
     
+    /* Add Green LED support for new design */
+    #ifdef LED_GREEN_PIN
+    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStruct.Pin = LED_GREEN_PIN;
+    HAL_GPIO_Init(LED_GREEN_PORT, &GPIO_InitStruct);
+    HAL_GPIO_WritePin(LED_GREEN_PORT, LED_GREEN_PIN, GPIO_PIN_SET);  // LED off
+    #endif
+    
     /* Charging detection (if available) */
     #ifdef CHRG_PIN
     GPIO_InitStruct.Pin = CHRG_PIN;
@@ -191,4 +199,40 @@ void HW_PowerOffSequence(void)
     
     // 4. Enter low power mode
     Power_EnterStandby();
+}
+
+// PD6 pin multiplexing management
+// PD6 is shared between KEY_PWR and UART_RX
+static bool pd6_is_uart = false;
+
+void HW_ConfigurePD6AsButton(void)
+{
+    if (!pd6_is_uart) return;  // Already configured as button
+    
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+    
+    // Configure as input with pull-up for button
+    GPIO_InitStruct.Pin = KEY_PWR_PIN;
+    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+    GPIO_InitStruct.Pull = GPIO_PULLUP;
+    HAL_GPIO_Init(KEY_PWR_PORT, &GPIO_InitStruct);
+    
+    pd6_is_uart = false;
+}
+
+void HW_ConfigurePD6AsUART(void)
+{
+    if (pd6_is_uart) return;  // Already configured as UART
+    
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+    
+    // Configure as alternate function for UART RX
+    GPIO_InitStruct.Pin = DEBUG_UART_RX_PIN;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_PULLUP;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+    GPIO_InitStruct.Alternate = GPIO_AF1_USART1;  // USART1 alternate function
+    HAL_GPIO_Init(DEBUG_UART_RX_PORT, &GPIO_InitStruct);
+    
+    pd6_is_uart = true;
 }

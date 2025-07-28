@@ -38,7 +38,7 @@ void ST7735_Reset(void)
     ST7735_RST_HIGH();
     HAL_Delay(10);
     ST7735_RST_LOW();
-    HAL_Delay(10);
+    HAL_Delay(15);  // Ensure ≥10ms reset pulse as per ChatGPT recommendation
     ST7735_RST_HIGH();
     HAL_Delay(120);
 }

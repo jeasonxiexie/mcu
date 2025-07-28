@@ -32,4 +32,8 @@ void HW_Init(void);
 void HW_PowerOnSequence(void);
 void HW_PowerOffSequence(void);
 
+// PD6 pin multiplexing (KEY_PWR vs UART_RX)
+void HW_ConfigurePD6AsButton(void);
+void HW_ConfigurePD6AsUART(void);
+
 #endif /* __HARDWARE_CONTROL_H */
