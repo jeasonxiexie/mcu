@@ -64,6 +64,8 @@ extern "C" {
 /* Buttons - Hardware team confirmed: Power button and Mode button */
 #define SW_POW_PIN              GPIO_PIN_0      // PB0 - SW_POW (Power button detection)
 #define SW_POW_PORT             GPIOB
+#define SW_MODE_PIN             GPIO_PIN_3      // PD3 - MODE button (o3 verified, not PB6)
+#define SW_MODE_PORT            GPIOD
 
 #define KEY_STEREO_PIN          GPIO_PIN_3      // PD3 - KEY_STEREO (Mode button)
 #define KEY_STEREO_PORT         GPIOD

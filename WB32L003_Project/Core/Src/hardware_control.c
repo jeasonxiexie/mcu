@@ -241,12 +241,12 @@ void HW_PowerOnSequence(void)
 
 void HW_PowerOffSequence(void)
 {
-    /* Hardware team power-off sequence:
+    /* o3 verified power-off sequence:
      * 1. Mute audio (PA4 LOW)
-     * 2. Disable 5V boost (PC5 LOW)
-     * 3. Turn off backlight (PB2 High-Z, PB1 High-Z)
-     * 4. Disable LCD power (PA3 LOW)
-     * 5. Turn off main power (PC6 LOW)
+     * 2. Show shutdown screen
+     * 3. Turn off backlight
+     * 4. Set PC6 HIGH to cut power (P-MOS transistor)
+     * 5. Set PA3 HIGH to cut LCD power (PNP transistor)
      */
     
     // 1. Mute audio before power off
@@ -267,27 +267,21 @@ void HW_PowerOffSequence(void)
     GPIO_InitStruct.Pin = CLD_BL1_PIN;
     HAL_GPIO_Init(CLD_BL1_PORT, &GPIO_InitStruct);
     
-    // 4. Disable LCD power
-    HW_SetLCDPower(false);  // PA3 LOW
+    // 4. Disable LCD power - already done above
     HAL_Delay(10);
     
-    // 5. Turn off main power
-    HW_SetMainPower(false);  // PC6 LOW
-    // 1. Mute audio
-    HW_SetMute(true);
-    HAL_Delay(10);
+    // 5. Show shutdown screen (optional, LCD may already be off)
+    // UI_ShowOffLogo();
+    // HAL_Delay(200);
     
-    // 2. Show shutdown screen
-    UI_ShowOffLogo();
-    HAL_Delay(1000);
+    // 6. Finally cut main power by setting PC6 HIGH
+    HAL_GPIO_WritePin(CON_POW_CPU_PORT, CON_POW_CPU_PIN, GPIO_PIN_SET);  // PC6 HIGH = Power OFF
     
-    // 3. Set CON_POW and CON_LCD high (maintain power for controlled shutdown)
-    HW_SetMainPower(true);
-    HW_SetLCDPower(true);
-    HAL_Delay(10);
+    // 7. Also set PA3 HIGH to ensure LCD power is off
+    HAL_GPIO_WritePin(CON_POW_LCD_PORT, CON_POW_LCD_PIN, GPIO_PIN_SET);  // PA3 HIGH = LCD OFF
     
-    // 4. Enter low power mode
-    Power_EnterStandby();
+    // 8. Enter low power mode (will never reach here if power cut successful)
+    __WFI();  // Wait for interrupt (or complete power loss)
 }
 
 // PD6 pin multiplexing management
