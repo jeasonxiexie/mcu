@@ -10,12 +10,14 @@ static audio_mode_t current_audio_mode = AUDIO_MODE_STEREO;
 
 void HW_SetMainPower(bool enable)
 {
-    HAL_GPIO_WritePin(CON_POW_PORT, CON_POW_PIN, enable ? GPIO_PIN_SET : GPIO_PIN_RESET);
+    // Based on Opus4 verification: CON_POW_CPU connects to PC4
+    HAL_GPIO_WritePin(CON_POW_CPU_PORT, CON_POW_CPU_PIN, enable ? GPIO_PIN_SET : GPIO_PIN_RESET);
 }
 
 void HW_SetLCDPower(bool enable)
 {
-    HAL_GPIO_WritePin(CON_LCD_PORT, CON_LCD_PIN, enable ? GPIO_PIN_SET : GPIO_PIN_RESET);
+    // Based on Opus4 verification: CON_POW_LCD connects to PB6
+    HAL_GPIO_WritePin(CON_POW_LCD_PORT, CON_POW_LCD_PIN, enable ? GPIO_PIN_SET : GPIO_PIN_RESET);
 }
 
 void HW_SetMute(bool mute)
@@ -26,13 +28,8 @@ void HW_SetMute(bool mute)
 
 void HW_SetAudioMode(bool mono)
 {
-    // V2 pin: LOW = STEREO, HIGH = MONO (if available)
-    #ifdef V2_PIN
-    HAL_GPIO_WritePin(V2_PORT, V2_PIN, mono ? GPIO_PIN_SET : GPIO_PIN_RESET);
-    #endif
-    
-    // MODE_OUT pin: mirrors the selected mode
-    HAL_GPIO_WritePin(MODE_OUT_PORT, MODE_OUT_PIN, mono ? GPIO_PIN_SET : GPIO_PIN_RESET);
+    // CON_STEREO pin: controls STEREO/MONO mode
+    HAL_GPIO_WritePin(CON_STEREO_PORT, CON_STEREO_PIN, mono ? GPIO_PIN_SET : GPIO_PIN_RESET);
     
     current_audio_mode = mono ? AUDIO_MODE_MONO : AUDIO_MODE_STEREO;
 }
@@ -44,18 +41,36 @@ audio_mode_t HW_GetAudioMode(void)
 
 void HW_SetGreenLED(bool on)
 {
-    // Note: GREEN_PIN might not be available in new design
-    // This function kept for compatibility, but may not be used
-    #ifdef GREEN_PIN
-    HAL_GPIO_WritePin(GREEN_PORT, GREEN_PIN, on ? GPIO_PIN_RESET : GPIO_PIN_SET);
-    #endif
+    // Green LED on PC1 - Active low (LOW = ON)
+    HAL_GPIO_WritePin(LED_GREEN_PORT, LED_GREEN_PIN, on ? GPIO_PIN_RESET : GPIO_PIN_SET);
 }
 
 void HW_SetRedLED(bool on)
 {
-    // Using LED_RED_PIN from new PinMap (PD5)
-    // Note: Logic might be inverted - verify with hardware
+    // Red LED on PD3 - Active low (LOW = ON)
     HAL_GPIO_WritePin(LED_RED_PORT, LED_RED_PIN, on ? GPIO_PIN_RESET : GPIO_PIN_SET);
+}
+
+void HW_SetBacklight(uint8_t level)
+{
+    // Two-level backlight control using PD0 (BL1) and PB6 (BL2)
+    // Through Q7 PNP transistor - LOW = ON
+    switch(level)
+    {
+        case 0:  // Off
+            HAL_GPIO_WritePin(TFT_BL1_PORT, TFT_BL1_PIN, GPIO_PIN_SET);
+            HAL_GPIO_WritePin(TFT_BL2_PORT, TFT_BL2_PIN, GPIO_PIN_SET);
+            break;
+        case 1:  // Low brightness (BL2 only)
+            HAL_GPIO_WritePin(TFT_BL1_PORT, TFT_BL1_PIN, GPIO_PIN_SET);
+            HAL_GPIO_WritePin(TFT_BL2_PORT, TFT_BL2_PIN, GPIO_PIN_RESET);
+            break;
+        case 2:  // High brightness (BL1 only or both)
+        default:
+            HAL_GPIO_WritePin(TFT_BL1_PORT, TFT_BL1_PIN, GPIO_PIN_RESET);
+            HAL_GPIO_WritePin(TFT_BL2_PORT, TFT_BL2_PIN, GPIO_PIN_SET);
+            break;
+    }
 }
 
 bool HW_IsCharging(void)
@@ -87,6 +102,16 @@ void HW_Init(void)
     __HAL_RCC_GPIOB_CLK_ENABLE();
     __HAL_RCC_GPIOC_CLK_ENABLE();
     
+    /* Enable GPIOD clock manually since HAL macro is missing */
+    /* Based on pattern: GPIOA=17, GPIOB=18, GPIOC=19, so GPIOD should be 20 */
+    #define RCC_AHBENR_GPIODEN_Pos           (20U)
+    #define RCC_AHBENR_GPIODEN_Msk           (0x1UL << RCC_AHBENR_GPIODEN_Pos)
+    #define RCC_AHBENR_GPIODEN               RCC_AHBENR_GPIODEN_Msk
+    SET_BIT(RCC->AHBENR, RCC_AHBENR_GPIODEN);
+    /* Read back to ensure write completion */
+    volatile uint32_t tmpreg = READ_BIT(RCC->AHBENR, RCC_AHBENR_GPIODEN);
+    (void)tmpreg;
+    
     /* Configure output pins */
     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -99,37 +124,35 @@ void HW_Init(void)
     HAL_GPIO_WritePin(MUTE_PORT, MUTE_PIN, GPIO_PIN_RESET);  // Start muted
     #endif
     
-    /* V2 (STEREO/MONO select) - if available */
-    #ifdef V2_PIN
-    GPIO_InitStruct.Pin = V2_PIN;
-    HAL_GPIO_Init(V2_PORT, &GPIO_InitStruct);
-    HAL_GPIO_WritePin(V2_PORT, V2_PIN, GPIO_PIN_RESET);  // Start in STEREO
-    #endif
+    /* CON_STEREO (STEREO/MONO select) */
+    GPIO_InitStruct.Pin = CON_STEREO_PIN;
+    HAL_GPIO_Init(CON_STEREO_PORT, &GPIO_InitStruct);
+    HAL_GPIO_WritePin(CON_STEREO_PORT, CON_STEREO_PIN, GPIO_PIN_RESET);  // Start in STEREO
     
-    /* MODE_OUT pin - outputs current mode */
-    GPIO_InitStruct.Pin = MODE_OUT_PIN;
-    HAL_GPIO_Init(MODE_OUT_PORT, &GPIO_InitStruct);
-    HAL_GPIO_WritePin(MODE_OUT_PORT, MODE_OUT_PIN, GPIO_PIN_RESET);  // Start in STEREO
+    /* Power control pins */
+    GPIO_InitStruct.Pin = CON_POW_CPU_PIN;
+    HAL_GPIO_Init(CON_POW_CPU_PORT, &GPIO_InitStruct);
     
-    /* Power control pins (if available) */
-    #ifdef CON_POW_PIN
-    GPIO_InitStruct.Pin = CON_POW_PIN;
-    HAL_GPIO_Init(CON_POW_PORT, &GPIO_InitStruct);
-    #endif
+    GPIO_InitStruct.Pin = CON_POW_LCD_PIN;
+    HAL_GPIO_Init(CON_POW_LCD_PORT, &GPIO_InitStruct);
     
-    #ifdef CON_LCD_PIN
-    GPIO_InitStruct.Pin = CON_LCD_PIN;
-    HAL_GPIO_Init(CON_LCD_PORT, &GPIO_InitStruct);
-    #endif
+    GPIO_InitStruct.Pin = CON_POW_RF_PIN;
+    HAL_GPIO_Init(CON_POW_RF_PORT, &GPIO_InitStruct);
+    
+    /* Backlight control pins */
+    GPIO_InitStruct.Pin = TFT_BL1_PIN;
+    HAL_GPIO_Init(TFT_BL1_PORT, &GPIO_InitStruct);
+    HAL_GPIO_WritePin(TFT_BL1_PORT, TFT_BL1_PIN, GPIO_PIN_SET);  // Start OFF
+    
+    GPIO_InitStruct.Pin = TFT_BL2_PIN;
+    HAL_GPIO_Init(TFT_BL2_PORT, &GPIO_InitStruct);
+    HAL_GPIO_WritePin(TFT_BL2_PORT, TFT_BL2_PIN, GPIO_PIN_SET);  // Start OFF
     
     /* LED indicators */
-    #ifdef GREEN_PIN
-    GPIO_InitStruct.Pin = GREEN_PIN;
-    HAL_GPIO_Init(GREEN_PORT, &GPIO_InitStruct);
-    HAL_GPIO_WritePin(GREEN_PORT, GREEN_PIN, GPIO_PIN_SET);  // LED off
-    #endif
+    GPIO_InitStruct.Pin = LED_GREEN_PIN;
+    HAL_GPIO_Init(LED_GREEN_PORT, &GPIO_InitStruct);
+    HAL_GPIO_WritePin(LED_GREEN_PORT, LED_GREEN_PIN, GPIO_PIN_SET);  // LED off
     
-    /* Red LED (new pin on PD5) */
     GPIO_InitStruct.Pin = LED_RED_PIN;
     HAL_GPIO_Init(LED_RED_PORT, &GPIO_InitStruct);
     HAL_GPIO_WritePin(LED_RED_PORT, LED_RED_PIN, GPIO_PIN_SET);  // LED off
@@ -138,19 +161,20 @@ void HW_Init(void)
     GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
     GPIO_InitStruct.Pull = GPIO_PULLUP;
     
-    /* Add Green LED support for new design */
-    #ifdef LED_GREEN_PIN
-    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-    GPIO_InitStruct.Pin = LED_GREEN_PIN;
-    HAL_GPIO_Init(LED_GREEN_PORT, &GPIO_InitStruct);
-    HAL_GPIO_WritePin(LED_GREEN_PORT, LED_GREEN_PIN, GPIO_PIN_SET);  // LED off
-    #endif
-    
-    /* Charging detection (if available) */
-    #ifdef CHRG_PIN
+    /* Charging detection - PB5 */
     GPIO_InitStruct.Pin = CHRG_PIN;
     HAL_GPIO_Init(CHRG_PORT, &GPIO_InitStruct);
-    #endif
+    
+    /* 5V detection - PB4 */
+    GPIO_InitStruct.Pin = DET_PIN;
+    HAL_GPIO_Init(DET_PORT, &GPIO_InitStruct);
+    
+    /* Button inputs - PD5 and PD6 */
+    GPIO_InitStruct.Pin = KEY_MODE_PIN;  // PD5
+    HAL_GPIO_Init(KEY_MODE_PORT, &GPIO_InitStruct);
+    
+    GPIO_InitStruct.Pin = KEY_PWR_PIN;   // PD6
+    HAL_GPIO_Init(KEY_PWR_PORT, &GPIO_InitStruct);
     
     /* Initialize audio ADC system */
     Audio_ADC_Init();
@@ -166,6 +190,7 @@ void HW_PowerOnSequence(void)
     
     // 2. Initialize and show boot screen
     ST7735_Init();
+    HW_SetBacklight(2);  // High brightness for boot
     UI_ShowBootLogo();
     HAL_Delay(1000);
     

@@ -2,6 +2,7 @@
 #include "ui.h"
 #include "st7735.h"
 #include "hardware_control.h"
+#include "pin_config.h"
 
 /* Forward declaration */
 void SystemClock_Config(void);
@@ -45,7 +46,8 @@ float Power_GetBatteryVoltage(void)
     
     battery_voltage = (float)adc_value * ADC_VREF / ADC_RESOLUTION;
     
-    battery_voltage = battery_voltage * 2.0f;
+    // Apply voltage divider ratio from pin_config.h (R52:R53 = 10K:33K = 1:4.3)
+    battery_voltage = battery_voltage * BATTERY_VOLTAGE_DIVIDER;
     
     return battery_voltage;
 }

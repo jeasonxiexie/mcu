@@ -20,6 +20,9 @@ audio_mode_t HW_GetAudioMode(void);     // Get current audio mode
 void HW_SetGreenLED(bool on);           // Green LED
 void HW_SetRedLED(bool on);             // Red LED
 
+// Backlight control (two-level brightness)
+void HW_SetBacklight(uint8_t level);    // 0=off, 1=low, 2=high
+
 // Input detection
 bool HW_IsCharging(void);               // CHRG pin
 uint16_t HW_GetLeftAudioLevel(void);    // L_AD ADC

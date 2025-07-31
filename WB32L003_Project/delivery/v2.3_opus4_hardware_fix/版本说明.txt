@@ -1,0 +1,51 @@
+WB32L003 耳放固件 v2.3 - Opus4 硬件修正版
+==========================================
+
+发布日期：2025-07-31
+固件版本：v2.3
+分支：fix/opus4-hardware-corrections
+
+文件说明：
+---------
+- firmware_opus4_fix.hex：用于 WB-Link PRO Configurator 烧录
+- firmware_opus4_fix.bin：二进制格式（备用）
+- README.md：详细的技术修改说明（英文）
+
+主要修改：
+---------
+基于 Opus4 AI 的原理图分析，修正了所有硬件引脚定义：
+
+1. LCD 控制引脚修正
+   - LCD_CS: PC0 → PB7
+   - LCD_RS: PA3 → PA4
+   - LCD_RESET: PD3 → PA2
+
+2. 背光控制改为两级亮度（非 PWM）
+   - BL1: PD0（高亮度）
+   - BL2: PB6（低亮度）
+
+3. ADC 输入修正
+   - 左声道：PB0 (AIN0)
+   - 右声道：PB1 (AIN1)
+   - 电池电压：PB2 (AIN2)
+   - 电池分压比：2.0 → 4.3
+
+4. LED 指示灯修正
+   - 绿色 LED：PC1 → PD2
+   - 红色 LED：PC0 → PD3
+
+5. 按键修正
+   - 模式按键：PD4 → PD5
+
+烧录说明：
+---------
+1. 使用 WB-Link PRO Configurator v1.0.15
+2. 选择 firmware_opus4_fix.hex 文件
+3. 确保选择正确的 COM 端口
+4. 点击"下载"进行烧录
+
+注意事项：
+---------
+- 固件大小：62,488 字节（占 64KB 的 97.6%）
+- 基地址：0x00000000（已修正）
+- 此版本基于 Opus4 的硬件分析结果

@@ -14,90 +14,86 @@ extern "C" {
 #include "wb32l003.h"
 
 /* ========== SPI INTERFACE FOR TFT DISPLAY ========== */
-/* Using PC5/PC6 for SPI as per WB32L003 datasheet */
-#define TFT_SPI_SCLK_PIN        GPIO_PIN_5      // PC5 - SPI_SCK (High Speed)
+/* Based on Opus4 schematic verification */
+#define TFT_SPI_SCLK_PIN        GPIO_PIN_5      // PC5 - LCD_SCL
 #define TFT_SPI_SCLK_PORT       GPIOC
-#define TFT_SPI_MOSI_PIN        GPIO_PIN_6      // PC6 - SPI_MOSI (High Speed)
+#define TFT_SPI_MOSI_PIN        GPIO_PIN_6      // PC6 - LCD_SDA
 #define TFT_SPI_MOSI_PORT       GPIOC
 
-/* TFT control pins */
-#define TFT_CS_PIN              GPIO_PIN_0      // PC0 - Chip Select (Low active)
-#define TFT_CS_PORT             GPIOC
-#define TFT_DC_PIN              GPIO_PIN_3      // PA3 - Data/Command
+/* TFT control pins - Corrected based on actual schematic */
+#define TFT_CS_PIN              GPIO_PIN_7      // PB7 - LCD_CS (not PC0!)
+#define TFT_CS_PORT             GPIOB
+#define TFT_DC_PIN              GPIO_PIN_4      // PA4 - LCD_RS (not PA3!)
 #define TFT_DC_PORT             GPIOA
-#define TFT_RST_PIN             GPIO_PIN_3      // PD3 - Hardware Reset
-#define TFT_RST_PORT            GPIOD
+#define TFT_RST_PIN             GPIO_PIN_2      // PA2 - LCD_RESET (OSCOUT pin)
+#define TFT_RST_PORT            GPIOA
 
-/* TFT backlight control - Using TIM2 (TIM1 not supported in current HAL) */
-#define TFT_BL_PIN              GPIO_PIN_1      // PA1 - TIM2_CH2 PWM backlight
-#define TFT_BL_PORT             GPIOA
-#define TFT_BL_TIM              TIM2
-#define TFT_BL_CHANNEL          TIM_CHANNEL_2
+/* TFT backlight control - Two-level brightness, not PWM */
+#define TFT_BL1_PIN             GPIO_PIN_0      // PD0 - CLD_BL1 (High brightness)
+#define TFT_BL1_PORT            GPIOD
+#define TFT_BL2_PIN             GPIO_PIN_6      // PB6 - CLD_BL2 (Low brightness)
+#define TFT_BL2_PORT            GPIOB
 
 /* ========== ADC INPUTS ========== */
+/* Based on Opus4 verification - Using PB0/PB1/PB2 for ADC */
 /* Battery voltage detection */
-#define BAT_ADC_PIN             GPIO_PIN_0      // PC0 - ADC_IN15 (with 1/2 divider)
-#define BAT_ADC_PORT            GPIOC
-#define BAT_ADC_CHANNEL         ADC_CHANNEL_15
+#define BAT_ADC_PIN             GPIO_PIN_2      // PB2 - AIN2 (V_Batt with 1:4.3 divider)
+#define BAT_ADC_PORT            GPIOB
+#define BAT_ADC_CHANNEL         ADC_CHANNEL_2
 
 /* Audio level detection ADC inputs - For VU meter display */
-#define L_AD_PIN                GPIO_PIN_1      // PC1 - ADC_IN14 (Left channel)
-#define L_AD_PORT               GPIOC
-#define L_AD_ADC_CHANNEL        ADC_CHANNEL_14
+#define L_AD_PIN                GPIO_PIN_0      // PB0 - AIN0 (Left channel - L_AF)
+#define L_AD_PORT               GPIOB
+#define L_AD_ADC_CHANNEL        ADC_CHANNEL_0
 
-#define R_AD_PIN                GPIO_PIN_2      // PC2 - ADC_IN13 (Right channel)
-#define R_AD_PORT               GPIOC
-#define R_AD_ADC_CHANNEL        ADC_CHANNEL_13
+#define R_AD_PIN                GPIO_PIN_1      // PB1 - AIN1 (Right channel - R_AF)
+#define R_AD_PORT               GPIOB
+#define R_AD_ADC_CHANNEL        ADC_CHANNEL_1
 
 /* ========== USER INTERFACE ========== */
 /* Buttons */
-#define KEY_PWR_PIN             GPIO_PIN_6      // PD6 - Power button (EXTI)
+#define KEY_PWR_PIN             GPIO_PIN_6      // PD6 - SW_POW (Power button)
 #define KEY_PWR_PORT            GPIOD
 
-#define KEY_MODE_PIN            GPIO_PIN_4      // PD4 - Mode button (STEREO/MONO)
+#define KEY_MODE_PIN            GPIO_PIN_5      // PD5 - KEY_STEREO (Mode button) - Corrected!
 #define KEY_MODE_PORT           GPIOD
 
-/* LED indicators */
-#define LED_RED_PIN             GPIO_PIN_0      // PB0 - Red LED for low battery
-#define LED_RED_PORT            GPIOB
-#define LED_GREEN_PIN           GPIO_PIN_2      // PB2 - Green LED (additional)
-#define LED_GREEN_PORT          GPIOB
+/* LED indicators - Dual-color LED L-C175JRJGCT-AM */
+#define LED_RED_PIN             GPIO_PIN_3      // PD3 - Red LED (Corrected from PC0)
+#define LED_RED_PORT            GPIOD
+#define LED_GREEN_PIN           GPIO_PIN_2      // PD2 - Green LED (Corrected from PC1)
+#define LED_GREEN_PORT          GPIOD
 
 /* ========== AUDIO AND CONTROL PINS ========== */
-/* Mode output pin */
-#define MODE_OUT_PIN            GPIO_PIN_2      // PB2 - Output selected mode
-#define MODE_OUT_PORT           GPIOB
+/* Audio control - Based on Opus4 verification */
+#define MUTE_PIN                GPIO_PIN_3      // PC3 - CON_MUTE (Audio mute control)
+#define MUTE_PORT               GPIOC
 
-/* Audio control - Pins to be assigned based on final PCB */
-#define MUTE_PIN                GPIO_PIN_4      // PA4 - Audio mute control (High = unmute)
-#define MUTE_PORT               GPIOA
+#define CON_STEREO_PIN          GPIO_PIN_2      // PC2 - CON_STEREO (STEREO/MONO select)
+#define CON_STEREO_PORT         GPIOC
 
-#define V2_PIN                  GPIO_PIN_6      // PB6 - STEREO/MONO select (High = MONO)
-#define V2_PORT                 GPIOB
+/* Power management pins - Based on Opus4 verification */
+#define CON_POW_CPU_PIN         GPIO_PIN_4      // PC4 - Main power control
+#define CON_POW_CPU_PORT        GPIOC
 
-/* Power management pins - To be confirmed with PCB design */
-#define CON_POW_PIN             GPIO_PIN_7      // PB7 - Main power control
-#define CON_POW_PORT            GPIOB
+#define CON_POW_LCD_PIN         GPIO_PIN_6      // PB6 - LCD power control (shared with BL2)
+#define CON_POW_LCD_PORT        GPIOB
 
-#define CON_LCD_PIN             GPIO_PIN_8      // PB8 - LCD power control
-#define CON_LCD_PORT            GPIOB
-
-/* LED indicators - To be confirmed */
-#define GREEN_PIN               GPIO_PIN_3      // PB3 - Green LED (Low = on)
-#define GREEN_PORT              GPIOB
-
-#define RED_PIN                 GPIO_PIN_4      // PB4 - Red LED (Low = on)
-#define RED_PORT                GPIOB
+#define CON_POW_RF_PIN          GPIO_PIN_1      // PC1 - RF power control
+#define CON_POW_RF_PORT         GPIOC
 
 /* Charging detection */
-#define CHRG_PIN                GPIO_PIN_5      // PB5 - Charging status (Low = charging)
+#define CHRG_PIN                GPIO_PIN_5      // PB5 - I2C_SDA/CHAR (Charge full detection)
 #define CHRG_PORT               GPIOB
 
+#define DET_PIN                 GPIO_PIN_4      // PB4 - I2C_SCL/DET (5V detection)
+#define DET_PORT                GPIOB
+
 /* ========== DEBUG UART ========== */
-/* Using PB6/PB7 to avoid conflict with SPI on PC6/PC7 */
-#define DEBUG_UART_TX_PIN       GPIO_PIN_6      // PB6 - UART TX
-#define DEBUG_UART_TX_PORT      GPIOB
-#define DEBUG_UART_RX_PIN       GPIO_PIN_6      // PD6 - UART RX (shared with KEY_PWR)
+/* Based on Opus4 verification */
+#define DEBUG_UART_TX_PIN       GPIO_PIN_5      // PD5 - UART2_TX (shared with KEY_MODE)
+#define DEBUG_UART_TX_PORT      GPIOD
+#define DEBUG_UART_RX_PIN       GPIO_PIN_6      // PD6 - UART2_RX (shared with KEY_PWR)
 #define DEBUG_UART_RX_PORT      GPIOD
 
 /* Backlight levels (mA) */
@@ -109,6 +105,9 @@ extern "C" {
 /* Battery voltage thresholds */
 #define BATTERY_VOLTAGE_WARNING 3.0f  // Red LED flash threshold
 #define BATTERY_VOLTAGE_CRITICAL 2.8f // Auto shutdown threshold
+
+/* Battery voltage divider ratio - Based on R52/R53 (10K:33K) */
+#define BATTERY_VOLTAGE_DIVIDER 4.3f  // Corrected from 2.0f
 
 #ifdef __cplusplus
 }

@@ -50,15 +50,15 @@ static void Audio_ADC_GPIO_Init(void)
     GPIO_InitTypeDef GPIO_InitStruct = {0};
     
     /* Enable GPIO clock */
-    __HAL_RCC_GPIOC_CLK_ENABLE();
+    __HAL_RCC_GPIOB_CLK_ENABLE();
     
-    /* Configure L_AD pin (PC1) */
+    /* Configure L_AD pin (PB0) */
     GPIO_InitStruct.Pin = L_AD_PIN;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(L_AD_PORT, &GPIO_InitStruct);
     
-    /* Configure R_AD pin (PC2) */
+    /* Configure R_AD pin (PB1) */
     GPIO_InitStruct.Pin = R_AD_PIN;
     HAL_GPIO_Init(R_AD_PORT, &GPIO_InitStruct);
 }

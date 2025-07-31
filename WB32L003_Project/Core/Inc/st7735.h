@@ -2,17 +2,18 @@
 #define __ST7735_H
 
 #include "wb32l003.h"
+#include "pin_config.h"
 
 // Note: Display is 80x160 in portrait mode
 #define ST7735_WIDTH  80
 #define ST7735_HEIGHT 160
 
-#define ST7735_CS_PORT   GPIOB
-#define ST7735_CS_PIN    GPIO_PIN_0
-#define ST7735_DC_PORT   GPIOB
-#define ST7735_DC_PIN    GPIO_PIN_1
-#define ST7735_RST_PORT  GPIOB
-#define ST7735_RST_PIN   GPIO_PIN_2
+#define ST7735_CS_PORT   TFT_CS_PORT
+#define ST7735_CS_PIN    TFT_CS_PIN
+#define ST7735_DC_PORT   TFT_DC_PORT
+#define ST7735_DC_PIN    TFT_DC_PIN
+#define ST7735_RST_PORT  TFT_RST_PORT
+#define ST7735_RST_PIN   TFT_RST_PIN
 
 #define ST7735_CS_LOW()  HAL_GPIO_WritePin(ST7735_CS_PORT, ST7735_CS_PIN, GPIO_PIN_RESET)
 #define ST7735_CS_HIGH() HAL_GPIO_WritePin(ST7735_CS_PORT, ST7735_CS_PIN, GPIO_PIN_SET)
