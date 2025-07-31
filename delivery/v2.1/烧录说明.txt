@@ -1,0 +1,64 @@
+WB32L003 VU表 固件烧录说明
+========================
+
+固件信息：
+- 版本：v2.1.0
+- 大小：64548 字节（未超出64KB限制）
+- 芯片：WB32L003K8U6 (64KB Flash, 8KB RAM)
+
+烧录参数：
+- 起始地址：0x08000000
+- 结束地址：0x0800FFFF
+- Flash大小：64KB (65536 bytes)
+
+Windows下使用STM32CubeProgrammer烧录步骤：
+1. 选择目标芯片：
+   - 如果没有WB32L003选项，选择"STM32F030F4"（同样是Cortex-M0+，64KB Flash）
+   - 或选择通用"Cortex-M0+"选项
+
+2. 连接设置：
+   - 接口：ST-LINK
+   - 频率：4000 kHz（如失败降至1000 kHz）
+   - 模式：Normal（如失败尝试"Connect under Reset"）
+
+3. 内存设置：
+   - Flash起始地址：0x08000000
+   - Flash大小：0x10000 (64KB)
+   
+4. 烧录前检查：
+   - 点击"Connect"连接目标板
+   - 读取芯片ID，确认连接正常
+   - 执行"Full chip erase"完全擦除
+
+5. 烧录固件：
+   - 选择firmware.hex文件
+   - 确认起始地址为0x08000000
+   - 点击"Download"开始烧录
+   - 等待进度条完成
+
+6. 验证：
+   - 勾选"Verify after programming"
+   - 烧录完成后自动校验
+
+故障排除：
+1. "不在允许的地址范围内"错误：
+   - 检查是否选择了正确的芯片型号
+   - 手动设置Flash大小为64KB
+   - 确认起始地址为0x08000000
+
+2. 连接失败：
+   - 检查+3.3V供电
+   - 确认SWDIO(PC7)和SWCLK(PD1)连接正确
+   - 尝试按住复位键再连接
+
+3. 烧录失败：
+   - 先执行完全擦除
+   - 降低SWD时钟频率
+   - 使用"Connect under Reset"模式
+
+调试接口连接（从左到右）：
+1. +3.3V (方形焊盘)
+2. SWDIO (PC7)
+3. SWCLK (PD1)
+4. NRST
+5. GND

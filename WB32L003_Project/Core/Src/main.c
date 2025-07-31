@@ -16,8 +16,12 @@ volatile uint8_t frame_update_flag = 0;
 
 int main(void)
 {
+    /* PC6 already set LOW in Early_PowerLatch() during Reset_Handler */
+    /* This ensures power is locked within the critical 150ms window */
+    
     HAL_Init();
     SystemClock_Config();
+    
     GPIO_Init();
     ADC_Init();
     TIM_Init();

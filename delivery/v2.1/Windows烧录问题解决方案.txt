@@ -1,0 +1,82 @@
+WB32L003K8U6 Windows烧录"地址超范围"问题解决方案
+===========================================
+
+问题描述：
+- 选择WB32L003K8U6设备时，提示"不在允许的地址范围内"
+- 固件实际大小64548字节，未超出64KB限制
+
+问题原因：
+STM32CubeProgrammer 默认不包含 WB32L003 的烧录算法，因为 WB32L003 是 Westberry（韦斯佰瑞）的产品，不是 ST 的产品。
+
+真正的解决方案：
+使用本发布包中提供的 WB32L003_64.FLM 烧录算法文件！
+
+解决方案（按优先级排序）：
+
+方案1：使用兼容芯片型号
+-------------------------
+在烧录软件中选择以下兼容型号之一：
+1. STM32F030F4Px（推荐）
+   - 同样是Cortex-M0+内核
+   - 64KB Flash, 4KB RAM
+   - 地址范围相同
+
+2. STM32F030C6Tx
+   - Cortex-M0+内核
+   - 32KB Flash（但烧录时会按64KB处理）
+
+3. 通用Cortex-M0+
+   - 手动设置Flash大小为64KB
+   - 起始地址：0x08000000
+
+方案2：使用命令行工具
+-------------------------
+1. 使用OpenOCD：
+   openocd -f interface/stlink-v2.cfg -c "transport select hla_swd" -c "set WORKAREASIZE 0x1000" -c "source [find target/stm32f0x.cfg]" -c "program firmware.hex verify reset exit"
+
+2. 使用st-flash（Linux/Mac）：
+   st-flash write firmware.bin 0x08000000
+
+3. 使用STM32_Programmer_CLI.exe（Windows命令行）：
+   STM32_Programmer_CLI.exe -c port=SWD -w firmware.hex 0x08000000 -v -rst
+
+方案3：修改烧录软件配置
+-------------------------
+如果烧录软件支持自定义配置：
+1. 芯片系列：ARM Cortex-M0+
+2. Flash起始：0x08000000
+3. Flash大小：0x10000 (65536 bytes)
+4. RAM起始：0x20000000
+5. RAM大小：0x2000 (8192 bytes)
+6. 页大小：1024 bytes
+
+方案4：使用J-Link
+-------------------------
+如果有J-Link烧录器：
+1. 在J-Flash中创建新项目
+2. 选择"Cortex-M0+"作为CPU
+3. 手动设置内存范围：
+   - Flash: 0x08000000 - 0x0800FFFF
+4. 加载hex文件并烧录
+
+验证步骤：
+1. 连接成功后，先读取芯片ID
+2. 执行完全擦除（Erase Chip）
+3. 烧录固件
+4. 校验（Verify）
+
+如果以上方案都不行：
+1. 尝试将hex文件转换为bin格式：
+   - 使用随附的firmware.bin文件
+   - 烧录地址必须是0x08000000
+
+2. 检查烧录器固件是否需要更新
+
+3. 降低SWD时钟频率到1MHz或更低
+
+调试接口连接（务必正确）：
+Pin1(方形焊盘): +3.3V
+Pin2: SWDIO (PC7)
+Pin3: SWCLK (PD1)
+Pin4: NRST
+Pin5: GND

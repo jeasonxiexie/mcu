@@ -1,0 +1,96 @@
+# 测试固件 Makefile
+TARGET = test_firmware
+
+BUILD_DIR = build_test
+
+# 源文件 - 只包含最小必需
+C_SOURCES =  \
+Core/Src/test_minimal.c \
+Core/Src/st7735.c \
+Core/Src/syscalls.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal_cortex.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal_rcc.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal_gpio.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal_spi.c \
+Drivers/WB32L003_HAL_Driver/Src/system_wb32l003.c
+
+ASM_SOURCES = startup_wb32l003.s
+
+# 工具链
+PREFIX = arm-none-eabi-
+CC = $(PREFIX)gcc
+AS = $(PREFIX)gcc -x assembler-with-cpp
+CP = $(PREFIX)objcopy
+SZ = $(PREFIX)size
+
+HEX = $(CP) -O ihex
+BIN = $(CP) -O binary -S
+
+# CPU
+CPU = -mcpu=cortex-m0plus
+MCU = $(CPU) -mthumb $(FPU) $(FLOAT-ABI)
+
+# 编译选项
+OPT = -Os
+
+C_DEFS =  \
+-DUSE_HAL_DRIVER \
+-DWB32L003K8U6 \
+-DUSE_HSI_ONLY
+
+C_INCLUDES =  \
+-ICore/Inc \
+-IDrivers/WB32L003_HAL_Driver/Inc \
+-IDrivers/CMSIS/Include
+
+ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
+CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections -ffreestanding -g -gdwarf-2
+
+LDSCRIPT = WB32L003K8Ux_FLASH.ld
+LIBS = -lc -lm -lnosys
+LIBDIR = 
+LDFLAGS = $(MCU) -T$(LDSCRIPT) -L/opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp -L$(BUILD_DIR)/stubs -lgcc -lc -lm -lnosys -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections -nostartfiles -nodefaultlibs
+
+# 创建 stub 库
+$(BUILD_DIR)/stubs:
+	mkdir -p $(BUILD_DIR)/stubs
+	echo "// empty" > $(BUILD_DIR)/stubs/dummy.c
+	$(CC) -c $(BUILD_DIR)/stubs/dummy.c -o $(BUILD_DIR)/stubs/dummy.o
+	$(PREFIX)ar rcs $(BUILD_DIR)/stubs/libc.a $(BUILD_DIR)/stubs/dummy.o
+	$(PREFIX)ar rcs $(BUILD_DIR)/stubs/libm.a $(BUILD_DIR)/stubs/dummy.o
+	$(PREFIX)ar rcs $(BUILD_DIR)/stubs/libnosys.a $(BUILD_DIR)/stubs/dummy.o
+
+# 默认目标
+all: $(BUILD_DIR)/stubs $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
+	$(SZ) $(BUILD_DIR)/$(TARGET).elf
+
+# 目标文件列表
+OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(C_SOURCES:.c=.o)))
+vpath %.c $(sort $(dir $(C_SOURCES)))
+OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(ASM_SOURCES:.s=.o)))
+vpath %.s $(sort $(dir $(ASM_SOURCES)))
+
+# 编译规则
+$(BUILD_DIR)/%.o: %.c Makefile_test | $(BUILD_DIR) 
+	$(CC) -c $(CFLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@
+
+$(BUILD_DIR)/%.o: %.s Makefile_test | $(BUILD_DIR)
+	$(AS) -c $(CFLAGS) $< -o $@
+
+$(BUILD_DIR)/$(TARGET).elf: $(OBJECTS) Makefile_test
+	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
+
+$(BUILD_DIR)/%.hex: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
+	$(HEX) $< $@
+
+$(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
+	$(BIN) $< $@
+
+$(BUILD_DIR):
+	mkdir $@
+
+clean:
+	-rm -fR $(BUILD_DIR)
+
+.PHONY: all clean

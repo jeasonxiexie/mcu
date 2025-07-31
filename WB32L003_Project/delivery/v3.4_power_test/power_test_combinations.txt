@@ -1,0 +1,109 @@
+Total combinations to test: 16
+
+Test 1:
+  PC6 = LOW  (Main power: ON per o3)
+  PA3 = LOW  (LCD power: ON per o3)
+  PB1 = LOW  (Backlight: ON per o3)
+  PB2 = LOW  (Brightness: Dim)
+  ⭐ This should work according to o3's analysis!
+
+Test 2:
+  PC6 = LOW  (Main power: ON per o3)
+  PA3 = LOW  (LCD power: ON per o3)
+  PB1 = LOW  (Backlight: ON per o3)
+  PB2 = HIGH (Brightness: Bright)
+  ⭐ This should work according to o3's analysis!
+
+Test 3:
+  PC6 = LOW  (Main power: ON per o3)
+  PA3 = LOW  (LCD power: ON per o3)
+  PB1 = HIGH (Backlight: OFF per o3)
+  PB2 = LOW  (Brightness: Dim)
+
+Test 4:
+  PC6 = LOW  (Main power: ON per o3)
+  PA3 = LOW  (LCD power: ON per o3)
+  PB1 = HIGH (Backlight: OFF per o3)
+  PB2 = HIGH (Brightness: Bright)
+
+Test 5:
+  PC6 = LOW  (Main power: ON per o3)
+  PA3 = HIGH (LCD power: OFF per o3)
+  PB1 = LOW  (Backlight: ON per o3)
+  PB2 = LOW  (Brightness: Dim)
+
+Test 6:
+  PC6 = LOW  (Main power: ON per o3)
+  PA3 = HIGH (LCD power: OFF per o3)
+  PB1 = LOW  (Backlight: ON per o3)
+  PB2 = HIGH (Brightness: Bright)
+
+Test 7:
+  PC6 = LOW  (Main power: ON per o3)
+  PA3 = HIGH (LCD power: OFF per o3)
+  PB1 = HIGH (Backlight: OFF per o3)
+  PB2 = LOW  (Brightness: Dim)
+  ⚠️  This matches 洪哥's document (but o3 says it's wrong)
+
+Test 8:
+  PC6 = LOW  (Main power: ON per o3)
+  PA3 = HIGH (LCD power: OFF per o3)
+  PB1 = HIGH (Backlight: OFF per o3)
+  PB2 = HIGH (Brightness: Bright)
+  ⚠️  This matches 洪哥's document (but o3 says it's wrong)
+
+Test 9:
+  PC6 = HIGH (Main power: OFF per o3)
+  PA3 = LOW  (LCD power: ON per o3)
+  PB1 = LOW  (Backlight: ON per o3)
+  PB2 = LOW  (Brightness: Dim)
+
+Test 10:
+  PC6 = HIGH (Main power: OFF per o3)
+  PA3 = LOW  (LCD power: ON per o3)
+  PB1 = LOW  (Backlight: ON per o3)
+  PB2 = HIGH (Brightness: Bright)
+
+Test 11:
+  PC6 = HIGH (Main power: OFF per o3)
+  PA3 = LOW  (LCD power: ON per o3)
+  PB1 = HIGH (Backlight: OFF per o3)
+  PB2 = LOW  (Brightness: Dim)
+
+Test 12:
+  PC6 = HIGH (Main power: OFF per o3)
+  PA3 = LOW  (LCD power: ON per o3)
+  PB1 = HIGH (Backlight: OFF per o3)
+  PB2 = HIGH (Brightness: Bright)
+
+Test 13:
+  PC6 = HIGH (Main power: OFF per o3)
+  PA3 = HIGH (LCD power: OFF per o3)
+  PB1 = LOW  (Backlight: ON per o3)
+  PB2 = LOW  (Brightness: Dim)
+
+Test 14:
+  PC6 = HIGH (Main power: OFF per o3)
+  PA3 = HIGH (LCD power: OFF per o3)
+  PB1 = LOW  (Backlight: ON per o3)
+  PB2 = HIGH (Brightness: Bright)
+
+Test 15:
+  PC6 = HIGH (Main power: OFF per o3)
+  PA3 = HIGH (LCD power: OFF per o3)
+  PB1 = HIGH (Backlight: OFF per o3)
+  PB2 = LOW  (Brightness: Dim)
+
+Test 16:
+  PC6 = HIGH (Main power: OFF per o3)
+  PA3 = HIGH (LCD power: OFF per o3)
+  PB1 = HIGH (Backlight: OFF per o3)
+  PB2 = HIGH (Brightness: Bright)
+
+
+Additional tests to consider:
+1. Pulse PC6 (edge triggered power?)
+2. Test PD0/PD1 pins (undocumented power control?)
+3. Hold power button (PB0) while testing
+4. Try different power-up sequences (PC6 first vs PA3 first)
+5. Check if we need pull-up/pull-down resistors

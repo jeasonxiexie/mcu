@@ -1,0 +1,66 @@
+WB32L003 烧录问题彻底解决方案
+==============================
+
+问题根源
+--------
+WB-Link PRO Configurator 报"不在允许的地址范围内"错误的真正原因：
+- STM32 等芯片 Flash 基址：0x08000000
+- WB32L003 Flash 基址：0x00000000（64KB 范围：0x00000000-0x0000FFFF）
+- 原固件使用了 STM32 风格的地址，导致烧录软件认为地址超出范围
+
+解决步骤
+--------
+1. 已修改链接脚本（WB32L003K8Ux_FLASH.ld）：
+   - 将 FLASH ORIGIN 从 0x08000000 改为 0x00000000
+   
+2. 重新编译生成了正确地址的固件
+
+3. 生成了多个版本的固件文件：
+   - firmware_wb32l003_final.hex - 最终版本（从 0x00000000 开始）
+   - firmware_wb32l003_final.bin - 二进制版本
+   - firmware_wb32l003.hex - 手动转换的版本（备用）
+
+烧录方法
+--------
+方法1：使用 WB-Link PRO Configurator
+1. 打开 WB-Link PRO Configurator v1.0.15
+2. 选择芯片型号：WB32L003（或 WB32L003@64K）
+3. 添加文件：firmware_wb32l003_final.hex
+4. 起始地址：0x00000000（默认）
+5. 勾选"整片擦除"
+6. 点击"下载"
+
+方法2：使用 J-Link
+1. 连接 J-Link 到开发板
+2. 运行：JLink.exe -CommanderScript flash_jlink.jlink
+3. 或手动执行 J-Link Commander 命令
+
+方法3：使用 Keil MDK
+1. 安装 WB32L003_64.FLM 到 Keil\ARM\Flash
+2. 在 Device 中选择 Westberry -> WB32L003-64K
+3. 直接下载
+
+硬件连接
+--------
+WB-Link PRO <-> WB32L003 板
+- GND     <->  GND
+- SWCLK   <->  SCK/SWCLK
+- SWDIO   <->  D/SWDIO
+- NRST    <->  NRST（可选）
+- Vext    <->  3.3V（如需 WB-Link 供电）
+
+注意：如果板子自带 Type-C 供电，不要同时连接 Vext
+
+固件特点
+--------
+- 大小：13.8KB（仅占 64KB 的 21%）
+- 功能：开机画面、关机画面、音量显示、VU表显示
+- 优化：删除了所有大图片，使用程序化绘图
+
+验证结果
+--------
+- 固件起始地址：0x00000000 ✓
+- 固件大小：< 64KB ✓
+- 地址范围：0x0000-0x35E7 ✓
+
+现在应该可以正常烧录了！

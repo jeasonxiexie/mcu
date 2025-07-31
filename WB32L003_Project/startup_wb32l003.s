@@ -42,6 +42,9 @@ Reset_Handler:
   ldr   r0, =_estack
   mov   sp, r0          /* set stack pointer */
 
+/* CRITICAL: Lock power IMMEDIATELY - must be within 150ms! */
+  bl  Early_PowerLatch
+
 /* Copy the data segment initializers from flash to SRAM */
   ldr r0, =_sdata
   ldr r1, =_edata

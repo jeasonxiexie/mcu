@@ -1,0 +1,31 @@
+【重要】WB32L003K8U6 烧录必读
+========================
+
+问题：选择 WB32L003K8U6 时提示"不在允许的地址范围内"
+
+原因：WB32L003 不是 ST 的芯片，需要专用烧录算法
+
+快速解决方案：
+============
+
+方案1：添加烧录算法（推荐）
+1. 找到本目录下的 WB32L003_64.FLM 文件
+2. 复制到 STM32CubeProgrammer 的 FlashLoader 目录
+3. 重启软件，问题解决
+
+方案2：使用兼容型号
+1. 在烧录软件中选择 STM32F030F4
+2. 两者都是 Cortex-M0+，64KB Flash
+3. 直接烧录即可
+
+方案3：使用命令行
+STM32_Programmer_CLI.exe -c port=SWD -w firmware.hex 0x08000000 -v -rst
+
+详细教程请看：STM32CubeProgrammer烧录WB32L003详细教程.txt
+
+调试接口连接：
+1 = +3.3V (方形焊盘)
+2 = SWDIO (PC7)
+3 = SWCLK (PD1)
+4 = NRST
+5 = GND

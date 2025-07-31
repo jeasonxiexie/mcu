@@ -1,7 +1,7 @@
 /**
  * @file pin_config.h
- * @brief Pin configuration for WB32L003 MCU according to o3 schematic analysis
- * @version 3.0 - Updated based on o3's hardware verification
+ * @brief Pin configuration for WB32L003 MCU according to hardware team documentation
+ * @version 3.3 - Updated based on o3's correct analysis of transistor logic
  */
 
 #ifndef __PIN_CONFIG_H
@@ -61,9 +61,12 @@ extern "C" {
 #define R_AD_ADC_CHANNEL        ADC_CHANNEL_12
 
 /* ========== USER INTERFACE ========== */
-/* Buttons - o3: Only power button exists, connected to PB0 */
+/* Buttons - Hardware team confirmed: Power button and Mode button */
 #define SW_POW_PIN              GPIO_PIN_0      // PB0 - SW_POW (Power button detection)
 #define SW_POW_PORT             GPIOB
+
+#define KEY_STEREO_PIN          GPIO_PIN_3      // PD3 - KEY_STEREO (Mode button)
+#define KEY_STEREO_PORT         GPIOD
 
 /* LED indicators - o3 verified */
 #define LED_RED_PIN             GPIO_PIN_0      // PC0 - Red LED (Common anode, LOW = ON)
@@ -76,11 +79,11 @@ extern "C" {
 #define CON_MUTE_PIN            GPIO_PIN_4      // PA4 - CON_MUTE (Low = mute, High = unmute)
 #define CON_MUTE_PORT           GPIOA
 
-#define CON_STEREO_PIN          GPIO_PIN_3      // PD3 - CON_STEREO (Low = stereo, High = mono)
+#define CON_STEREO_PIN          GPIO_PIN_2      // PD2 - CON_STEREO (Low = stereo, High = mono)
 #define CON_STEREO_PORT         GPIOD
 
-/* Power management pins - o3 verified */
-#define CON_POW_CPU_PIN         GPIO_PIN_6      // PC6 - Main power control (via Q5 PNP)
+/* Power management pins - o3 analysis verified */
+#define CON_POW_CPU_PIN         GPIO_PIN_6      // PC6 - Main power control (LOW = ON, HIGH = OFF)
 #define CON_POW_CPU_PORT        GPIOC
 
 #define CON_POW_RF_PIN          GPIO_PIN_5      // PC5 - 5V power control (for audio amp)
@@ -103,8 +106,8 @@ extern "C" {
 #define ISP_D_PIN               GPIO_PIN_7      // PC7 - ISP Data (shared pin)
 #define ISP_D_PORT              GPIOC
 
-/* ========== UNUSED PINS (o3 verified) ========== */
-/* PD0, PD4, PD5, PB5 are not connected */
+/* ========== UNUSED PINS (Hardware team verified) ========== */
+/* PD0, PD1, PD4, PD5 are not connected */
 
 /* Backlight control method */
 #define BACKLIGHT_USE_TRANSISTOR 1  // Using Q7 transistor control

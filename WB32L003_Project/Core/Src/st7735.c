@@ -260,27 +260,54 @@ void ST7735_DrawImage(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint16_t
 
 void ST7735_SetBacklight(uint8_t level)
 {
-    /* o3 verified: Two-level backlight control via Q7 transistor */
-    /* CLD_BL1 (PB1) controls Q7 PNP transistor - LOW = ON */
-    /* CLD_BL2 (PB2) directly drives backlight cathode */
+    /* Hardware team verified backlight control:
+     * PB1 (CLD_BL1): LOW = enable Q7 to supply backlight power
+     * PB2 (CLD_BL2): HIGH = bright, LOW = dim, High-Z = off
+     */
     
     switch (level)
     {
-        case 0:  /* Off */
-            HAL_GPIO_WritePin(CLD_BL1_PORT, CLD_BL1_PIN, GPIO_PIN_SET);    /* BL1 OFF */
-            HAL_GPIO_WritePin(CLD_BL2_PORT, CLD_BL2_PIN, GPIO_PIN_SET);    /* BL2 OFF */
+        case 0:  /* Off - PB2 set to high impedance */
+        {
+            GPIO_InitTypeDef GPIO_InitStruct = {0};
+            GPIO_InitStruct.Pin = CLD_BL2_PIN;
+            GPIO_InitStruct.Mode = GPIO_MODE_INPUT;  // High-Z
+            GPIO_InitStruct.Pull = GPIO_NOPULL;
+            HAL_GPIO_Init(CLD_BL2_PORT, &GPIO_InitStruct);
+            
+            /* Also disable backlight power */
+            HAL_GPIO_WritePin(CLD_BL1_PORT, CLD_BL1_PIN, GPIO_PIN_SET);    /* BL1 HIGH = OFF */
+            break;
+        }
+            
+        case 1:  /* Low brightness */
+            /* First ensure PB2 is output mode */
+            {
+                GPIO_InitTypeDef GPIO_InitStruct = {0};
+                GPIO_InitStruct.Pin = CLD_BL2_PIN;
+                GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+                GPIO_InitStruct.Pull = GPIO_NOPULL;
+                GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+                HAL_GPIO_Init(CLD_BL2_PORT, &GPIO_InitStruct);
+            }
+            HAL_GPIO_WritePin(CLD_BL1_PORT, CLD_BL1_PIN, GPIO_PIN_RESET);  /* BL1 LOW = ON */
+            HAL_GPIO_WritePin(CLD_BL2_PORT, CLD_BL2_PIN, GPIO_PIN_RESET);  /* BL2 LOW = dim */
             break;
             
-        case 1:  /* Low brightness - BL2 only */
-            HAL_GPIO_WritePin(CLD_BL1_PORT, CLD_BL1_PIN, GPIO_PIN_SET);    /* BL1 OFF */
-            HAL_GPIO_WritePin(CLD_BL2_PORT, CLD_BL2_PIN, GPIO_PIN_RESET);  /* BL2 ON */
-            break;
-            
-        case 2:  /* High brightness - BL1 via Q7 */
+        case 2:  /* High brightness */
         case 3:
         default:
-            HAL_GPIO_WritePin(CLD_BL1_PORT, CLD_BL1_PIN, GPIO_PIN_RESET);  /* BL1 ON (Q7 conducts) */
-            HAL_GPIO_WritePin(CLD_BL2_PORT, CLD_BL2_PIN, GPIO_PIN_SET);    /* BL2 OFF */
+            /* First ensure PB2 is output mode */
+            {
+                GPIO_InitTypeDef GPIO_InitStruct = {0};
+                GPIO_InitStruct.Pin = CLD_BL2_PIN;
+                GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+                GPIO_InitStruct.Pull = GPIO_NOPULL;
+                GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+                HAL_GPIO_Init(CLD_BL2_PORT, &GPIO_InitStruct);
+            }
+            HAL_GPIO_WritePin(CLD_BL1_PORT, CLD_BL1_PIN, GPIO_PIN_RESET);  /* BL1 LOW = ON */
+            HAL_GPIO_WritePin(CLD_BL2_PORT, CLD_BL2_PIN, GPIO_PIN_SET);    /* BL2 HIGH = bright */
             break;
     }
 }

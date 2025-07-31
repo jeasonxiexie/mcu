@@ -1,0 +1,35 @@
+# J-Link 烧录脚本 for WB32L003
+# 使用方法: JLink.exe -CommanderScript flash_jlink.jlink
+
+# 设置设备
+device WB32L003K8U6
+# 如果上面的型号不被识别，尝试使用通用的 Cortex-M0
+# device Cortex-M0
+
+# 设置接口
+si SWD
+
+# 设置速度
+speed 4000
+
+# 连接到目标
+connect
+
+# 停止 CPU
+h
+
+# 擦除芯片
+erase
+
+# 加载固件
+loadfile firmware_optimized.hex
+
+# 或者使用 bin 文件（需要指定地址）
+# loadbin firmware_optimized.bin, 0x08000000
+
+# 复位并运行
+r
+g
+
+# 退出
+exit

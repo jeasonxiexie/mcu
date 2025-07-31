@@ -1,0 +1,56 @@
+# Minimal test Makefile
+TARGET = minimal_test
+BUILD_DIR = build_minimal
+
+# Toolchain
+PREFIX = arm-none-eabi-
+CC = $(PREFIX)gcc
+AS = $(PREFIX)gcc -x assembler-with-cpp
+CP = $(PREFIX)objcopy
+SZ = $(PREFIX)size
+
+# MCU
+CPU = -mcpu=cortex-m0plus
+MCU = $(CPU) -mthumb -mfloat-abi=soft
+
+# Defines
+C_DEFS = -DUSE_HAL_DRIVER -DWB32L003K8U6
+
+# Includes
+C_INCLUDES = \
+-ICore/Inc \
+-IDrivers/WB32L003_HAL_Driver/Inc \
+-IDrivers/CMSIS/Include
+
+# Compile flags
+CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) -Os -Wall -fdata-sections -ffunction-sections -g
+
+# Link flags
+LDSCRIPT = WB32L003K8Ux_FLASH.ld
+LDFLAGS = $(MCU) -T$(LDSCRIPT) -L$(BUILD_DIR) -lgcc -lc -lm -lnosys -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections -nostartfiles -nodefaultlibs
+
+# Sources
+C_SOURCES = Core/Src/minimal_test.c
+ASM_SOURCES = startup_wb32l003.s
+
+# Build
+all: $(BUILD_DIR)/$(TARGET).hex
+
+$(BUILD_DIR)/%.o: %.c
+	@mkdir -p $(dir $@)
+	$(CC) -c $(CFLAGS) -o $@ $<
+
+$(BUILD_DIR)/%.o: %.s
+	@mkdir -p $(dir $@)
+	$(AS) -c $(CFLAGS) -o $@ $<
+
+$(BUILD_DIR)/$(TARGET).elf: $(BUILD_DIR)/Core/Src/minimal_test.o $(BUILD_DIR)/startup_wb32l003.o
+	$(CC) $(LDFLAGS) -o $@ $^
+	$(SZ) $@
+
+$(BUILD_DIR)/$(TARGET).hex: $(BUILD_DIR)/$(TARGET).elf
+	$(CP) -O ihex $< $@
+	$(CP) -O binary -S $< $(BUILD_DIR)/$(TARGET).bin
+
+clean:
+	rm -rf $(BUILD_DIR)

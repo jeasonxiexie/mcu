@@ -1,0 +1,122 @@
+STM32CubeProgrammer 烧录 WB32L003K8U6 详细配置教程
+==============================================
+
+问题描述：
+选择 WB32L003K8U6 时提示"不在允许的地址范围内"
+
+根本原因：
+STM32CubeProgrammer 缺少 WB32L003 专用的烧录算法文件
+
+解决方案：
+
+步骤1：添加烧录算法文件
+------------------------
+1. 找到 STM32CubeProgrammer 安装目录
+   - Windows 默认路径：C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeProgrammer\v2.x.x\
+   
+2. 进入烧录算法目录：
+   - bin\FlashLoader\
+   
+3. 复制 WB32L003_64.FLM 文件到此目录
+   - 文件位置：本发布包中 /docs/WB32L003资料/WB32L003_开发资料/WB32L003_64.FLM
+   
+4. 重启 STM32CubeProgrammer
+
+步骤2：配置芯片参数
+------------------------
+如果软件仍无法识别，手动创建配置：
+
+1. 在 STM32CubeProgrammer 中选择"External Loader"
+2. 点击"Add External Loader"
+3. 选择 WB32L003_64.FLM
+4. 配置参数：
+   - Name: WB32L003 64KB Flash
+   - Start Address: 0x08000000
+   - Size: 0x10000 (64KB)
+   - Page Size: 1024
+   - Sector Size: 1024
+
+步骤3：使用 Keil 烧录算法（备选方案）
+------------------------------------
+如果您有 Keil MDK，可以使用其烧录算法：
+
+1. 将 WB32L003_64.FLM 复制到 Keil 安装目录
+   - 路径：C:\Keil_v5\ARM\Flash\
+   
+2. 在 STM32CubeProgrammer 中选择：
+   - Device: Generic Cortex-M0+
+   - 手动设置 Flash 参数：
+     * Start: 0x08000000
+     * Size: 64KB
+     * Algorithm: 选择 WB32L003_64.FLM
+
+步骤4：使用命令行烧录（最可靠方案）
+----------------------------------
+1. 打开命令提示符（管理员模式）
+
+2. 进入 STM32CubeProgrammer CLI 目录：
+   cd "C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeProgrammer\v2.x.x\bin"
+
+3. 执行烧录命令：
+   STM32_Programmer_CLI.exe -c port=SWD -w firmware.hex 0x08000000 -v -rst
+
+   或使用 bin 文件：
+   STM32_Programmer_CLI.exe -c port=SWD -e all -w firmware.bin 0x08000000 -v -rst
+
+步骤5：使用其他烧录软件（终极方案）
+----------------------------------
+如果 STM32CubeProgrammer 始终无法工作，可以使用：
+
+1. **J-Link 烧录器**（推荐）
+   - 使用 J-Flash 软件
+   - 选择 Device: Cortex-M0+
+   - 手动设置 Flash 基地址：0x08000000
+   - 使用附带的 WB32L003_64.FLM
+
+2. **OpenOCD**
+   创建配置文件 wb32l003.cfg：
+   ```
+   source [find interface/stlink-v2.cfg]
+   transport select hla_swd
+   set WORKAREASIZE 0x1000
+   
+   # WB32L003 是 Cortex-M0+ 内核
+   set CHIPNAME WB32L003
+   set ENDIAN little
+   set CPUTAPID 0x0bc11477
+   
+   source [find target/stm32f0x.cfg]
+   
+   # 覆盖 Flash 大小
+   flash bank $_FLASHNAME stm32f0x 0x08000000 0x10000 0 0 $_TARGETNAME
+   ```
+   
+   烧录命令：
+   openocd -f wb32l003.cfg -c "program firmware.hex verify reset exit"
+
+验证步骤：
+---------
+1. 连接成功后，读取芯片 ID
+2. 读取 Flash 内容，确认地址范围 0x08000000-0x0800FFFF
+3. 烧录后读回验证
+
+故障排除：
+---------
+1. 确保使用最新版本的 STM32CubeProgrammer
+2. 以管理员权限运行软件
+3. 检查 ST-Link 固件是否需要更新
+4. 尝试降低 SWD 时钟频率（1MHz 或更低）
+
+芯片信息确认：
+------------
+- 型号：WB32L003K8U6
+- 内核：ARM Cortex-M0+ @ 24MHz
+- Flash：64KB (0x10000)
+- SRAM：4KB (0x1000)
+- Flash 起始地址：0x08000000
+- 封装：QFN32 (K8 = 32pin封装，64KB Flash)
+
+重要提示：
+---------
+WB32L003 是 Westberry（韦斯佰瑞）的产品，不是 ST 的产品，
+所以 STM32CubeProgrammer 默认不支持。必须添加专用烧录算法！

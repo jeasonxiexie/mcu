@@ -10,24 +10,30 @@ static audio_mode_t current_audio_mode = AUDIO_MODE_STEREO;
 
 void HW_SetMainPower(bool enable)
 {
-    /* o3 verified: PC6 controls Q5 PNP transistor via Q6 NPN
-     * PC6 LOW -> Q6 OFF -> Q5 base pulled LOW by SW_POW -> Q5 ON -> Power ON
-     * PC6 HIGH -> Q6 ON -> Q5 base HIGH -> Q5 OFF -> Power OFF
-     * So logic is INVERTED: LOW = Power ON, HIGH = Power OFF
+    /* o3 analysis: PC6 controls Q5 P-MOS via Q6 NPN transistor
+     * PC6 LOW -> Q6 OFF -> Q5 gate pulled LOW -> Q5 ON -> Power ON
+     * PC6 HIGH -> Q6 ON -> Q5 gate HIGH -> Q5 OFF -> Power OFF
+     * Logic is INVERTED: LOW = ON, HIGH = OFF
      */
     HAL_GPIO_WritePin(CON_POW_CPU_PORT, CON_POW_CPU_PIN, enable ? GPIO_PIN_RESET : GPIO_PIN_SET);
 }
 
 void HW_SetLCDPower(bool enable)
 {
-    /* o3 verified: PA3 directly controls LCD power */
-    HAL_GPIO_WritePin(CON_POW_LCD_PORT, CON_POW_LCD_PIN, enable ? GPIO_PIN_SET : GPIO_PIN_RESET);
+    /* o3 analysis: PA3 controls LCD via Q7 PNP transistor
+     * PA3 LOW -> Q7 ON -> LCD power ON
+     * PA3 HIGH -> Q7 OFF -> LCD power OFF
+     * Logic is INVERTED: LOW = ON, HIGH = OFF
+     */
+    HAL_GPIO_WritePin(CON_POW_LCD_PORT, CON_POW_LCD_PIN, enable ? GPIO_PIN_RESET : GPIO_PIN_SET);
 }
 
 void HW_Set5VPower(bool enable)
 {
-    /* o3 verified: PC5 controls 5V boost for audio amplifier */
-    HAL_GPIO_WritePin(CON_POW_RF_PORT, CON_POW_RF_PIN, enable ? GPIO_PIN_RESET : GPIO_PIN_SET);
+    /* PC5 controls 5V boost for audio amplifier
+     * Assuming normal logic: HIGH = ON, LOW = OFF
+     */
+    HAL_GPIO_WritePin(CON_POW_RF_PORT, CON_POW_RF_PIN, enable ? GPIO_PIN_SET : GPIO_PIN_RESET);
 }
 
 void HW_SetMute(bool mute)
@@ -38,7 +44,7 @@ void HW_SetMute(bool mute)
 
 void HW_SetAudioMode(bool mono)
 {
-    /* o3 verified: PD3 controls CON_STEREO signal to U4 analog switch
+    /* Hardware team verified: PD2 controls CON_STEREO signal
      * LOW = STEREO, HIGH = MONO
      */
     HAL_GPIO_WritePin(CON_STEREO_PORT, CON_STEREO_PIN, mono ? GPIO_PIN_SET : GPIO_PIN_RESET);
@@ -134,7 +140,7 @@ void HW_Init(void)
     HAL_GPIO_Init(CON_MUTE_PORT, &GPIO_InitStruct);
     HAL_GPIO_WritePin(CON_MUTE_PORT, CON_MUTE_PIN, GPIO_PIN_RESET);  // Start muted
     
-    /* STEREO/MONO control - PD3 */
+    /* STEREO/MONO control - PD2 (Hardware team verified) */
     GPIO_InitStruct.Pin = CON_STEREO_PIN;
     HAL_GPIO_Init(CON_STEREO_PORT, &GPIO_InitStruct);
     HAL_GPIO_WritePin(CON_STEREO_PORT, CON_STEREO_PIN, GPIO_PIN_RESET);  // Start in STEREO
@@ -142,11 +148,11 @@ void HW_Init(void)
     /* Power control pins */
     GPIO_InitStruct.Pin = CON_POW_CPU_PIN;  // PC6
     HAL_GPIO_Init(CON_POW_CPU_PORT, &GPIO_InitStruct);
-    HAL_GPIO_WritePin(CON_POW_CPU_PORT, CON_POW_CPU_PIN, GPIO_PIN_RESET);  // Keep power ON
+    HAL_GPIO_WritePin(CON_POW_CPU_PORT, CON_POW_CPU_PIN, GPIO_PIN_RESET);  // Keep power ON (LOW = ON)
     
     GPIO_InitStruct.Pin = CON_POW_RF_PIN;   // PC5
     HAL_GPIO_Init(CON_POW_RF_PORT, &GPIO_InitStruct);
-    HAL_GPIO_WritePin(CON_POW_RF_PORT, CON_POW_RF_PIN, GPIO_PIN_SET);    // 5V OFF initially
+    HAL_GPIO_WritePin(CON_POW_RF_PORT, CON_POW_RF_PIN, GPIO_PIN_RESET);  // 5V OFF initially (LOW = OFF)
     
     GPIO_InitStruct.Pin = CON_POW_LCD_PIN;  // PA3
     HAL_GPIO_Init(CON_POW_LCD_PORT, &GPIO_InitStruct);
@@ -182,33 +188,42 @@ void HW_Init(void)
 
 void HW_PowerOnSequence(void)
 {
-    /* o3 verified power-on sequence:
-     * 1. MCU must immediately set PC6 LOW to maintain power after SW_POW release
-     * 2. Enable LCD power, then 5V for audio
-     * 3. Initialize display and audio
+    /* Hardware team power-on sequence:
+     * 1. PC6 HIGH to maintain power after SW_POW release
+     * 2. Mute audio first (PA4 LOW)
+     * 3. Enable LCD power (PA3 HIGH)
+     * 4. Initialize LCD and backlight
+     * 5. Enable 5V boost (PC5 HIGH)
+     * 6. Unmute audio (PA4 HIGH)
      */
     
-    // 1. Ensure main power stays ON (PC6 must be LOW)
-    HW_SetMainPower(true);  // This sets PC6 LOW
+    // 1. Ensure main power stays ON (PC6 must be HIGH)
+    HW_SetMainPower(true);  // This sets PC6 HIGH
     HAL_Delay(10);
     
-    // 2. Enable LCD power
-    HW_SetLCDPower(true);
+    // 2. Mute audio during power on
+    HW_SetMute(true);  // PA4 LOW
+    
+    // 3. Enable LCD power
+    HW_SetLCDPower(true);  // PA3 HIGH
     HAL_Delay(10);
     
-    // 3. Initialize LCD
+    // 4. Initialize LCD
     ST7735_Init();
-    ST7735_SetBacklight(2);  // High brightness for boot
+    // PB1 LOW to enable backlight power via Q7
+    HAL_GPIO_WritePin(CLD_BL1_PORT, CLD_BL1_PIN, GPIO_PIN_RESET);
+    // PB2 HIGH for bright backlight
+    HAL_GPIO_WritePin(CLD_BL2_PORT, CLD_BL2_PIN, GPIO_PIN_SET);
     UI_ShowBootLogo();
     
-    // 4. Enable 5V for audio amplifier
-    HW_Set5VPower(true);
+    // 5. Enable 5V for audio amplifier
+    HW_Set5VPower(true);  // PC5 HIGH
     HAL_Delay(50);  // Allow 5V to stabilize
     
-    // 5. Unmute audio
-    HW_SetMute(false);
+    // 6. Unmute audio after power stable
+    HW_SetMute(false);  // PA4 HIGH
     
-    // 6. Set initial LED state based on battery
+    // 7. Set initial LED state based on battery
     float voltage = Power_GetBatteryVoltage();
     if (voltage >= 3.0f)
     {
@@ -226,7 +241,38 @@ void HW_PowerOnSequence(void)
 
 void HW_PowerOffSequence(void)
 {
-    // Implement power-off sequence as per spec
+    /* Hardware team power-off sequence:
+     * 1. Mute audio (PA4 LOW)
+     * 2. Disable 5V boost (PC5 LOW)
+     * 3. Turn off backlight (PB2 High-Z, PB1 High-Z)
+     * 4. Disable LCD power (PA3 LOW)
+     * 5. Turn off main power (PC6 LOW)
+     */
+    
+    // 1. Mute audio before power off
+    HW_SetMute(true);  // PA4 LOW
+    HAL_Delay(10);
+    
+    // 2. Disable 5V boost
+    HW_Set5VPower(false);  // PC5 LOW
+    HAL_Delay(10);
+    
+    // 3. Turn off backlight - configure as high impedance
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+    GPIO_InitStruct.Pin = CLD_BL2_PIN;
+    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;  // High-Z
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    HAL_GPIO_Init(CLD_BL2_PORT, &GPIO_InitStruct);
+    
+    GPIO_InitStruct.Pin = CLD_BL1_PIN;
+    HAL_GPIO_Init(CLD_BL1_PORT, &GPIO_InitStruct);
+    
+    // 4. Disable LCD power
+    HW_SetLCDPower(false);  // PA3 LOW
+    HAL_Delay(10);
+    
+    // 5. Turn off main power
+    HW_SetMainPower(false);  // PC6 LOW
     // 1. Mute audio
     HW_SetMute(true);
     HAL_Delay(10);

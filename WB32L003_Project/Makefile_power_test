@@ -15,7 +15,6 @@ BUILD_DIR = build
 # Source files
 C_SOURCES =  \
 Core/Src/main.c \
-Core/Src/early_power.c \
 Core/Src/st7735.c \
 Core/Src/power.c \
 Core/Src/ui.c \
