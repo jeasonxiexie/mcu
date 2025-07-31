@@ -1,6 +1,7 @@
-# Firmware Version 3.0 - o3 Hardware Verification Fix
+# Firmware Version 3.0.1 - o3 Hardware Verification Fix
 
 ## Release Date: 2025-07-31
+## Updated: 2025-07-31 (v3.0.1 - Fixed Flash base address)
 
 ## Overview
 This firmware version implements comprehensive hardware fixes based on o3's detailed schematic analysis and verification.
@@ -40,9 +41,15 @@ This firmware version implements comprehensive hardware fixes based on o3's deta
 - PD6 is multiplexed between CHAR detection and UART RX
 - Backlight control uses transistor switching instead of PWM
 
+## Version History
+- v3.0.1: Fixed Flash base address from 0x08000000 to 0x00000000
+- v3.0.0: Initial release based on o3 analysis
+
 ## Files Included
-- `firmware_v3.0_o3.hex` - Intel HEX format for programming
-- `firmware_v3.0_o3.bin` - Binary format
+- `firmware_v3.0.1_o3.hex` - Intel HEX format for programming (v3.0.1)
+- `firmware_v3.0.1_o3.bin` - Binary format (v3.0.1)
+- `firmware_v3.0_o3.hex` - Previous version (deprecated - wrong Flash address)
+- `firmware_v3.0_o3.bin` - Previous version (deprecated - wrong Flash address)
 
 ## Programming Instructions
 Use WB-Link with ISP interface (PC7 for clock/data) to program the firmware.
