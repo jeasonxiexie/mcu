@@ -1,11 +1,35 @@
 #include "st7735.h"
+#include "pin_config.h"
 
-extern SPI_HandleTypeDef hspi1;
-extern TIM_HandleTypeDef htim2;
+/* Software SPI implementation for LCD interface */
+/* o3 verified: Using PB5 (SCL) and PB3 (SDA) for bit-banged SPI */
+
+/* Macros for software SPI control */
+#define LCD_SCL_HIGH()  HAL_GPIO_WritePin(LCD_SCL_PORT, LCD_SCL_PIN, GPIO_PIN_SET)
+#define LCD_SCL_LOW()   HAL_GPIO_WritePin(LCD_SCL_PORT, LCD_SCL_PIN, GPIO_PIN_RESET)
+#define LCD_SDA_HIGH()  HAL_GPIO_WritePin(LCD_SDA_PORT, LCD_SDA_PIN, GPIO_PIN_SET)
+#define LCD_SDA_LOW()   HAL_GPIO_WritePin(LCD_SDA_PORT, LCD_SDA_PIN, GPIO_PIN_RESET)
 
 static void ST7735_SpiWrite(uint8_t data)
 {
-    HAL_SPI_Transmit(&hspi1, &data, 1, HAL_MAX_DELAY);
+    uint8_t bit;
+    
+    /* Send 8 bits, MSB first */
+    for (bit = 0x80; bit != 0; bit >>= 1)
+    {
+        /* Set data line */
+        if (data & bit) {
+            LCD_SDA_HIGH();
+        } else {
+            LCD_SDA_LOW();
+        }
+        
+        /* Clock pulse */
+        LCD_SCL_LOW();
+        __asm__("nop");  /* Small delay */
+        LCD_SCL_HIGH();
+        __asm__("nop");
+    }
 }
 
 void ST7735_WriteCommand(uint8_t cmd)
@@ -236,26 +260,27 @@ void ST7735_DrawImage(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint16_t
 
 void ST7735_SetBacklight(uint8_t level)
 {
-    uint16_t pulse = 0;
+    /* o3 verified: Two-level backlight control via Q7 transistor */
+    /* CLD_BL1 (PB1) controls Q7 PNP transistor - LOW = ON */
+    /* CLD_BL2 (PB2) directly drives backlight cathode */
     
     switch (level)
     {
-        case 0:
-            pulse = 0;
+        case 0:  /* Off */
+            HAL_GPIO_WritePin(CLD_BL1_PORT, CLD_BL1_PIN, GPIO_PIN_SET);    /* BL1 OFF */
+            HAL_GPIO_WritePin(CLD_BL2_PORT, CLD_BL2_PIN, GPIO_PIN_SET);    /* BL2 OFF */
             break;
-        case 1:
-            pulse = 250;
+            
+        case 1:  /* Low brightness - BL2 only */
+            HAL_GPIO_WritePin(CLD_BL1_PORT, CLD_BL1_PIN, GPIO_PIN_SET);    /* BL1 OFF */
+            HAL_GPIO_WritePin(CLD_BL2_PORT, CLD_BL2_PIN, GPIO_PIN_RESET);  /* BL2 ON */
             break;
-        case 2:
-            pulse = 600;
-            break;
+            
+        case 2:  /* High brightness - BL1 via Q7 */
         case 3:
-            pulse = 999;
-            break;
         default:
-            pulse = 600;
+            HAL_GPIO_WritePin(CLD_BL1_PORT, CLD_BL1_PIN, GPIO_PIN_RESET);  /* BL1 ON (Q7 conducts) */
+            HAL_GPIO_WritePin(CLD_BL2_PORT, CLD_BL2_PIN, GPIO_PIN_SET);    /* BL2 OFF */
             break;
     }
-    
-    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, pulse);
 }

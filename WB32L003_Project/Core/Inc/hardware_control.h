@@ -8,8 +8,9 @@
 // Hardware control functions - to be implemented when GPIO assignments are known
 
 // Power control
-void HW_SetMainPower(bool enable);      // CON_POW
-void HW_SetLCDPower(bool enable);       // CON_LCD
+void HW_SetMainPower(bool enable);      // CON_POW_CPU (PC6)
+void HW_SetLCDPower(bool enable);       // CON_POW_LCD (PA3)
+void HW_Set5VPower(bool enable);        // CON_POW_RF (PC5)
 
 // Audio control
 void HW_SetMute(bool mute);             // MUTE pin
@@ -21,7 +22,8 @@ void HW_SetGreenLED(bool on);           // Green LED
 void HW_SetRedLED(bool on);             // Red LED
 
 // Input detection
-bool HW_IsCharging(void);               // CHRG pin
+bool HW_IsCharging(void);               // DET pin (PD7)
+bool HW_IsChargeFull(void);             // CHAR pin (PD6)
 uint16_t HW_GetLeftAudioLevel(void);    // L_AD ADC
 uint16_t HW_GetRightAudioLevel(void);   // R_AD ADC
 

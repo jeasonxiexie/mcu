@@ -8,7 +8,6 @@
 
 static void SystemClock_Config(void);
 static void GPIO_Init(void);
-static void SPI_Init(void);
 static void ADC_Init(void);
 static void TIM_Init(void);
 
@@ -20,7 +19,6 @@ int main(void)
     HAL_Init();
     SystemClock_Config();
     GPIO_Init();
-    SPI_Init();
     ADC_Init();
     TIM_Init();
     
@@ -65,15 +63,15 @@ int main(void)
             UI_UpdateAnimation();
         }
         
-        /* Check power button */
-        if (HAL_GPIO_ReadPin(KEY_PWR_PORT, KEY_PWR_PIN) == GPIO_PIN_RESET)
+        /* Check power button - o3 verified: only power button on PB0 */
+        if (HAL_GPIO_ReadPin(SW_POW_PORT, SW_POW_PIN) == GPIO_PIN_RESET)
         {
             HAL_Delay(50);  // Debounce
-            if (HAL_GPIO_ReadPin(KEY_PWR_PORT, KEY_PWR_PIN) == GPIO_PIN_RESET)
+            if (HAL_GPIO_ReadPin(SW_POW_PORT, SW_POW_PIN) == GPIO_PIN_RESET)
             {
                 uint32_t press_time = 0;
                 // Wait for button release or timeout
-                while (HAL_GPIO_ReadPin(KEY_PWR_PORT, KEY_PWR_PIN) == GPIO_PIN_RESET)
+                while (HAL_GPIO_ReadPin(SW_POW_PORT, SW_POW_PIN) == GPIO_PIN_RESET)
                 {
                     HAL_Delay(10);
                     press_time += 10;
@@ -83,37 +81,18 @@ int main(void)
                         break;
                     }
                 }
-                // Power button short press could cycle backlight levels
-            }
-        }
-        
-        /* Check mode button */
-        if (HAL_GPIO_ReadPin(KEY_MODE_PORT, KEY_MODE_PIN) == GPIO_PIN_RESET)
-        {
-            HAL_Delay(50);  // Debounce
-            if (HAL_GPIO_ReadPin(KEY_MODE_PORT, KEY_MODE_PIN) == GPIO_PIN_RESET)
-            {
-                // Wait for button release
-                while (HAL_GPIO_ReadPin(KEY_MODE_PORT, KEY_MODE_PIN) == GPIO_PIN_RESET)
+                
+                if (press_time < 3000)  // Short press - cycle audio mode
                 {
-                    HAL_Delay(10);
+                    // Toggle between STEREO and MONO
+                    static audio_mode_t current_audio_mode = AUDIO_MODE_STEREO;
+                    current_audio_mode = (current_audio_mode == AUDIO_MODE_STEREO) ? 
+                                       AUDIO_MODE_MONO : AUDIO_MODE_STEREO;
+                    UI_SetAudioMode(current_audio_mode);
+                    
+                    // Update hardware audio mode
+                    HW_SetAudioMode(current_audio_mode == AUDIO_MODE_MONO);
                 }
-                
-                // Toggle between STEREO and MONO
-                static audio_mode_t current_audio_mode = AUDIO_MODE_STEREO;
-                current_audio_mode = (current_audio_mode == AUDIO_MODE_STEREO) ? 
-                                   AUDIO_MODE_MONO : AUDIO_MODE_STEREO;
-                UI_SetAudioMode(current_audio_mode);
-                
-                // Update hardware audio mode
-                HW_SetAudioMode(current_audio_mode == AUDIO_MODE_MONO);
-                
-                // Update MODE_OUT pin
-                HAL_GPIO_WritePin(MODE_OUT_PORT, MODE_OUT_PIN, 
-                                  current_audio_mode == AUDIO_MODE_MONO ? GPIO_PIN_SET : GPIO_PIN_RESET);
-                
-                // TODO: Save audio mode to flash for power-off memory
-                // SaveAudioModeToFlash(current_audio_mode);
             }
         }
         
@@ -152,96 +131,53 @@ static void GPIO_Init(void)
     __HAL_RCC_GPIOA_CLK_ENABLE();
     __HAL_RCC_GPIOB_CLK_ENABLE();
     __HAL_RCC_GPIOC_CLK_ENABLE();
-    /* GPIOD clock enable - commented out as HAL may not support it */
-    /* If your HAL supports GPIOD, uncomment the following line: */
-    /* __HAL_RCC_GPIOD_CLK_ENABLE(); */
     
-    /* TFT control pins */
-    GPIO_InitStruct.Pin = TFT_CS_PIN;  // PB4
+    /* Enable GPIOD clock manually since HAL macro might be missing */
+    /* Based on pattern: GPIOA=17, GPIOB=18, GPIOC=19, so GPIOD should be 20 */
+    #ifndef __HAL_RCC_GPIOD_CLK_ENABLE
+        #define RCC_AHBENR_GPIODEN_Pos           (20U)
+        #define RCC_AHBENR_GPIODEN_Msk           (0x1UL << RCC_AHBENR_GPIODEN_Pos)
+        #define RCC_AHBENR_GPIODEN               RCC_AHBENR_GPIODEN_Msk
+        SET_BIT(RCC->AHBENR, RCC_AHBENR_GPIODEN);
+        /* Read back to ensure write completion */
+        volatile uint32_t tmpreg = READ_BIT(RCC->AHBENR, RCC_AHBENR_GPIODEN);
+        (void)tmpreg;
+    #else
+        __HAL_RCC_GPIOD_CLK_ENABLE();
+    #endif
+    
+    /* LCD control pins (o3: PB7-PB0 used for LCD) */
     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-    HAL_GPIO_Init(TFT_CS_PORT, &GPIO_InitStruct);
     
-    GPIO_InitStruct.Pin = TFT_DC_PIN;  // PA3
-    HAL_GPIO_Init(TFT_DC_PORT, &GPIO_InitStruct);
+    /* LCD pins on GPIOB - software SPI */
+    GPIO_InitStruct.Pin = LCD_RST_PIN | LCD_RS_PIN | LCD_SCL_PIN | LCD_CS_PIN | LCD_SDA_PIN;
+    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
     
-    /* TFT_RST_PIN on GPIOD - commented out as HAL may not support GPIOD */
-    /* GPIO_InitStruct.Pin = TFT_RST_PIN;  // PD3 */
-    /* HAL_GPIO_Init(TFT_RST_PORT, &GPIO_InitStruct); */
-    
-    /* Set initial states */
-    HAL_GPIO_WritePin(TFT_CS_PORT, TFT_CS_PIN, GPIO_PIN_SET);    // CS high (inactive)
-    HAL_GPIO_WritePin(TFT_DC_PORT, TFT_DC_PIN, GPIO_PIN_SET);    // DC high
-    /* HAL_GPIO_WritePin(TFT_RST_PORT, TFT_RST_PIN, GPIO_PIN_SET);  // RST high - GPIOD */
-    
-    /* PWM backlight pin - will be configured as AF in TIM_Init */
-    GPIO_InitStruct.Pin = TFT_BL_PIN;  // PA1
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    /* Backlight control pins */
+    GPIO_InitStruct.Pin = CLD_BL1_PIN | CLD_BL2_PIN;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.Alternate = GPIO_AF2_TIM2;  // TIM2_CH2
-    HAL_GPIO_Init(TFT_BL_PORT, &GPIO_InitStruct);
+    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
     
-    /* Button inputs with pull-up - GPIOD not supported in current HAL */
-    /* TODO: Enable when HAL supports GPIOD */
-    /* GPIO_InitStruct.Pin = KEY_PWR_PIN;  // PD6
+    /* Set initial LCD states */
+    HAL_GPIO_WritePin(LCD_CS_PORT, LCD_CS_PIN, GPIO_PIN_SET);      // CS high (inactive)
+    HAL_GPIO_WritePin(LCD_RS_PORT, LCD_RS_PIN, GPIO_PIN_SET);      // DC high
+    HAL_GPIO_WritePin(LCD_RST_PORT, LCD_RST_PIN, GPIO_PIN_SET);    // RST high
+    HAL_GPIO_WritePin(LCD_SCL_PORT, LCD_SCL_PIN, GPIO_PIN_SET);    // Clock high
+    HAL_GPIO_WritePin(CLD_BL1_PORT, CLD_BL1_PIN, GPIO_PIN_SET);    // BL1 off
+    HAL_GPIO_WritePin(CLD_BL2_PORT, CLD_BL2_PIN, GPIO_PIN_SET);    // BL2 off
+    
+    /* Power button input (o3: SW_POW on PB0) */
     GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
     GPIO_InitStruct.Pull = GPIO_PULLUP;
-    HAL_GPIO_Init(KEY_PWR_PORT, &GPIO_InitStruct);
+    GPIO_InitStruct.Pin = SW_POW_PIN;
+    HAL_GPIO_Init(SW_POW_PORT, &GPIO_InitStruct);
     
-    GPIO_InitStruct.Pin = KEY_MODE_PIN;  // PD4
-    HAL_GPIO_Init(KEY_MODE_PORT, &GPIO_InitStruct); */
-    
-    /* LED output */
-    GPIO_InitStruct.Pin = LED_RED_PIN;  // PD5
-    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    HAL_GPIO_Init(LED_RED_PORT, &GPIO_InitStruct);
-    HAL_GPIO_WritePin(LED_RED_PORT, LED_RED_PIN, GPIO_PIN_SET);  // LED off (active low)
-    
-    /* Mode output pin */
-    GPIO_InitStruct.Pin = MODE_OUT_PIN;  // PB2
-    HAL_GPIO_Init(MODE_OUT_PORT, &GPIO_InitStruct);
-    HAL_GPIO_WritePin(MODE_OUT_PORT, MODE_OUT_PIN, GPIO_PIN_RESET);  // Default STEREO
-    
-    /* ADC pins will be configured as analog in ADC_Init */
-    /* SPI pins will be configured as AF in SPI_Init */
+    /* Note: All other GPIO initialization is handled by HW_Init() */
+    /* including power control, LEDs, audio control, etc. */
 }
 
-static void SPI_Init(void)
-{
-    GPIO_InitTypeDef GPIO_InitStruct = {0};
-    SPI_HandleTypeDef hspi1 = {0};
-    
-    __HAL_RCC_SPI1_CLK_ENABLE();
-    
-    /* Configure SPI pins: PC5 (SCK) and PC6 (MOSI) */
-    GPIO_InitStruct.Pin = TFT_SPI_SCLK_PIN | TFT_SPI_MOSI_PIN;  // PC5 | PC6
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-    GPIO_InitStruct.Alternate = GPIO_AF0_SPI1;  // SPI1 alternate function
-    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-    
-    /* Configure SPI peripheral */
-    hspi1.Instance = SPI1;
-    hspi1.Init.Mode = SPI_MODE_MASTER;
-    hspi1.Init.Direction = SPI_DIRECTION_1LINE;  // Single line TX only for TFT
-    hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
-    hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;   // CPOL = 0
-    hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;       // CPHA = 0 (Mode 0)
-    hspi1.Init.NSS = SPI_NSS_SOFT;
-    hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;  // 24MHz/2 = 12MHz
-    hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
-    hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
-    hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
-    HAL_SPI_Init(&hspi1);
-    
-    /* Note: SPI configured for transmit-only mode since TFT is write-only */
-    /* MISO pin is not connected, saving one GPIO */
-}
 
 static void ADC_Init(void)
 {
@@ -255,11 +191,11 @@ static void ADC_Init(void)
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     
-    /* Battery ADC pin - PC0 */
+    /* Battery ADC pin - PC2 (o3 verified) */
     GPIO_InitStruct.Pin = BAT_ADC_PIN;
     HAL_GPIO_Init(BAT_ADC_PORT, &GPIO_InitStruct);
     
-    /* Audio ADC pins - PC1, PC2 */
+    /* Audio ADC pins - PC4 (left), PC3 (right) (o3 verified) */
     GPIO_InitStruct.Pin = L_AD_PIN;
     HAL_GPIO_Init(L_AD_PORT, &GPIO_InitStruct);
     
@@ -283,19 +219,19 @@ static void ADC_Init(void)
     hadc.Init.Overrun = ADC_OVR_DATA_OVERWRITTEN;
     HAL_ADC_Init(&hadc);
     
-    /* Configure Battery voltage channel - PC0 (ADC_IN15) */
+    /* Configure Battery voltage channel - PC2 (ADC_IN13) (o3 verified) */
     sConfig.Channel = BAT_ADC_CHANNEL;
     sConfig.Rank = 1;
     sConfig.SamplingTime = ADC_SAMPLETIME_239CYCLES_5;  // Long sampling for accuracy
     HAL_ADC_ConfigChannel(&hadc, &sConfig);
     
-    /* Configure Left audio channel - PC1 (ADC_IN14) */
+    /* Configure Left audio channel - PC4 (ADC_IN11) (o3 verified) */
     sConfig.Channel = L_AD_ADC_CHANNEL;
     sConfig.Rank = 2;
     sConfig.SamplingTime = ADC_SAMPLETIME_71CYCLES_5;  // Faster for audio
     HAL_ADC_ConfigChannel(&hadc, &sConfig);
     
-    /* Configure Right audio channel - PC2 (ADC_IN13) */
+    /* Configure Right audio channel - PC3 (ADC_IN12) (o3 verified) */
     sConfig.Channel = R_AD_ADC_CHANNEL;
     sConfig.Rank = 3;
     sConfig.SamplingTime = ADC_SAMPLETIME_71CYCLES_5;  // Faster for audio
@@ -314,30 +250,11 @@ static void ADC_Init(void)
 
 static void TIM_Init(void)
 {
-    TIM_HandleTypeDef htim2;  // Use TIM2 for PWM backlight (TIM1 not supported in HAL)
-    TIM_OC_InitTypeDef sConfigOC = {0};
+    /* o3 verified: Backlight is controlled via transistor (PB1/PB2), not PWM */
+    /* Timer initialization removed - backlight control is handled by HW_SetBacklight */
     
-    /* TIM2 for PWM backlight control */
-    __HAL_RCC_TIM2_CLK_ENABLE();
-    
-    htim2.Instance = TIM2;
-    htim2.Init.Prescaler = 31;  // For 1kHz PWM at 24MHz clock
-    htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-    htim2.Init.Period = 999;
-    htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-    htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
-    HAL_TIM_PWM_Init(&htim2);
-    
-    sConfigOC.OCMode = TIM_OCMODE_PWM1;
-    sConfigOC.Pulse = 500;  // 50% duty cycle default
-    sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-    sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-    HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_2);
-    
-    HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
-    
-    /* Note: Will upgrade to TIM1 when HAL support is available
-       ADC will use software trigger for now */
+    /* Timers may still be needed for other purposes like ADC triggering */
+    /* Add timer initialization here if needed in the future */
 }
 
 void HAL_SYSTICK_Callback(void)
