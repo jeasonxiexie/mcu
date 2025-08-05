@@ -1,0 +1,109 @@
+# Makefile for minimal LCD test
+# Version 8.0 - Focus on LCD functionality only
+
+TARGET = lcd_minimal_test
+
+# Toolchain
+PREFIX = arm-none-eabi-
+CC = $(PREFIX)gcc
+AS = $(PREFIX)gcc -x assembler-with-cpp
+CP = $(PREFIX)objcopy
+SZ = $(PREFIX)size
+HEX = $(CP) -O ihex
+BIN = $(CP) -O binary -S
+
+# Build directory
+BUILD_DIR = build_lcd_minimal
+
+# Sources
+C_SOURCES = \
+Core/Src/lcd_test_minimal.c \
+Core/Src/system_wb32l003.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal_cortex.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal_gpio.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal_rcc.c
+
+# Startup file
+ASM_SOURCES = \
+Core/Startup/startup_wb32l003.s
+
+# Includes
+C_INCLUDES = \
+-ICore/Inc \
+-IDrivers/WB32L003_HAL_Driver/Inc \
+-IDrivers/CMSIS/Include \
+-IDrivers/CMSIS/Device/WestBerry/WB32L003/Include
+
+# Defines
+C_DEFS = \
+-DUSE_HAL_DRIVER \
+-DWB32L003K8U6
+
+# MCU flags
+CPU = -mcpu=cortex-m0plus
+MCU = $(CPU) -mthumb
+
+# Compile flags
+CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) -Wall -fdata-sections -ffunction-sections
+CFLAGS += -Os -g
+
+# Linker flags
+LDSCRIPT = WB32L003K8Ux_FLASH.ld
+LDFLAGS = $(MCU) -specs=nosys.specs -T$(LDSCRIPT) -Wl,--gc-sections
+LDFLAGS += -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--print-memory-usage
+
+# Libraries
+LIBS = -lc -lm -lnosys
+
+# Build all
+all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
+
+# Create build directory
+$(BUILD_DIR):
+	mkdir -p $@
+
+# Build object files
+OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(C_SOURCES:.c=.o)))
+vpath %.c $(sort $(dir $(C_SOURCES)))
+
+OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(ASM_SOURCES:.s=.o)))
+vpath %.s $(sort $(dir $(ASM_SOURCES)))
+
+$(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR)
+	$(CC) -c $(CFLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@
+
+$(BUILD_DIR)/%.o: %.s Makefile | $(BUILD_DIR)
+	$(AS) -c $(CFLAGS) $< -o $@
+
+# Build ELF
+$(BUILD_DIR)/$(TARGET).elf: $(OBJECTS) Makefile
+	$(CC) $(OBJECTS) $(LDFLAGS) $(LIBS) -o $@
+	$(SZ) $@
+
+# Build HEX
+$(BUILD_DIR)/$(TARGET).hex: $(BUILD_DIR)/$(TARGET).elf | $(BUILD_DIR)
+	$(HEX) $< $@
+
+# Build BIN
+$(BUILD_DIR)/$(TARGET).bin: $(BUILD_DIR)/$(TARGET).elf | $(BUILD_DIR)
+	$(BIN) $< $@
+
+# Clean
+clean:
+	-rm -rf $(BUILD_DIR)
+
+# Flash using JLink
+flash: $(BUILD_DIR)/$(TARGET).hex
+	@echo "Creating JLink script..."
+	@echo "device WB32L003K8U6" > $(BUILD_DIR)/flash.jlink
+	@echo "si SWD" >> $(BUILD_DIR)/flash.jlink
+	@echo "speed 4000" >> $(BUILD_DIR)/flash.jlink
+	@echo "connect" >> $(BUILD_DIR)/flash.jlink
+	@echo "loadfile $(BUILD_DIR)/$(TARGET).hex" >> $(BUILD_DIR)/flash.jlink
+	@echo "r" >> $(BUILD_DIR)/flash.jlink
+	@echo "g" >> $(BUILD_DIR)/flash.jlink
+	@echo "exit" >> $(BUILD_DIR)/flash.jlink
+	JLinkExe -CommandFile $(BUILD_DIR)/flash.jlink
+
+.PHONY: all clean flash

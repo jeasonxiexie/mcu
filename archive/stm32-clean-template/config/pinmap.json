@@ -1,0 +1,66 @@
+{
+  "mcu": "WB32L003K8U6",
+  "peripherals": {
+    "spi1": {
+      "enabled": true,
+      "sclk": "PA5",
+      "mosi": "PA7",
+      "miso": null,
+      "speed": "8MHz",
+      "mode": "master"
+    },
+    "display": {
+      "type": "st7735",
+      "interface": "spi1",
+      "cs": "PB0",
+      "dc": "PB1",
+      "rst": "PB2",
+      "bl": "PA1",
+      "width": 80,
+      "height": 160,
+      "rotation": 0
+    },
+    "power": {
+      "battery_adc": {
+        "pin": "PA0",
+        "channel": "ADC_CHANNEL_0",
+        "voltage_divider": 2.0
+      },
+      "power_btn": "PC13",
+      "power_led": "PA3",
+      "charge_detect": null
+    },
+    "audio": {
+      "mute": null,
+      "mode_select": null,
+      "left_adc": null,
+      "right_adc": null
+    },
+    "timers": {
+      "tim2": {
+        "enabled": true,
+        "channel2": {
+          "pin": "PA1",
+          "mode": "PWM",
+          "purpose": "display_backlight"
+        }
+      }
+    },
+    "adc": {
+      "enabled": true,
+      "reference": "VDD",
+      "resolution": 12,
+      "channels": ["PA0"]
+    }
+  },
+  "gpio_config": {
+    "PA0": {"mode": "analog", "purpose": "battery_adc"},
+    "PA1": {"mode": "alternate", "af": "TIM2_CH2", "purpose": "display_backlight"},
+    "PA5": {"mode": "alternate", "af": "SPI1_SCK", "purpose": "display_spi"},
+    "PA7": {"mode": "alternate", "af": "SPI1_MOSI", "purpose": "display_spi"},
+    "PB0": {"mode": "output", "purpose": "display_cs"},
+    "PB1": {"mode": "output", "purpose": "display_dc"},
+    "PB2": {"mode": "output", "purpose": "display_rst"},
+    "PC13": {"mode": "input", "pull": "up", "purpose": "power_button"}
+  }
+}

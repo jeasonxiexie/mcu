@@ -1,0 +1,76 @@
+# Makefile for power test
+TARGET = power_test_high
+BUILD_DIR = build_power_test
+
+CC = arm-none-eabi-gcc
+AS = arm-none-eabi-gcc -x assembler-with-cpp
+CP = arm-none-eabi-objcopy
+SZ = arm-none-eabi-size
+
+CPU = -mcpu=cortex-m0plus
+MCU = $(CPU) -mthumb
+
+C_SOURCES =  \
+Core/Src/power_test_high.c \
+Core/Src/syscalls.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal_cortex.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal_rcc.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal_gpio.c \
+Drivers/WB32L003_HAL_Driver/Src/system_wb32l003.c
+
+ASM_SOURCES = startup_wb32l003.s
+
+C_DEFS =  \
+-DUSE_HAL_DRIVER \
+-DWB32L003K8U6 \
+-DUSE_HSI_ONLY
+
+C_INCLUDES =  \
+-ICore/Inc \
+-IDrivers/WB32L003_HAL_Driver/Inc \
+-IDrivers/CMSIS/Include
+
+CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) -Og -Wall -fdata-sections -ffunction-sections -ffreestanding -g -gdwarf-2
+
+LDSCRIPT = WB32L003K8Ux_FLASH.ld
+LIBS = -lc -lm -lnosys
+LIBDIR = -L/opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp
+LDFLAGS = $(MCU) -T$(LDSCRIPT) $(LIBDIR) -lgcc $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections -nostartfiles -nodefaultlibs
+
+all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
+
+OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(C_SOURCES:.c=.o)))
+vpath %.c $(sort $(dir $(C_SOURCES)))
+OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(ASM_SOURCES:.s=.o)))
+vpath %.s $(sort $(dir $(ASM_SOURCES)))
+
+$(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR) 
+	$(CC) -c $(CFLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@
+
+$(BUILD_DIR)/%.o: %.s Makefile | $(BUILD_DIR)
+	$(AS) -c $(CFLAGS) $< -o $@
+
+$(BUILD_DIR)/$(TARGET).elf: $(OBJECTS) Makefile
+	@mkdir -p $(BUILD_DIR)/stubs
+	@echo "// empty" > $(BUILD_DIR)/stubs/dummy.c
+	@$(CC) -c $(BUILD_DIR)/stubs/dummy.c -o $(BUILD_DIR)/stubs/dummy.o
+	@ar rcs $(BUILD_DIR)/stubs/libc.a $(BUILD_DIR)/stubs/dummy.o
+	@ar rcs $(BUILD_DIR)/stubs/libm.a $(BUILD_DIR)/stubs/dummy.o
+	@ar rcs $(BUILD_DIR)/stubs/libnosys.a $(BUILD_DIR)/stubs/dummy.o
+	$(CC) $(OBJECTS) -L$(BUILD_DIR)/stubs $(LDFLAGS) -o $@
+	$(SZ) $@
+
+$(BUILD_DIR)/%.hex: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
+	$(CP) -O ihex $< $@
+	
+$(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
+	$(CP) -O binary -S $< $@	
+	
+$(BUILD_DIR):
+	mkdir $@		
+
+clean:
+	-rm -fR $(BUILD_DIR)
+
+.PHONY: all clean

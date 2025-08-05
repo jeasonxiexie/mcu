@@ -1,0 +1,133 @@
+# Makefile for WB32L003 LCD MVP Test
+# Minimal viable product for LCD testing
+
+# Target
+TARGET = lcd_mvp
+
+# Debug build?
+DEBUG = 1
+
+# Build path
+BUILD_DIR = build_mvp
+
+# Source files
+C_SOURCES =  \
+Core/Src/mvp_test.c \
+Core/Src/lcd_mvp.c \
+Core/Src/early_power.c \
+Core/Src/syscalls.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal_cortex.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal_rcc.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal_gpio.c \
+Drivers/WB32L003_HAL_Driver/Src/system_wb32l003.c
+
+# ASM sources
+ASM_SOURCES = startup_wb32l003.s
+
+# Binaries
+PREFIX = arm-none-eabi-
+CC = $(PREFIX)gcc
+AS = $(PREFIX)gcc -x assembler-with-cpp
+CP = $(PREFIX)objcopy
+SZ = $(PREFIX)size
+
+# CPU
+CPU = -mcpu=cortex-m0plus
+
+# FPU
+FPU = 
+
+# FLOAT-ABI
+FLOAT-ABI = -mfloat-abi=soft
+
+# MCU
+MCU = $(CPU) -mthumb $(FPU) $(FLOAT-ABI)
+
+# AS includes
+AS_INCLUDES = 
+
+# AS defines
+AS_DEFS = 
+
+# C includes
+C_INCLUDES =  \
+-ICore/Inc \
+-IDrivers/WB32L003_HAL_Driver/Inc \
+-IDrivers/CMSIS/Include
+
+# C defines
+C_DEFS =  \
+-DUSE_HAL_DRIVER \
+-DWB32L003K8U6 \
+-DUSE_HSI_ONLY
+
+# Compile flags
+ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
+
+CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections -ffreestanding
+
+ifeq ($(DEBUG), 1)
+CFLAGS += -g -gdwarf-2
+OPT = -Og
+else
+OPT = -Os
+endif
+
+# Generate dependency information
+CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
+
+# link script
+LDSCRIPT = WB32L003K8Ux_FLASH.ld
+
+# libraries
+LIBS = -L/opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp -L$(BUILD_DIR)/stubs -lgcc -lc -lm -lnosys
+LIBDIR = 
+LDFLAGS = $(MCU) -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections -nostartfiles -nodefaultlibs
+
+# default action: build all
+all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
+
+# list of objects
+OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(C_SOURCES:.c=.o)))
+vpath %.c $(sort $(dir $(C_SOURCES)))
+# list of ASM program objects
+OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(ASM_SOURCES:.s=.o)))
+vpath %.s $(sort $(dir $(ASM_SOURCES)))
+
+$(BUILD_DIR)/%.o: %.c Makefile_mvp | $(BUILD_DIR) 
+	$(CC) -c $(CFLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@
+
+$(BUILD_DIR)/%.o: %.s Makefile_mvp | $(BUILD_DIR)
+	$(AS) -c $(CFLAGS) $< -o $@
+
+$(BUILD_DIR)/$(TARGET).elf: $(OBJECTS) Makefile_mvp | $(BUILD_DIR)/stubs
+	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
+	$(SZ) $@
+
+$(BUILD_DIR)/%.hex: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
+	$(CP) -O ihex $< $@
+	
+$(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
+	$(CP) -O binary -S $< $@	
+	
+$(BUILD_DIR):
+	mkdir $@
+
+$(BUILD_DIR)/stubs: | $(BUILD_DIR)
+	mkdir -p $@
+	echo "// empty" > $@/dummy.c
+	$(CC) -c $@/dummy.c -o $@/dummy.o
+	ar rcs $@/libc.a $@/dummy.o
+	ar rcs $@/libm.a $@/dummy.o
+	ar rcs $@/libnosys.a $@/dummy.o
+
+# clean up
+clean:
+	-rm -fR $(BUILD_DIR)
+
+# phony targets
+.PHONY: all clean
+
+# dependencies
+-include $(wildcard $(BUILD_DIR)/*.d)

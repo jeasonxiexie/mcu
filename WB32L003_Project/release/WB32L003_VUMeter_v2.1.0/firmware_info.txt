@@ -1,0 +1,30 @@
+WB32L003 VU Meter Firmware v2.1.0
+=================================
+
+Build Date: 2025-07-10
+Target MCU: WB32L003K8U6 (QFN32)
+
+Memory Usage:
+- Flash: 64528 bytes (98.4% of 64KB)
+- RAM: 2016 bytes (49.2% of 4KB)
+
+Pin Configuration:
+- SPI: PC5(SCK), PC6(MOSI), PC0(CS)
+- Display: PA3(DC), PD3(RST), PA1(BL_PWM)
+- Buttons: PD6(PWR), PD4(MODE)
+- LEDs: PB0(RED), PB2(GREEN)
+- ADC: PC0(BAT), PC1(L_CH), PC2(R_CH)
+- Debug: PB6(TX), PD6(RX)
+
+Features:
+- Stereo/Mono VU meter display
+- Battery voltage monitoring
+- PWM backlight control
+- Power management with sleep modes
+- 1kHz audio sampling rate
+- 50Hz display refresh rate
+
+Notes:
+- GPIOD support pending HAL update
+- Using TIM2 for PWM (TIM1 planned)
+- PC0 shared between CS and ADC

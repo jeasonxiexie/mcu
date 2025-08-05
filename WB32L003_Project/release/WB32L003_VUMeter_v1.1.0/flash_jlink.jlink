@@ -1,0 +1,18 @@
+# J-Link flash script for WB32L003K8U6
+# Usage: JLinkExe -device WB32L003K8U6 -if SWD -speed 4000 -CommanderScript flash_jlink.jlink
+
+# Connect to target
+connect
+
+# Halt target
+h
+
+# Load firmware
+loadfile firmware.hex
+
+# Reset and run
+r
+g
+
+# Exit
+exit

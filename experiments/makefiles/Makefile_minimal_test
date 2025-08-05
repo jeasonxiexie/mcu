@@ -1,0 +1,57 @@
+# Minimal Makefile
+TARGET = minimal_blink
+BUILD_DIR = build_minimal_test
+
+CC = arm-none-eabi-gcc
+AS = arm-none-eabi-gcc -x assembler-with-cpp
+CP = arm-none-eabi-objcopy
+SZ = arm-none-eabi-size
+
+CPU = -mcpu=cortex-m0plus
+MCU = $(CPU) -mthumb
+
+C_SOURCES = Core/Src/minimal_blink.c
+ASM_SOURCES = startup_wb32l003.s
+
+C_DEFS = -DWB32L003K8U6
+
+C_INCLUDES = \
+-ICore/Inc \
+-IDrivers/WB32L003_HAL_Driver/Inc \
+-IDrivers/CMSIS/Include
+
+CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) -Os -Wall -fdata-sections -ffunction-sections -ffreestanding -nostdlib
+
+LDSCRIPT = WB32L003K8Ux_FLASH.ld
+LDFLAGS = $(MCU) -T$(LDSCRIPT) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections -nostartfiles -nodefaultlibs -nostdlib -lgcc -L/opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp
+
+all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
+
+OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(C_SOURCES:.c=.o)))
+vpath %.c $(sort $(dir $(C_SOURCES)))
+OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(ASM_SOURCES:.s=.o)))
+vpath %.s $(sort $(dir $(ASM_SOURCES)))
+
+$(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR) 
+	$(CC) -c $(CFLAGS) $< -o $@
+
+$(BUILD_DIR)/%.o: %.s Makefile | $(BUILD_DIR)
+	$(AS) -c $(CFLAGS) $< -o $@
+
+$(BUILD_DIR)/$(TARGET).elf: $(OBJECTS) Makefile
+	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
+	$(SZ) $@
+
+$(BUILD_DIR)/%.hex: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
+	$(CP) -O ihex $< $@
+	
+$(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
+	$(CP) -O binary -S $< $@	
+	
+$(BUILD_DIR):
+	mkdir $@		
+
+clean:
+	-rm -fR $(BUILD_DIR)
+
+.PHONY: all clean

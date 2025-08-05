@@ -1,0 +1,30 @@
+WB32L003 VU Meter Firmware Information
+=====================================
+
+Version: v1.1.0
+Build Date: 2025-01-07
+MCU: WB32L003K8U6 (ARM Cortex-M0+)
+
+Memory Usage:
+- Flash: 64,304 bytes (98.05% of 64KB)
+- RAM: 1,996 bytes (24.37% of 8KB)
+
+Files:
+- firmware.bin : Binary firmware file (64,324 bytes)
+- firmware.hex : Intel HEX format for J-Link/ST-Link
+- firmware.map : Memory map for debugging
+
+Key Features:
+- Real-time audio level detection
+- STEREO/MONO mode switching
+- Battery monitoring with low voltage warning
+- 0.96" TFT display support (ST7735S)
+
+Pinout Summary:
+- Audio Input: PA2 (Left), PA3 (Right)
+- Display: SPI1 + PB0/PB1/PB2 control
+- Power Button: PC13
+- Mode Control: PB6 (STEREO/MONO)
+- LEDs: PB3 (Green), PB4 (Red)
+
+For detailed information, see RELEASE_NOTES.md

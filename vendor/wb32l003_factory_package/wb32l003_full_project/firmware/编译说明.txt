@@ -1,0 +1,25 @@
+固件编译说明
+============
+
+编译环境要求
+-----------
+- arm-none-eabi-gcc (版本 10.3.1 或更高)
+- GNU Make
+
+编译方法一：使用编译脚本
+---------------------
+./build.sh          # 编译项目
+./build.sh clean    # 清理编译文件
+
+编译方法二：使用Make
+------------------
+make clean          # 清理
+make               # 编译
+
+输出文件
+--------
+编译成功后生成：
+- build/firmware.hex
+- build/firmware.bin
+
+文件会自动复制到firmware目录。

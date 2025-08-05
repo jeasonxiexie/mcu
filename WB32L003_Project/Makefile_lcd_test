@@ -1,0 +1,123 @@
+# WB32L003K8U6 LCD Test Makefile
+# Minimal test build for LCD debugging
+
+# Target
+TARGET = lcd_test_fixed
+
+# Debug build?
+DEBUG = 1
+
+# Optimization
+OPT = -Os
+
+# Build path
+BUILD_DIR = build_lcd_test
+
+# Source files - minimal for LCD test only
+C_SOURCES =  \
+Core/Src/lcd_test_fixed.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal_cortex.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal_rcc.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal_gpio.c \
+Drivers/WB32L003_HAL_Driver/Src/system_wb32l003.c
+
+# ASM sources
+ASM_SOURCES = startup_wb32l003.s
+
+# Binaries
+PREFIX = arm-none-eabi-
+CC = $(PREFIX)gcc
+AS = $(PREFIX)gcc -x assembler-with-cpp
+CP = $(PREFIX)objcopy
+SZ = $(PREFIX)size
+
+HEX = $(CP) -O ihex
+BIN = $(CP) -O binary -S
+
+# CPU
+CPU = -mcpu=cortex-m0plus
+
+# FPU and FLOAT-ABI
+FPU = 
+FLOAT-ABI = -mfloat-abi=soft
+
+# MCU
+MCU = $(CPU) -mthumb $(FPU) $(FLOAT-ABI)
+
+# C defines
+C_DEFS =  \
+-DUSE_HAL_DRIVER \
+-DWB32L003K8U6 \
+-DUSE_HSI_ONLY
+
+# C includes
+C_INCLUDES =  \
+-ICore/Inc \
+-IDrivers/WB32L003_HAL_Driver/Inc \
+-IDrivers/CMSIS/Include
+
+# Compile gcc flags
+ASFLAGS = $(MCU) $(OPT) -Wall -fdata-sections -ffunction-sections
+
+CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections -ffreestanding
+
+ifeq ($(DEBUG), 1)
+CFLAGS += -g -gdwarf-2
+endif
+
+# Generate dependency information
+CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
+
+# Link script
+LDSCRIPT = WB32L003K8Ux_FLASH.ld
+
+# Libraries
+LIBS = -lgcc
+LIBDIR = 
+LDFLAGS = $(MCU) -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections -nostartfiles -nodefaultlibs
+
+# Default action: build all
+all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
+
+# Build the application
+# List of objects
+OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(C_SOURCES:.c=.o)))
+vpath %.c $(sort $(dir $(C_SOURCES)))
+
+# List of ASM program objects
+OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(ASM_SOURCES:.s=.o)))
+vpath %.s $(sort $(dir $(ASM_SOURCES)))
+
+$(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR) 
+	$(CC) -c $(CFLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@
+
+$(BUILD_DIR)/%.o: %.s Makefile | $(BUILD_DIR)
+	$(AS) -c $(CFLAGS) $< -o $@
+
+$(BUILD_DIR)/$(TARGET).elf: $(OBJECTS) Makefile
+	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
+	$(SZ) $@
+
+$(BUILD_DIR)/%.hex: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
+	$(HEX) $< $@
+	
+$(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
+	$(BIN) $< $@	
+	
+$(BUILD_DIR):
+	mkdir $@
+
+# Clean up
+clean:
+	-rm -fR $(BUILD_DIR)
+
+# Flash the device
+flash: $(BUILD_DIR)/$(TARGET).bin
+	@echo "Flashing $(BUILD_DIR)/$(TARGET).bin to device..."
+	@echo "Use ST-Link: st-flash write $(BUILD_DIR)/$(TARGET).bin 0x08000000"
+
+# Dependencies
+-include $(wildcard $(BUILD_DIR)/*.d)
+
+.PHONY: all clean flash

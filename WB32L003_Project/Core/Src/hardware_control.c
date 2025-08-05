@@ -125,9 +125,9 @@ void HW_Init(void)
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     
-    /* LCD control pins (PB7-PB1) */
+    /* LCD control pins - CORRECTED to use GPIOC per schematic */
     GPIO_InitStruct.Pin = LCD_RST_PIN | LCD_RS_PIN | LCD_SCL_PIN | LCD_CS_PIN | LCD_SDA_PIN;
-    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
     
     /* Backlight control pins */
     GPIO_InitStruct.Pin = CLD_BL1_PIN | CLD_BL2_PIN;
@@ -156,7 +156,7 @@ void HW_Init(void)
     
     GPIO_InitStruct.Pin = CON_POW_LCD_PIN;  // PA3
     HAL_GPIO_Init(CON_POW_LCD_PORT, &GPIO_InitStruct);
-    HAL_GPIO_WritePin(CON_POW_LCD_PORT, CON_POW_LCD_PIN, GPIO_PIN_RESET); // LCD OFF initially
+    HAL_GPIO_WritePin(CON_POW_LCD_PORT, CON_POW_LCD_PIN, GPIO_PIN_SET); // LCD OFF initially (HIGH = OFF for PNP transistor)
     
     /* LED indicators */
     GPIO_InitStruct.Pin = LED_RED_PIN;  // PC0
@@ -205,7 +205,7 @@ void HW_PowerOnSequence(void)
     HW_SetMute(true);  // PA4 LOW
     
     // 3. Enable LCD power
-    HW_SetLCDPower(true);  // PA3 HIGH
+    HW_SetLCDPower(true);  // PA3 LOW (inverted logic for PNP transistor)
     HAL_Delay(10);
     
     // 4. Initialize LCD

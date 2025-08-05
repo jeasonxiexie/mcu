@@ -13,7 +13,8 @@
       "Bash(git reset:*)",
       "Bash(cp:*)",
       "Bash(python3:*)",
-      "Bash(arm-none-eabi-gcc:*)"
+      "Bash(arm-none-eabi-gcc:*)",
+      "Bash(cat:*)"
     ],
     "deny": []
   }

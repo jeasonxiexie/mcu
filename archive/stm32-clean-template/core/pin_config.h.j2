@@ -1,0 +1,85 @@
+#ifndef __PIN_CONFIG_H
+#define __PIN_CONFIG_H
+
+#include "stm32{{ mcu.series or "f0" }}xx_hal.h"
+
+/**
+ * @brief Pin Configuration for {{ mcu or "STM32" }} MCU
+ * Generated from pinmap.json configuration
+ */
+
+/* GPIO Port and Pin Definitions */
+{% for port_name, port_config in gpio_config.items() -%}
+/* {{ port_name }} Port Configuration */
+{% for pin_name, pin_config in port_config.items() -%}
+#define {{ pin_name }}_Port                {{ pin_config.port }}
+#define {{ pin_name }}_Pin                 {{ pin_config.pin }}
+#define {{ pin_name }}_GPIO_Port           {{ pin_config.port }}
+{% if pin_config.alternate_function -%}
+#define {{ pin_name }}_AF                  {{ pin_config.alternate_function }}
+{% endif -%}
+{% endfor -%}
+
+{% endfor -%}
+
+/* Peripheral Pin Mappings */
+{% if peripherals.display -%}
+/* Display ({{ peripherals.display.type | upper }}) Configuration */
+#define DISPLAY_CS_Port                    {{ peripherals.display.cs.split('P')[0] }}{{ peripherals.display.cs.split('P')[1][0] }}
+#define DISPLAY_CS_Pin                     GPIO_PIN_{{ peripherals.display.cs.split('P')[1][1:] }}
+#define DISPLAY_DC_Port                    {{ peripherals.display.dc.split('P')[0] }}{{ peripherals.display.dc.split('P')[1][0] }}
+#define DISPLAY_DC_Pin                     GPIO_PIN_{{ peripherals.display.dc.split('P')[1][1:] }}
+#define DISPLAY_RST_Port                   {{ peripherals.display.rst.split('P')[0] }}{{ peripherals.display.rst.split('P')[1][0] }}
+#define DISPLAY_RST_Pin                    GPIO_PIN_{{ peripherals.display.rst.split('P')[1][1:] }}
+#define DISPLAY_BL_Port                    {{ peripherals.display.bl.split('P')[0] }}{{ peripherals.display.bl.split('P')[1][0] }}
+#define DISPLAY_BL_Pin                     GPIO_PIN_{{ peripherals.display.bl.split('P')[1][1:] }}
+
+{% endif -%}
+{% if peripherals.power -%}
+/* Power Management Configuration */
+#define POWER_LED_Port                     {{ peripherals.power.led.split('P')[0] }}{{ peripherals.power.led.split('P')[1][0] }}
+#define POWER_LED_Pin                      GPIO_PIN_{{ peripherals.power.led.split('P')[1][1:] }}
+#define POWER_CTRL_Port                    {{ peripherals.power.control.split('P')[0] }}{{ peripherals.power.control.split('P')[1][0] }}
+#define POWER_CTRL_Pin                     GPIO_PIN_{{ peripherals.power.control.split('P')[1][1:] }}
+
+{% endif -%}
+{% if peripherals.audio -%}
+/* Audio Configuration */
+#define AUDIO_MUTE_Port                    {{ peripherals.audio.mute.split('P')[0] }}{{ peripherals.audio.mute.split('P')[1][0] }}
+#define AUDIO_MUTE_Pin                     GPIO_PIN_{{ peripherals.audio.mute.split('P')[1][1:] }}
+#define AUDIO_MODE_Port                    {{ peripherals.audio.mode_select.split('P')[0] }}{{ peripherals.audio.mode_select.split('P')[1][0] }}
+#define AUDIO_MODE_Pin                     GPIO_PIN_{{ peripherals.audio.mode_select.split('P')[1][1:] }}
+
+{% endif -%}
+{% if peripherals.input -%}
+/* Input Configuration */
+#define BUTTON_POWER_Port                  {{ peripherals.input.power_button.split('P')[0] }}{{ peripherals.input.power_button.split('P')[1][0] }}
+#define BUTTON_POWER_Pin                   GPIO_PIN_{{ peripherals.input.power_button.split('P')[1][1:] }}
+
+{% endif -%}
+
+/* ADC Channel Mappings */
+{% if peripherals.adc -%}
+{% for adc_name, adc_config in peripherals.adc.items() -%}
+#define {{ adc_name | upper }}_ADC_CHANNEL           {{ adc_config.channel }}
+{% endfor -%}
+{% endif -%}
+
+/* SPI Configuration */
+{% if peripherals.spi1 -%}
+#define SPI1_SCK_Port                      {{ peripherals.spi1.sck.split('P')[0] }}{{ peripherals.spi1.sck.split('P')[1][0] }}
+#define SPI1_SCK_Pin                       GPIO_PIN_{{ peripherals.spi1.sck.split('P')[1][1:] }}
+#define SPI1_MISO_Port                     {{ peripherals.spi1.miso.split('P')[0] }}{{ peripherals.spi1.miso.split('P')[1][0] }}
+#define SPI1_MISO_Pin                      GPIO_PIN_{{ peripherals.spi1.miso.split('P')[1][1:] }}
+#define SPI1_MOSI_Port                     {{ peripherals.spi1.mosi.split('P')[0] }}{{ peripherals.spi1.mosi.split('P')[1][0] }}
+#define SPI1_MOSI_Pin                      GPIO_PIN_{{ peripherals.spi1.mosi.split('P')[1][1:] }}
+
+{% endif -%}
+
+/* Pin Configuration Functions */
+void GPIO_Init_All(void);
+void SPI_GPIO_Init(void);
+void ADC_GPIO_Init(void);
+void Timer_GPIO_Init(void);
+
+#endif /* __PIN_CONFIG_H */

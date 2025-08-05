@@ -1,0 +1,47 @@
+开发环境配置
+============
+
+硬件环境
+--------
+- 主控芯片：WB32L003K8U6 (QFN32封装)
+- 系统时钟：48MHz (内部振荡器)
+- Flash：8KB
+- RAM：2KB
+- 工作电压：3.3V
+
+软件环境
+--------
+- 编译器：arm-none-eabi-gcc
+- 调试器：WB-Link PRO
+- 烧录软件：WB-Link PRO Configurator v1.0.15
+- 开发框架：WB32L003 HAL库
+
+LCD模块
+-------
+- 型号：0.96寸 TFT
+- 驱动IC：ST7735S
+- 分辨率：80×160
+- 接口：4线SPI（软件模拟）
+- 工作电压：3.3V
+
+编译配置
+--------
+- 优化等级：-Os
+- 调试信息：-g
+- MCU参数：-mcpu=cortex-m0plus -mthumb
+- 链接脚本：WB32L003K8Ux_FLASH.ld
+
+烧录配置
+--------
+- 接口：SWD
+- 速度：4MHz
+- 复位方式：软件复位
+
+调试接口
+--------
+P1接口定义（2.54mm间距）：
+1. +3.3V
+2. GND
+3. NRST
+4. SWCLK (PD1)
+5. SWDIO (PC7)

@@ -1,0 +1,63 @@
+{
+  "features": {
+    "display": {
+      "enabled": true,
+      "driver": "st7735",
+      "width": 80,
+      "height": 160,
+      "color_mode": "RGB565",
+      "backlight_control": true,
+      "rotation": 0
+    },
+    "battery_monitor": {
+      "enabled": true,
+      "low_voltage_threshold": 3.0,
+      "critical_voltage_threshold": 2.8,
+      "voltage_levels": 4,
+      "flash_warning": true
+    },
+    "power_management": {
+      "enabled": true,
+      "sleep_mode": "STOP",
+      "wakeup_sources": ["button", "timer"],
+      "low_power_current": "30uA"
+    },
+    "audio": {
+      "modes": ["STEREO", "MONO"],
+      "level_detection": false,
+      "mute_control": false
+    },
+    "user_interface": {
+      "boot_logo": true,
+      "shutdown_logo": true,
+      "animations": true,
+      "frame_rate": 20
+    },
+    "input": {
+      "buttons": {
+        "power_button": {
+          "enabled": true,
+          "debounce_time": 50,
+          "long_press_time": 3000
+        }
+      }
+    },
+    "debug": {
+      "enabled": true,
+      "uart_output": false,
+      "swd_debug": true
+    }
+  },
+  "resources": {
+    "max_flash_usage": "90%",
+    "max_ram_usage": "80%",
+    "image_compression": true,
+    "font_subset": true
+  },
+  "build_options": {
+    "optimization": "-Os",
+    "debug_symbols": true,
+    "warnings_as_errors": false,
+    "static_analysis": false
+  }
+}

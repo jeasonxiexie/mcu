@@ -72,10 +72,25 @@ Thumbs.db
 # Empty tools directory
 tools/
 
-# Template projects (manage separately)
-stm32-clean-template/
+# Build directories
+WB32L003_Project/build_*/
+WB32L003_Project/minimal_build/
+WB32L003_Project/compile_temp/
 
-# Release management - only keep the latest version
-WB32L003_Project/release/*
-!WB32L003_Project/release/WB32L003_VUMeter_v2.0.0/
-!WB32L003_Project/release/WB32L003_VUMeter_v2.0.0/**
+# Compressed archives
+*.tar.gz
+*.tar.bz2
+*.zip
+
+# Experiment and archive directories (tracked but not their build outputs)
+experiments/builds/**/build/
+experiments/builds/**/*.o
+experiments/builds/**/*.d
+experiments/builds/**/*.elf
+experiments/builds/**/*.map
+experiments/builds/**/*.lst
+
+# Vendor package build outputs
+vendor/**/build/
+vendor/**/*.o
+vendor/**/*.d

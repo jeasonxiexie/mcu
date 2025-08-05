@@ -14,18 +14,18 @@ extern "C" {
 #include "wb32l003.h"
 
 /* ========== LCD INTERFACE (LH096NT) ========== */
-/* Based on o3 analysis: LCD uses PB7-PB0 pins sequentially */
-/* Using bit-banged SPI on PB5/PB3 instead of hardware SPI */
-#define LCD_RST_PIN             GPIO_PIN_7      // PB7 - LCD_RESET
-#define LCD_RST_PORT            GPIOB
-#define LCD_RS_PIN              GPIO_PIN_6      // PB6 - LCD_RS (Data/Command)
-#define LCD_RS_PORT             GPIOB
-#define LCD_SCL_PIN             GPIO_PIN_5      // PB5 - LCD_SCL (SPI Clock)
-#define LCD_SCL_PORT            GPIOB
-#define LCD_CS_PIN              GPIO_PIN_4      // PB4 - LCD_CS (Chip Select)
-#define LCD_CS_PORT             GPIOB
-#define LCD_SDA_PIN             GPIO_PIN_3      // PB3 - LCD_SDA (SPI Data)
-#define LCD_SDA_PORT            GPIOB
+/* CORRECTED based on actual schematic - LCD uses GPIOC pins */
+/* Previous code had wrong pin mappings (was using GPIOB) */
+#define LCD_RST_PIN             GPIO_PIN_3      // PC3 - LCD_RESET
+#define LCD_RST_PORT            GPIOC
+#define LCD_RS_PIN              GPIO_PIN_1      // PC1 - LCD_RS (Data/Command)
+#define LCD_RS_PORT             GPIOC
+#define LCD_SCL_PIN             GPIO_PIN_5      // PC5 - LCD_SCL (SPI Clock)
+#define LCD_SCL_PORT            GPIOC
+#define LCD_CS_PIN              GPIO_PIN_0      // PC0 - LCD_CS (Chip Select)
+#define LCD_CS_PORT             GPIOC
+#define LCD_SDA_PIN             GPIO_PIN_6      // PC6 - LCD_SDA (SPI Data)
+#define LCD_SDA_PORT            GPIOC
 
 /* Backlight control - Two level brightness via Q7 transistor */
 #define CLD_BL2_PIN             GPIO_PIN_2      // PB2 - CLD_BL2 (Low brightness)
@@ -56,7 +56,7 @@ extern "C" {
 #define L_AD_PORT               GPIOC
 #define L_AD_ADC_CHANNEL        ADC_CHANNEL_11
 
-#define R_AD_PIN                GPIO_PIN_3      // PC3 - AF_R (Right channel)
+#define R_AD_PIN                GPIO_PIN_3      // FIXME: PC3 conflicts with LCD_RST
 #define R_AD_PORT               GPIOC
 #define R_AD_ADC_CHANNEL        ADC_CHANNEL_12
 
@@ -70,10 +70,11 @@ extern "C" {
 #define KEY_STEREO_PIN          GPIO_PIN_3      // PD3 - KEY_STEREO (Mode button)
 #define KEY_STEREO_PORT         GPIOD
 
-/* LED indicators - o3 verified */
-#define LED_RED_PIN             GPIO_PIN_0      // PC0 - Red LED (Common anode, LOW = ON)
+/* LED indicators - NOTE: PC0/PC1 are now used by LCD */
+/* Need to verify actual LED pins from schematic */
+#define LED_RED_PIN             GPIO_PIN_0      // FIXME: PC0 conflicts with LCD_CS
 #define LED_RED_PORT            GPIOC
-#define LED_GREEN_PIN           GPIO_PIN_1      // PC1 - Green LED (Common anode, LOW = ON)
+#define LED_GREEN_PIN           GPIO_PIN_1      // FIXME: PC1 conflicts with LCD_RS
 #define LED_GREEN_PORT          GPIOC
 
 /* ========== AUDIO AND CONTROL PINS ========== */

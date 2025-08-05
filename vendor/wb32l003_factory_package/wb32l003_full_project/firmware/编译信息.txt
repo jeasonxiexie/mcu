@@ -1,0 +1,28 @@
+编译信息
+========
+
+编译环境：arm-none-eabi-gcc 15.1.0
+
+文件说明
+--------
+wb32l003_vu_meter.hex - 烧录文件（Intel HEX格式）
+wb32l003_vu_meter.bin - 二进制文件
+
+版本说明
+--------
+- LCD引脚定义：GPIOC（PC0/1/3/4/6）
+- LCD驱动：ST7735S，80×160分辨率
+- 接口方式：软件SPI
+
+固件大小
+--------
+   text    data     bss     dec     hex filename
+  37432      20    1844   39296    9980 firmware.elf
+
+内存使用：
+- Flash: 37.5KB / 64KB (58.6%)
+- RAM: 1.8KB / 8KB (22.5%)
+
+烧录方法
+--------
+使用WB-Link PRO或其他SWD调试器烧录wb32l003_vu_meter.hex文件

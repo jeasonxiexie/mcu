@@ -1,0 +1,112 @@
+# Makefile for LCD variants
+TARGET_PREFIX = lcd
+CC = arm-none-eabi-gcc
+AS = arm-none-eabi-gcc -x assembler-with-cpp
+CP = arm-none-eabi-objcopy
+SZ = arm-none-eabi-size
+
+# MCU settings
+CPU = -mcpu=cortex-m0plus
+MCU = $(CPU) -mthumb $(FPU) $(FLOAT-ABI)
+
+# Macros for specific MCU
+C_DEFS =  \
+-DUSE_HAL_DRIVER \
+-DWB32L003K8U6 \
+-DUSE_HSI_ONLY
+
+# Include paths
+C_INCLUDES =  \
+-ICore/Inc \
+-IDrivers/WB32L003_HAL_Driver/Inc \
+-IDrivers/CMSIS/Include
+
+# Compile flags
+CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) -Og -Wall -fdata-sections -ffunction-sections -ffreestanding -g -gdwarf-2 -MMD -MP
+
+# Common source files
+COMMON_SOURCES = \
+Core/Src/lcd_variant_test.c \
+Core/Src/early_power_stub.c \
+Core/Src/syscalls.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal_cortex.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal_rcc.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal_gpio.c \
+Drivers/WB32L003_HAL_Driver/Src/system_wb32l003.c
+
+# Startup file
+STARTUP = startup_wb32l003.s
+
+# Linker settings
+LDSCRIPT = WB32L003K8Ux_FLASH.ld
+LIBS = -lc -lm -lnosys
+LIBDIR = -L/opt/homebrew/Cellar/arm-none-eabi-gcc/15.1.0/lib/gcc/arm-none-eabi/15.1.0/thumb/v6-m/nofp
+LDFLAGS = $(MCU) -T$(LDSCRIPT) $(LIBDIR) -lgcc $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections -nostartfiles -nodefaultlibs
+
+# Default build directory
+BUILD_DIR = build_lcd_variants
+
+# List of variants to build
+VARIANTS = v1_no_offset v2_offset_24 v3_offset_26 v4_offset_32 power_test_high
+
+.PHONY: all clean $(VARIANTS)
+
+all: $(VARIANTS)
+
+# Build rules for each variant
+v1_no_offset: TARGET = lcd_v1_no_offset
+v1_no_offset: LCD_SOURCE = Core/Src/lcd_v1_no_offset.c
+v1_no_offset: build_variant
+
+v2_offset_24: TARGET = lcd_v2_offset_24
+v2_offset_24: LCD_SOURCE = Core/Src/lcd_v2_offset_24.c
+v2_offset_24: build_variant
+
+v3_offset_26: TARGET = lcd_v3_offset_26
+v3_offset_26: LCD_SOURCE = Core/Src/lcd_v3_offset_26.c
+v3_offset_26: build_variant
+
+v4_offset_32: TARGET = lcd_v4_offset_32
+v4_offset_32: LCD_SOURCE = Core/Src/lcd_v4_offset_32.c
+v4_offset_32: build_variant
+
+power_test_high: TARGET = power_test_high
+power_test_high: LCD_SOURCE = Core/Src/power_test_high.c
+power_test_high: build_variant
+
+build_variant:
+	@echo "Building $(TARGET)..."
+	@mkdir -p $(BUILD_DIR)/$(TARGET)
+	@mkdir -p $(BUILD_DIR)/$(TARGET)/stubs
+	@echo "// empty" > $(BUILD_DIR)/$(TARGET)/stubs/dummy.c
+	@$(CC) -c $(BUILD_DIR)/$(TARGET)/stubs/dummy.c -o $(BUILD_DIR)/$(TARGET)/stubs/dummy.o
+	@ar rcs $(BUILD_DIR)/$(TARGET)/stubs/libc.a $(BUILD_DIR)/$(TARGET)/stubs/dummy.o
+	@ar rcs $(BUILD_DIR)/$(TARGET)/stubs/libm.a $(BUILD_DIR)/$(TARGET)/stubs/dummy.o
+	@ar rcs $(BUILD_DIR)/$(TARGET)/stubs/libnosys.a $(BUILD_DIR)/$(TARGET)/stubs/dummy.o
+	
+	$(CC) -c $(CFLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(TARGET)/$(notdir $(LCD_SOURCE:.c=.lst)) $(LCD_SOURCE) -o $(BUILD_DIR)/$(TARGET)/lcd.o
+	
+	@for src in $(COMMON_SOURCES); do \
+		echo "Compiling $$src..."; \
+		$(CC) -c $(CFLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(TARGET)/$$(basename $$src .c).lst $$src -o $(BUILD_DIR)/$(TARGET)/$$(basename $$src .c).o; \
+	done
+	
+	$(AS) -c $(CFLAGS) -MMD -MP -MF"$(BUILD_DIR)/$(TARGET)/startup.d" $(STARTUP) -o $(BUILD_DIR)/$(TARGET)/startup.o
+	
+	$(CC) $(BUILD_DIR)/$(TARGET)/lcd.o $(BUILD_DIR)/$(TARGET)/lcd_variant_test.o $(BUILD_DIR)/$(TARGET)/early_power_stub.o $(BUILD_DIR)/$(TARGET)/syscalls.o $(BUILD_DIR)/$(TARGET)/wb32l003_hal.o $(BUILD_DIR)/$(TARGET)/wb32l003_hal_cortex.o $(BUILD_DIR)/$(TARGET)/wb32l003_hal_rcc.o $(BUILD_DIR)/$(TARGET)/wb32l003_hal_gpio.o $(BUILD_DIR)/$(TARGET)/system_wb32l003.o $(BUILD_DIR)/$(TARGET)/startup.o -L$(BUILD_DIR)/$(TARGET)/stubs $(LDFLAGS) -o $(BUILD_DIR)/$(TARGET)/$(TARGET).elf
+	
+	$(CP) -O ihex $(BUILD_DIR)/$(TARGET)/$(TARGET).elf $(BUILD_DIR)/$(TARGET)/$(TARGET).hex
+	$(CP) -O binary -S $(BUILD_DIR)/$(TARGET)/$(TARGET).elf $(BUILD_DIR)/$(TARGET)/$(TARGET).bin
+	
+	$(SZ) $(BUILD_DIR)/$(TARGET)/$(TARGET).elf
+	
+	@mkdir -p delivery/lcd_test_variants
+	@cp $(BUILD_DIR)/$(TARGET)/$(TARGET).hex delivery/lcd_test_variants/
+	@cp $(BUILD_DIR)/$(TARGET)/$(TARGET).bin delivery/lcd_test_variants/
+	@echo "$(TARGET) built successfully!"
+	@echo ""
+
+clean:
+	-rm -fR $(BUILD_DIR)
+	-rm -fR delivery/lcd_test_variants

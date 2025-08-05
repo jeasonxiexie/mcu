@@ -1,0 +1,116 @@
+# Makefile for LCD diagnostic test
+# Based on o3pro's troubleshooting guide
+
+TARGET = lcd_diagnostic
+
+# Toolchain
+PREFIX = arm-none-eabi-
+CC = $(PREFIX)gcc
+AS = $(PREFIX)gcc -x assembler-with-cpp
+CP = $(PREFIX)objcopy
+SZ = $(PREFIX)size
+HEX = $(CP) -O ihex
+BIN = $(CP) -O binary -S
+
+# MCU
+CPU = -mcpu=cortex-m0plus
+MCU = $(CPU) -mthumb -mfloat-abi=soft
+
+# Build directory
+BUILD_DIR = build_diagnostic
+
+# Sources
+C_SOURCES = \
+Core/Src/lcd_diagnostic_test.c \
+Core/Src/early_power.c \
+Core/Src/syscalls.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal_cortex.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal_rcc.c \
+Drivers/WB32L003_HAL_Driver/Src/wb32l003_hal_gpio.c \
+Drivers/WB32L003_HAL_Driver/Src/system_wb32l003.c
+
+ASM_SOURCES = \
+Core/Startup/startup_wb32l003.s
+
+# Includes
+C_INCLUDES = \
+-ICore/Inc \
+-IDrivers/WB32L003_HAL_Driver/Inc \
+-IDrivers/CMSIS/Include \
+-IDrivers/CMSIS/Device/WestBerry/WB32L003/Include
+
+# Defines
+C_DEFS = \
+-DUSE_HAL_DRIVER \
+-DWB32L003K8U6 \
+-DUSE_HSI_ONLY
+
+# Compile flags
+CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) -Os -Wall -fdata-sections -ffunction-sections
+CFLAGS += -ffreestanding -g -gdwarf-2
+
+# Link script
+LDSCRIPT = WB32L003K8Ux_FLASH.ld
+
+# Libraries
+LDFLAGS = $(MCU) -T$(LDSCRIPT) -Wl,--gc-sections
+LDFLAGS += -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref
+LDFLAGS += -nostartfiles -nodefaultlibs
+
+# Library paths and stubs
+LDFLAGS += -L$(shell dirname $(shell $(CC) $(MCU) -print-libgcc-file-name))
+LDFLAGS += -L$(BUILD_DIR)/stubs
+
+LIBS = -lgcc -lc -lm -lnosys
+
+# Build all
+all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
+
+# List of objects
+OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(C_SOURCES:.c=.o)))
+vpath %.c $(sort $(dir $(C_SOURCES)))
+
+OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(ASM_SOURCES:.s=.o)))
+vpath %.s $(sort $(dir $(ASM_SOURCES)))
+
+# Create stubs
+$(BUILD_DIR)/stubs:
+	mkdir -p $(BUILD_DIR)/stubs
+	echo "// empty" > $(BUILD_DIR)/stubs/dummy.c
+	$(CC) -c $(BUILD_DIR)/stubs/dummy.c -o $(BUILD_DIR)/stubs/dummy.o
+	ar rcs $(BUILD_DIR)/stubs/libc.a $(BUILD_DIR)/stubs/dummy.o
+	ar rcs $(BUILD_DIR)/stubs/libm.a $(BUILD_DIR)/stubs/dummy.o
+	ar rcs $(BUILD_DIR)/stubs/libnosys.a $(BUILD_DIR)/stubs/dummy.o
+
+# Build object files
+$(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR) $(BUILD_DIR)/stubs
+	$(CC) -c $(CFLAGS) -MMD -MP -MF"$(@:%.o=%.d)" -Wa,-a,-ad,-alms=$(@:%.o=%.lst) $< -o $@
+
+$(BUILD_DIR)/%.o: %.s Makefile | $(BUILD_DIR)
+	$(AS) -c $(CFLAGS) -MMD -MP -MF"$(@:%.o=%.d)" $< -o $@
+
+# Build ELF
+$(BUILD_DIR)/$(TARGET).elf: $(OBJECTS) Makefile
+	$(CC) $(OBJECTS) $(LDFLAGS) $(LIBS) -o $@
+	$(SZ) $@
+
+# Build HEX/BIN
+$(BUILD_DIR)/$(TARGET).hex: $(BUILD_DIR)/$(TARGET).elf | $(BUILD_DIR)
+	$(HEX) $< $@
+	
+$(BUILD_DIR)/$(TARGET).bin: $(BUILD_DIR)/$(TARGET).elf | $(BUILD_DIR)
+	$(BIN) $< $@
+
+# Create build directory
+$(BUILD_DIR):
+	mkdir -p $@
+
+# Clean
+clean:
+	-rm -rf $(BUILD_DIR)
+
+# Dependencies
+-include $(wildcard $(BUILD_DIR)/*.d)
+
+.PHONY: all clean

@@ -12,6 +12,10 @@ OPT = -Os
 # Build path
 BUILD_DIR = build
 
+# LCD variant selection
+# Options: lcd_v1_no_offset, lcd_v2_offset_24, lcd_v3_offset_26, lcd_v4_offset_32
+VARIANT ?= lcd_v1_no_offset
+
 # Source files
 C_SOURCES =  \
 Core/Src/main.c \
