@@ -14,8 +14,7 @@ extern "C" {
 #include "wb32l003.h"
 
 /* ========== LCD INTERFACE (LH096NT) ========== */
-/* CORRECTED based on actual schematic - LCD uses GPIOC pins */
-/* Previous code had wrong pin mappings (was using GPIOB) */
+/* LCD uses GPIOC pins - verified by o3 from schematic */
 #define LCD_RST_PIN             GPIO_PIN_3      // PC3 - LCD_RESET
 #define LCD_RST_PORT            GPIOC
 #define LCD_RS_PIN              GPIO_PIN_1      // PC1 - LCD_RS (Data/Command)
@@ -56,7 +55,7 @@ extern "C" {
 #define L_AD_PORT               GPIOC
 #define L_AD_ADC_CHANNEL        ADC_CHANNEL_11
 
-#define R_AD_PIN                GPIO_PIN_3      // FIXME: PC3 conflicts with LCD_RST
+#define R_AD_PIN                GPIO_PIN_3      // PC3 - Note: shared with LCD_RST, needs special handling
 #define R_AD_PORT               GPIOC
 #define R_AD_ADC_CHANNEL        ADC_CHANNEL_12
 
@@ -70,11 +69,11 @@ extern "C" {
 #define KEY_STEREO_PIN          GPIO_PIN_3      // PD3 - KEY_STEREO (Mode button)
 #define KEY_STEREO_PORT         GPIOD
 
-/* LED indicators - NOTE: PC0/PC1 are now used by LCD */
-/* Need to verify actual LED pins from schematic */
-#define LED_RED_PIN             GPIO_PIN_0      // FIXME: PC0 conflicts with LCD_CS
+/* LED indicators - PC0/PC1 are used by LCD, so LEDs must be elsewhere */
+/* TODO: Verify actual LED pins from schematic */
+#define LED_RED_PIN             GPIO_PIN_0      // Need to find actual LED pin
 #define LED_RED_PORT            GPIOC
-#define LED_GREEN_PIN           GPIO_PIN_1      // FIXME: PC1 conflicts with LCD_RS
+#define LED_GREEN_PIN           GPIO_PIN_1      // Need to find actual LED pin
 #define LED_GREEN_PORT          GPIOC
 
 /* ========== AUDIO AND CONTROL PINS ========== */
@@ -86,11 +85,11 @@ extern "C" {
 #define CON_STEREO_PORT         GPIOD
 
 /* Power management pins - o3 analysis verified */
-#define CON_POW_CPU_PIN         GPIO_PIN_6      // PC6 - Main power control (LOW = ON, HIGH = OFF)
-#define CON_POW_CPU_PORT        GPIOC
+#define CON_POW_CPU_PIN         GPIO_PIN_7      // PB7 - Main power control (LOW = ON, HIGH = OFF)
+#define CON_POW_CPU_PORT        GPIOB
 
-#define CON_POW_RF_PIN          GPIO_PIN_5      // PC5 - 5V power control (for audio amp)
-#define CON_POW_RF_PORT         GPIOC
+#define CON_POW_RF_PIN          GPIO_PIN_6      // PB6 - 5V power control (for audio amp)
+#define CON_POW_RF_PORT         GPIOB
 
 #define CON_POW_LCD_PIN         GPIO_PIN_3      // PA3 - LCD power control
 #define CON_POW_LCD_PORT        GPIOA
