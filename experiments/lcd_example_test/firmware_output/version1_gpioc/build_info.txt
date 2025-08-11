@@ -1,0 +1,21 @@
+LCD Test Version 1 - GPIOC (标准原理图版本)
+=====================================
+编译时间: 2025-08-06 22:56:19
+时间戳: 20250806_225619
+GPIO端口: GPIOC
+参考文档: 0.96寸插接式原理图.pdf
+
+固件文件:
+- lcd_test_v1_20250806_225619.bin
+- lcd_test_v1_20250806_225619.hex
+- lcd_test_v1_20250806_225619.elf
+
+固件大小:
+   6100	     12	   1540	   7652	   1de4	lcd_test_v1.elf
+
+引脚映射:
+- LCD_RST: PC6
+- LCD_RS:  PC5
+- LCD_SCL: PC3
+- LCD_CS:  PC1
+- LCD_SDA: PC0

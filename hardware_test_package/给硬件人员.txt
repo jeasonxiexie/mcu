@@ -1,0 +1,40 @@
+硬件测试包使用说明
+==================
+
+这个包是专门为你准备的独立测试程序，可以帮助定位LED不亮的问题。
+
+重要文件：
+1. source/config.h - 引脚配置文件（可以修改）
+2. output/test.hex - 编译好的固件（直接烧录）
+3. TROUBLESHOOTING.md - 故障排查指南
+
+当前配置（基于RTF文档）：
+- 电源锁存: PC6 (高电平保持)
+- LED1: PC0 (低电平亮)
+- LED2: PC1 (低电平亮)  
+- 串口: PA9 (115200)
+
+测试步骤：
+1. 先直接烧录 output/test.hex 试试
+2. 连接串口（PA9，115200）看输出
+3. 观察LED是否闪烁
+
+如果不工作：
+1. 打开 source/config.h
+2. 修改引脚定义（特别是POWER_LATCH）
+3. Windows系统双击 build.bat 重新编译
+4. 烧录新的 output/test.hex
+
+最可能的问题：
+1. 电源锁存引脚不是PC6 → 修改POWER_LATCH_PORT和POWER_LATCH_PIN
+2. LED引脚不是PC0/PC1 → 修改LED1_PORT/PIN和LED2_PORT/PIN
+3. LED是高电平亮 → 修改LED_ACTIVE_LOW为0
+
+请测量并告诉我：
+- PC6的电压是多少？（应该3.3V）
+- PC0和PC1的电压？（应该在切换）
+- 串口有输出吗？
+
+修改成功后，把config.h发给我，我们就知道正确的引脚配置了。
+
+注意：这个程序非常简单，只有电源锁存和LED闪烁，没有LCD等复杂功能，就是为了排查基础问题。

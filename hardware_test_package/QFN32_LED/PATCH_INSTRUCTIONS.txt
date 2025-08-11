@@ -1,0 +1,15 @@
+手动修改方法：
+================
+
+1. 在hex编辑器中打开 original_working.hex
+2. 搜索 GPIO_ToggleBits 的调用
+3. 找到传递 0x10 (GPIO_Pin_4) 的地方
+4. 改为 0x01 (GPIO_Pin_0)
+
+特征码：
+- TIM10中断向量在中断表的某个位置
+- 会调用 GPIOC 相关函数
+- 使用 pin mask 0x0010
+
+或者：
+让硬件工程师把LED接到PC4（如果该引脚存在）

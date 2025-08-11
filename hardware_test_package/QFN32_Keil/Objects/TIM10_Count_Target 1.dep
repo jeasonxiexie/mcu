@@ -1,0 +1,201 @@
+Dependencies for Project 'TIM10_Count', Target 'Target 1': (DO NOT MODIFY !)
+CompilerVersion: 5060183::V5.06 update 2 (build 183)::ARMCC
+F (..\..\..\..\Libraries\CMSIS\Device\WB\WB32L003\startup\arm\startup_wb32l003.s)(0x6444FEEF)(--cpu Cortex-M0+ -g --apcs=interwork -ID:\Keil_v5\ARM\PACK\ARM\Cortex_DFP\1.1.0\Device\ARMCM0plus\Include-ID:\Keil_v5\ARM\PACK\ARM\Cortex_DFP\1.1.0\Device\ARM\ARMCM0plus\Include--pd "__UVISION_VERSION SETA 542" --pd "ARMCM0P SETA 1"--list .\listings\startup_wb32l003.lst --xref -o .\objects\startup_wb32l003.o --depend .\objects\startup_wb32l003.d)
+F (..\..\..\..\Libraries\CMSIS\Device\WB\WB32L003\system_wb32l003.c)(0x6444FEEF)(--c99 -c --cpu Cortex-M0+ -g -O0 --apcs=interwork --split_sections -I ..\..\..\..\Libraries\CMSIS\Device\WB\WB32L003 -I ..\..\..\..\Libraries\CMSIS\Include -I ..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc -I ..\..\..\WB32L003_StdPeriph_Template-ID:\Keil_v5\ARM\PACK\ARM\Cortex_DFP\1.1.0\Device\ARMCM0plus\Include-ID:\Keil_v5\ARM\PACK\ARM\Cortex_DFP\1.1.0\Device\ARM\ARMCM0plus\Include-D__UVISION_VERSION="542" -DARMCM0P -DWB32L003Fx -DUSE_STDPERIPH_DRIVER -DMAINCLK_FREQ_HSI -DHSI_VALUE="24000000"-o .\objects\system_wb32l003.o --omf_browse .\objects\system_wb32l003.crf --depend .\objects\system_wb32l003.d)
+I (..\..\..\..\Libraries\CMSIS\Device\WB\WB32L003\wb32l003.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Include\core_cm0plus.h)(0x6444FEEF)
+I (d:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\..\..\..\Libraries\CMSIS\Include\cmsis_version.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Include\cmsis_compiler.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Include\cmsis_armcc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Device\WB\WB32L003\system_wb32l003.h)(0x6444FEEF)
+I (..\..\..\WB32L003_StdPeriph_Template\wb32l003_conf.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_gpio.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_rcc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_tim.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_flash.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_uart.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_basetim.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_lpuart.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_pca.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_beep.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_adc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_lptim.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_vcmp.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_lvd.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_i2c.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_iwdg.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_wwdg.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_spi.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_syscon.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_rtc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_crc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_awk.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_owire.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_pwr.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\misc.h)(0x6444FEEF)
+F (.\main.c)(0x6444FEEF)(--c99 -c --cpu Cortex-M0+ -g -O0 --apcs=interwork --split_sections -I ..\..\..\..\Libraries\CMSIS\Device\WB\WB32L003 -I ..\..\..\..\Libraries\CMSIS\Include -I ..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc -I ..\..\..\WB32L003_StdPeriph_Template-ID:\Keil_v5\ARM\PACK\ARM\Cortex_DFP\1.1.0\Device\ARMCM0plus\Include-ID:\Keil_v5\ARM\PACK\ARM\Cortex_DFP\1.1.0\Device\ARM\ARMCM0plus\Include-D__UVISION_VERSION="542" -DARMCM0P -DWB32L003Fx -DUSE_STDPERIPH_DRIVER -DMAINCLK_FREQ_HSI -DHSI_VALUE="24000000"-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+I (..\..\..\..\Libraries\CMSIS\Device\WB\WB32L003\wb32l003.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Include\core_cm0plus.h)(0x6444FEEF)
+I (d:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\..\..\..\Libraries\CMSIS\Include\cmsis_version.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Include\cmsis_compiler.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Include\cmsis_armcc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Device\WB\WB32L003\system_wb32l003.h)(0x6444FEEF)
+I (..\..\..\WB32L003_StdPeriph_Template\wb32l003_conf.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_gpio.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_rcc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_tim.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_flash.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_uart.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_basetim.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_lpuart.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_pca.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_beep.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_adc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_lptim.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_vcmp.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_lvd.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_i2c.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_iwdg.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_wwdg.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_spi.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_syscon.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_rtc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_crc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_awk.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_owire.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_pwr.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\misc.h)(0x6444FEEF)
+F (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\src\wb32l003_gpio.c)(0x6444FEEF)(--c99 -c --cpu Cortex-M0+ -g -O0 --apcs=interwork --split_sections -I ..\..\..\..\Libraries\CMSIS\Device\WB\WB32L003 -I ..\..\..\..\Libraries\CMSIS\Include -I ..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc -I ..\..\..\WB32L003_StdPeriph_Template-ID:\Keil_v5\ARM\PACK\ARM\Cortex_DFP\1.1.0\Device\ARMCM0plus\Include-ID:\Keil_v5\ARM\PACK\ARM\Cortex_DFP\1.1.0\Device\ARM\ARMCM0plus\Include-D__UVISION_VERSION="542" -DARMCM0P -DWB32L003Fx -DUSE_STDPERIPH_DRIVER -DMAINCLK_FREQ_HSI -DHSI_VALUE="24000000"-o .\objects\wb32l003_gpio.o --omf_browse .\objects\wb32l003_gpio.crf --depend .\objects\wb32l003_gpio.d)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_gpio.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Device\WB\WB32L003\wb32l003.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Include\core_cm0plus.h)(0x6444FEEF)
+I (d:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\..\..\..\Libraries\CMSIS\Include\cmsis_version.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Include\cmsis_compiler.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Include\cmsis_armcc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Device\WB\WB32L003\system_wb32l003.h)(0x6444FEEF)
+I (..\..\..\WB32L003_StdPeriph_Template\wb32l003_conf.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_rcc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_tim.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_flash.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_uart.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_basetim.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_lpuart.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_pca.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_beep.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_adc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_lptim.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_vcmp.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_lvd.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_i2c.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_iwdg.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_wwdg.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_spi.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_syscon.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_rtc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_crc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_awk.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_owire.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_pwr.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\misc.h)(0x6444FEEF)
+F (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\src\wb32l003_rcc.c)(0x6444FEEF)(--c99 -c --cpu Cortex-M0+ -g -O0 --apcs=interwork --split_sections -I ..\..\..\..\Libraries\CMSIS\Device\WB\WB32L003 -I ..\..\..\..\Libraries\CMSIS\Include -I ..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc -I ..\..\..\WB32L003_StdPeriph_Template-ID:\Keil_v5\ARM\PACK\ARM\Cortex_DFP\1.1.0\Device\ARMCM0plus\Include-ID:\Keil_v5\ARM\PACK\ARM\Cortex_DFP\1.1.0\Device\ARM\ARMCM0plus\Include-D__UVISION_VERSION="542" -DARMCM0P -DWB32L003Fx -DUSE_STDPERIPH_DRIVER -DMAINCLK_FREQ_HSI -DHSI_VALUE="24000000"-o .\objects\wb32l003_rcc.o --omf_browse .\objects\wb32l003_rcc.crf --depend .\objects\wb32l003_rcc.d)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_rcc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Device\WB\WB32L003\wb32l003.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Include\core_cm0plus.h)(0x6444FEEF)
+I (d:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\..\..\..\Libraries\CMSIS\Include\cmsis_version.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Include\cmsis_compiler.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Include\cmsis_armcc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Device\WB\WB32L003\system_wb32l003.h)(0x6444FEEF)
+I (..\..\..\WB32L003_StdPeriph_Template\wb32l003_conf.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_gpio.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_tim.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_flash.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_uart.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_basetim.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_lpuart.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_pca.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_beep.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_adc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_lptim.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_vcmp.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_lvd.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_i2c.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_iwdg.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_wwdg.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_spi.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_syscon.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_rtc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_crc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_awk.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_owire.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_pwr.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\misc.h)(0x6444FEEF)
+F (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\src\wb32l003_basetim.c)(0x6444FEEF)(--c99 -c --cpu Cortex-M0+ -g -O0 --apcs=interwork --split_sections -I ..\..\..\..\Libraries\CMSIS\Device\WB\WB32L003 -I ..\..\..\..\Libraries\CMSIS\Include -I ..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc -I ..\..\..\WB32L003_StdPeriph_Template-ID:\Keil_v5\ARM\PACK\ARM\Cortex_DFP\1.1.0\Device\ARMCM0plus\Include-ID:\Keil_v5\ARM\PACK\ARM\Cortex_DFP\1.1.0\Device\ARM\ARMCM0plus\Include-D__UVISION_VERSION="542" -DARMCM0P -DWB32L003Fx -DUSE_STDPERIPH_DRIVER -DMAINCLK_FREQ_HSI -DHSI_VALUE="24000000"-o .\objects\wb32l003_basetim.o --omf_browse .\objects\wb32l003_basetim.crf --depend .\objects\wb32l003_basetim.d)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_basetim.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Device\WB\WB32L003\wb32l003.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Include\core_cm0plus.h)(0x6444FEEF)
+I (d:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\..\..\..\Libraries\CMSIS\Include\cmsis_version.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Include\cmsis_compiler.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Include\cmsis_armcc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Device\WB\WB32L003\system_wb32l003.h)(0x6444FEEF)
+I (..\..\..\WB32L003_StdPeriph_Template\wb32l003_conf.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_gpio.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_rcc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_tim.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_flash.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_uart.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_lpuart.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_pca.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_beep.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_adc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_lptim.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_vcmp.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_lvd.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_i2c.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_iwdg.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_wwdg.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_spi.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_syscon.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_rtc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_crc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_awk.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_owire.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_pwr.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\misc.h)(0x6444FEEF)
+F (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\src\wb32l003_tim.c)(0x6444FEEF)(--c99 -c --cpu Cortex-M0+ -g -O0 --apcs=interwork --split_sections -I ..\..\..\..\Libraries\CMSIS\Device\WB\WB32L003 -I ..\..\..\..\Libraries\CMSIS\Include -I ..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc -I ..\..\..\WB32L003_StdPeriph_Template-ID:\Keil_v5\ARM\PACK\ARM\Cortex_DFP\1.1.0\Device\ARMCM0plus\Include-ID:\Keil_v5\ARM\PACK\ARM\Cortex_DFP\1.1.0\Device\ARM\ARMCM0plus\Include-D__UVISION_VERSION="542" -DARMCM0P -DWB32L003Fx -DUSE_STDPERIPH_DRIVER -DMAINCLK_FREQ_HSI -DHSI_VALUE="24000000"-o .\objects\wb32l003_tim.o --omf_browse .\objects\wb32l003_tim.crf --depend .\objects\wb32l003_tim.d)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_tim.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Device\WB\WB32L003\wb32l003.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Include\core_cm0plus.h)(0x6444FEEF)
+I (d:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\..\..\..\Libraries\CMSIS\Include\cmsis_version.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Include\cmsis_compiler.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Include\cmsis_armcc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\CMSIS\Device\WB\WB32L003\system_wb32l003.h)(0x6444FEEF)
+I (..\..\..\WB32L003_StdPeriph_Template\wb32l003_conf.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_gpio.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_rcc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_flash.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_uart.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_basetim.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_lpuart.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_pca.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_beep.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_adc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_lptim.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_vcmp.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_lvd.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_i2c.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_iwdg.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_wwdg.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_spi.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_syscon.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_rtc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_crc.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_awk.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_owire.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\wb32l003_pwr.h)(0x6444FEEF)
+I (..\..\..\..\Libraries\WB32L003_StdPeriph_Driver\inc\misc.h)(0x6444FEEF)

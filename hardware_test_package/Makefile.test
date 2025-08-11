@@ -1,0 +1,122 @@
+# Makefile for WB32L003 Test Programs
+# Based on TIM10_Count successful configuration
+
+# 工具链配置
+CC = arm-none-eabi-gcc
+AS = arm-none-eabi-as
+LD = arm-none-eabi-ld
+OBJCOPY = arm-none-eabi-objcopy
+OBJDUMP = arm-none-eabi-objdump
+SIZE = arm-none-eabi-size
+
+# CPU配置（Cortex-M0+）
+CPU = -mcpu=cortex-m0plus
+MCU = $(CPU) -mthumb
+
+# 编译选项
+CFLAGS = $(MCU)
+CFLAGS += -Wall -O2
+CFLAGS += -ffunction-sections -fdata-sections
+CFLAGS += -ffreestanding -nostdlib
+CFLAGS += -std=gnu99
+
+# 链接选项
+LDFLAGS = $(MCU)
+LDFLAGS += -T source/wb32l003.ld
+LDFLAGS += -Wl,--gc-sections
+LDFLAGS += -Wl,-Map=$@.map
+LDFLAGS += -nostartfiles
+
+# 构建目录
+BUILD_DIR = build_test
+
+# 目标文件
+TARGETS = test_hal test_reg
+
+# 默认目标
+all: $(BUILD_DIR) $(TARGETS:%=$(BUILD_DIR)/%.hex)
+
+# 创建构建目录
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
+
+# HAL版本编译
+$(BUILD_DIR)/test_hal.elf: test_hal.c source/startup_wb32l003.s
+	@echo "Building HAL version..."
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $@
+	$(SIZE) $@
+
+# 寄存器版本编译
+$(BUILD_DIR)/test_reg.elf: test_reg.c source/startup_wb32l003.s
+	@echo "Building Register version..."
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $@
+	$(SIZE) $@
+
+# 切换测试版本编译
+$(BUILD_DIR)/test_toggle.elf: test_toggle.c source/startup_wb32l003.s
+	@echo "Building Toggle test version..."
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $@
+	$(SIZE) $@
+
+# 生成HEX文件
+$(BUILD_DIR)/%.hex: $(BUILD_DIR)/%.elf
+	@echo "Generating $@..."
+	$(OBJCOPY) -O ihex $< $@
+	@echo "Created: $@"
+	@ls -la $@
+
+# 生成反汇编文件（用于调试）
+$(BUILD_DIR)/%.lst: $(BUILD_DIR)/%.elf
+	$(OBJDUMP) -d -S $< > $@
+
+# 生成二进制文件
+$(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.elf
+	$(OBJCOPY) -O binary $< $@
+
+# 清理
+clean:
+	rm -rf $(BUILD_DIR)
+
+# 显示大小信息
+size: $(TARGETS:%=$(BUILD_DIR)/%.elf)
+	@for elf in $^; do \
+		echo "Size of $$elf:"; \
+		$(SIZE) $$elf; \
+		echo ""; \
+	done
+
+# 帮助信息
+help:
+	@echo "WB32L003 Test Build System"
+	@echo "=========================="
+	@echo "Targets:"
+	@echo "  all       - Build all test versions"
+	@echo "  test_hal  - Build HAL library version"
+	@echo "  test_reg  - Build register-only version"
+	@echo "  clean     - Remove all build files"
+	@echo "  size      - Show size of all builds"
+	@echo ""
+	@echo "Output files in $(BUILD_DIR):"
+	@echo "  *.hex     - Intel HEX format for flashing"
+	@echo "  *.elf     - ELF format with debug info"
+	@echo "  *.map     - Linker map file"
+	@echo ""
+	@echo "Flash commands:"
+	@echo "  pyocd flash -t wb32l003 $(BUILD_DIR)/test_hal.hex"
+	@echo "  pyocd flash -t wb32l003 $(BUILD_DIR)/test_reg.hex"
+
+# 单独构建目标
+test_hal: $(BUILD_DIR)/test_hal.hex
+
+test_reg: $(BUILD_DIR)/test_reg.hex
+
+test_toggle: $(BUILD_DIR)/test_toggle.hex
+
+# 烧录命令（需要安装pyocd）
+flash_hal: $(BUILD_DIR)/test_hal.hex
+	pyocd flash -t wb32l003 $<
+
+flash_reg: $(BUILD_DIR)/test_reg.hex
+	pyocd flash -t wb32l003 $<
+
+.PHONY: all clean size help test_hal test_reg flash_hal flash_reg

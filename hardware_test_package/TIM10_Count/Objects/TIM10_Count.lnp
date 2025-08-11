@@ -1,0 +1,12 @@
+--cpu Cortex-M0+
+".\objects\startup_wb32l003.o"
+".\objects\system_wb32l003.o"
+".\objects\main.o"
+".\objects\wb32l003_gpio.o"
+".\objects\wb32l003_rcc.o"
+".\objects\wb32l003_basetim.o"
+".\objects\wb32l003_tim.o"
+--strict --scatter ".\Objects\TIM10_Count.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\TIM10_Count.map" -o .\Objects\TIM10_Count.axf

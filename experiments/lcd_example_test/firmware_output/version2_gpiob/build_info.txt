@@ -1,0 +1,23 @@
+LCD Test Version 2 - GPIOB (实际PCB版本)
+=====================================
+编译时间: 2025-08-06 22:56:19
+时间戳: 20250806_225619
+GPIO端口: GPIOB
+参考文档: WB32L003 耳放固件.rtf
+
+固件文件:
+- lcd_test_v2_20250806_225619.bin
+- lcd_test_v2_20250806_225619.hex
+- lcd_test_v2_20250806_225619.elf
+
+固件大小:
+   6180	     12	   1540	   7732	   1e34	lcd_test_v2.elf
+
+引脚映射:
+- LCD_RST: PB7
+- LCD_RS:  PB6
+- LCD_SCL: PB5
+- LCD_CS:  PB4
+- LCD_SDA: PB3
+- LCD_BL1: PB1 (背光控制)
+- LCD_BL2: PB2 (背光亮度)
